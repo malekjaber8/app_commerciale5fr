@@ -4,9 +4,12 @@ import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
 import { findCategory } from '../lib/catalogue'
 import { useQuote } from '../store/quote'
+import { useAuth } from '../store/auth'
+import { AdminPriceEditor } from './AdminPriceEditor'
 
 export function ArticleDrawer({ article, onClose }: { article: Article; onClose: () => void }) {
   const { add } = useQuote()
+  const { role } = useAuth()
   const [variantIdx, setVariantIdx] = useState(0)
   const [qty, setQty] = useState(1)
   const [imgIdx, setImgIdx] = useState(0)
@@ -97,6 +100,8 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
               </table>
             </div>
           </div>
+
+          {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && <AdminPriceEditor article={article} />}
         </div>
 
         <footer className="mt-auto flex items-center gap-3 border-t border-slate-200 bg-white p-5">
