@@ -2,7 +2,8 @@ import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react
 import { deleteDoc, doc } from 'firebase/firestore'
 import { Banknote, CheckCircle2, Pencil } from 'lucide-react'
 import { db } from '../../firebase'
-import { fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
+import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
+import { deleteInvoice } from '../../lib/db'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { QuoteList } from '../../components/QuoteList'
@@ -50,7 +51,12 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const pendingCount = quotes.filter(q => q.status !== 'valide').length
 
   const remove = async (q: QuoteDoc) => {
-    if (!confirm(`Supprimer le devis ${q.number} ?`)) return
+    const type = q.status === 'valide' ? (q.docType ?? 'devis') : 'devis'
+    const label = DOC_TYPE_LABEL[type].toLowerCase()
+    const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
+    const extra = q.invoiceId ? "\n\nLa facture correspondante sera aussi supprimee de l'onglet Factures." : ''
+    if (!confirm(`Supprimer definitivement le ${label} ${number} (${q.client || 'sans client'}) ?${extra}`)) return
+    if (q.invoiceId) { try { await deleteInvoice(q.invoiceId) } catch { /* facture deja supprimee */ } }
     await deleteDoc(doc(db, 'quotes', q.id)); await load()
   }
 

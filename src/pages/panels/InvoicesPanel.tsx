@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Eye, Pencil, Trash2 } from 'lucide-react'
+import { collection, getDocs, query as fsQuery, where } from 'firebase/firestore'
+import { db } from '../../firebase'
 import { deleteInvoice, fetchInvoices } from '../../lib/db'
+import { updateQuote } from '../../lib/quotes'
 import { dt, fmtTs } from '../../lib/format'
 import type { InvoiceDoc } from '../../types'
 import { InvoiceEditor } from '../../components/InvoiceEditor'
@@ -27,8 +30,16 @@ export function InvoicesPanel({ ownerUid }: { ownerUid?: string }) {
   }, [invoices, query])
 
   const remove = async (i: InvoiceDoc) => {
-    if (!confirm(`Supprimer la facture ${i.number} ?`)) return
-    await deleteInvoice(i.id); await load()
+    if (!confirm(`Supprimer definitivement la facture ${i.number} (${i.clientName}) ?
+
+Le devis d'origine repassera « En attente » chez le commercial.`)) return
+    await deleteInvoice(i.id)
+    // Le devis lie a cette facture redevient « en attente » (il ne pointe plus vers une facture supprimee)
+    try {
+      const linked = await getDocs(fsQuery(collection(db, 'quotes'), where('invoiceId', '==', i.id)))
+      await Promise.all(linked.docs.map(d => updateQuote(d.id, { status: 'attente', docType: 'devis', docNumber: '', invoiceId: '', validatedAt: null })))
+    } catch { /* aucun devis lie */ }
+    await load()
   }
 
   return (
