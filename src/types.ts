@@ -20,6 +20,16 @@ export interface Article {
   unit?: string
   badge?: string
   specs?: string[]
+  /** Renseignes par les reglages admin (vue admin seulement pour `hidden`). */
+  hidden?: boolean
+  adjusted?: boolean
+}
+
+export interface Settings {
+  hiddenIds: string[]
+  /** articleId -> libelle de variante -> prix impose par l'admin */
+  priceOverrides: Record<string, Record<string, number>>
+  maxDiscountPct: number
 }
 
 export interface Category {

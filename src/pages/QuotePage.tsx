@@ -1,22 +1,54 @@
 import { useState } from 'react'
-import { Minus, Plus, Printer, Trash2 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Minus, Plus, Printer, Save, Trash2 } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useQuote } from '../store/quote'
+import { useAuth } from '../store/auth'
+import { useSettings } from '../store/settings'
+import { saveQuote } from '../lib/quotes'
 import { dt } from '../lib/format'
 
 const TVA = 0.19
 
 export function QuotePage() {
   const { lines, setQty, remove, clear, total } = useQuote()
+  const { uid, email, profile, role } = useAuth()
+  const { settings } = useSettings()
+  const navigate = useNavigate()
   const [client, setClient] = useState('')
   const [phone, setPhone] = useState('')
   const [note, setNote] = useState('')
   const [discountPct, setDiscountPct] = useState(0)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+  const [number] = useState(() =>
+    'DV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(1000 + Math.random() * 9000))
 
-  const discount = total * (Math.min(100, Math.max(0, discountPct)) / 100)
+  // Le plafond de remise fixe par l'admin s'applique aux commerciaux (pas a l'admin)
+  const maxPct = role === 'admin' ? 100 : settings.maxDiscountPct
+  const pct = Math.min(maxPct, Math.max(0, discountPct))
+  const discount = total * (pct / 100)
   const net = total - discount
-  const number = 'DV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '')
   const date = new Date().toLocaleDateString('fr-FR')
+
+  const save = async () => {
+    if (!uid) return
+    setError('')
+    setSaving(true)
+    try {
+      await saveQuote({
+        number, ownerUid: uid, ownerName: profile?.name || '', ownerEmail: email || '',
+        client: client.trim(), phone: phone.trim(), note: note.trim(), discountPct: pct,
+        lines: lines.map(({ articleId, name, variant, unitPrice, qty }) => ({ articleId, name, variant, unitPrice, qty })),
+        subtotal: total, discount, total: net,
+      })
+      clear()
+      navigate('/mes-devis')
+    } catch {
+      setError('Impossible d\'enregistrer le devis. Verifiez votre connexion.')
+    } finally {
+      setSaving(false)
+    }
+  }
 
   if (lines.length === 0) {
     return (
@@ -35,8 +67,11 @@ export function QuotePage() {
           <button onClick={clear} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">
             <Trash2 size={15} /> Vider
           </button>
-          <button onClick={() => window.print()} className="flex items-center gap-2 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white">
+          <button onClick={() => window.print()} className="flex items-center gap-2 rounded-xl border border-navy bg-white px-4 py-2 text-sm font-bold text-navy">
             <Printer size={15} /> Imprimer / PDF
+          </button>
+          <button onClick={save} disabled={saving} className="flex items-center gap-2 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white disabled:opacity-60">
+            <Save size={15} /> {saving ? 'Enregistrement...' : 'Enregistrer le devis'}
           </button>
         </div>
       </div>
@@ -50,10 +85,12 @@ export function QuotePage() {
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal sm:col-span-2" />
         <label className="flex items-center gap-2 text-sm text-slate-600">
           Remise (%)
-          <input type="number" min={0} max={100} value={discountPct}
+          <input type="number" min={0} max={maxPct} value={discountPct}
             onChange={e => setDiscountPct(parseFloat(e.target.value) || 0)}
             className="w-24 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal" />
+          <span className="text-xs text-slate-400">(max {maxPct}%)</span>
         </label>
+        {error && <div className="rounded-lg bg-red-50 px-3 py-2 text-xs font-medium text-red-700 sm:col-span-2">{error}</div>}
       </div>
 
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -113,7 +150,7 @@ export function QuotePage() {
         <div className="ml-auto mt-5 w-full max-w-xs space-y-1 text-sm">
           <div className="flex justify-between"><span className="text-slate-500">Sous-total</span><span>{dt(total)}</span></div>
           {discount > 0 && (
-            <div className="flex justify-between text-green-700"><span>Remise ({discountPct}%)</span><span>-{dt(discount)}</span></div>
+            <div className="flex justify-between text-green-700"><span>Remise ({pct}%)</span><span>-{dt(discount)}</span></div>
           )}
           <div className="flex justify-between border-t border-slate-200 pt-2 text-base font-extrabold text-navy">
             <span>Total TTC</span><span>{dt(net)}</span>

@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin : identifie par son e-mail (le meme que dans src/config.ts)
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'malekjaber955@gmail.com';
+    }
+
+    // Commercial : compte cree par l'admin, actif, avec un profil users/{uid}
+    function isCommercial() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'commercial'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
+    }
+
+    // Profils : lisibles par l'admin et par la personne concernee ; ecrits par l'admin seulement
+    match /users/{uid} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+      allow write: if isAdmin();
+    }
+
+    // Reglages du contenu (articles masques, prix ajustes, remise maximale)
+    match /settings/{docId} {
+      allow read: if isAdmin() || isCommercial();
+      allow write: if isAdmin();
+    }
+
+    // Devis : chaque commercial voit et modifie uniquement les siens ; l'admin voit tout
+    match /quotes/{quoteId} {
+      allow create: if (isCommercial() || isAdmin())
+        && request.resource.data.ownerUid == request.auth.uid;
+      allow read: if isAdmin()
+        || (isCommercial() && resource.data.ownerUid == request.auth.uid);
+      allow update: if isAdmin()
+        || (isCommercial()
+            && resource.data.ownerUid == request.auth.uid
+            && request.resource.data.ownerUid == resource.data.ownerUid);
+      allow delete: if isAdmin();
+    }
+  }
+}

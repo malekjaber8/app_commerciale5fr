@@ -15,6 +15,9 @@ export function ArticleCard({ article, onOpen }: { article: Article; onOpen: () 
         ) : (
           <ImageOff className="text-slate-300" />
         )}
+        {article.hidden && (
+          <span className="absolute right-2 top-2 rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-bold uppercase text-white">Masque</span>
+        )}
         {article.promo && (
           <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white">
             <Flame size={11} /> Promo

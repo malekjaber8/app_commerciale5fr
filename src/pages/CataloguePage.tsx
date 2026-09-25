@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { ChevronDown, ChevronRight, Search, X } from 'lucide-react'
-import { articles, categoryScope, childrenOf, topCategories } from '../lib/catalogue'
+import { categoryScope, childrenOf, topCategories } from '../lib/catalogue'
+import { useSettings } from '../store/settings'
 import type { Article } from '../types'
 import { ArticleCard } from '../components/ArticleCard'
 import { ArticleDrawer } from '../components/ArticleDrawer'
@@ -8,6 +9,7 @@ import { ArticleDrawer } from '../components/ArticleDrawer'
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 export function CataloguePage() {
+  const { articles } = useSettings()
   const [catId, setCatId] = useState<string | null>(null)
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const [query, setQuery] = useState('')
@@ -24,7 +26,7 @@ export function CataloguePage() {
       if (q && !norm(`${a.name} ${a.id} ${a.desc}`).includes(q)) return false
       return true
     })
-  }, [catId, query, promoOnly])
+  }, [articles, catId, query, promoOnly])
 
   const countIn = (id: string) => {
     const scope = new Set(categoryScope(id))
