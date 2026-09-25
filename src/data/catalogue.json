@@ -1,0 +1,8651 @@
+{
+ "generatedAt": "2026-09-25T08:18:04.987Z",
+ "categories": [
+  {
+   "id": "tissu",
+   "label": "Tissus d'Ameublement",
+   "icon": "🧵",
+   "desc": "Tissus professionnels pour canapés, fauteuils et sièges — 8 collections, 72 coloris disponibles. Indiquez le code couleur souhaité lors de votre commande."
+  },
+  {
+   "id": "mousse",
+   "label": "Mousse & Garnissage",
+   "icon": "🛏️",
+   "desc": "Matelas mousse, plaques, fibre et polystyrène."
+  },
+  {
+   "id": "mousse-matelas",
+   "label": "Matelas Mousse",
+   "icon": "🛏️",
+   "desc": "Matelas en mousse — 4 qualités disponibles avec dimensions standard et commande sur mesure.",
+   "parentId": "mousse"
+  },
+  {
+   "id": "mousse-tabka",
+   "label": "Plaque de Mousse (TABKA)",
+   "icon": "🟫",
+   "desc": "Plaques de mousse 190×140 cm — 7 densités, plusieurs épaisseurs disponibles.",
+   "parentId": "mousse"
+  },
+  {
+   "id": "polyester",
+   "label": "Fibre Polyester",
+   "icon": "🌿",
+   "desc": "Fibre polyester vierge pour garnissage de coussins, meubles rembourrés et matelas.",
+   "parentId": "mousse"
+  },
+  {
+   "id": "polystyrene",
+   "label": "Polystyrène (OAT)",
+   "icon": "📦",
+   "desc": "Rouleaux de polyester super souple et ouate pour garnissage de meubles, coussins et matelas.",
+   "parentId": "mousse"
+  },
+  {
+   "id": "ressort",
+   "label": "Matelas Ressort",
+   "icon": "🛏️",
+   "desc": "Matelas à ressorts Super Siesta — 10 qualités, 15 dimensions disponibles."
+  },
+  {
+   "id": "pietement",
+   "label": "Piètements de Meuble",
+   "icon": "🪑",
+   "desc": "Piètements et pieds pour canapés, fauteuils et tables basses."
+  },
+  {
+   "id": "pietement-metal",
+   "label": "Piètement Métal",
+   "icon": "🔧",
+   "parentId": "pietement"
+  },
+  {
+   "id": "pietement-bois",
+   "label": "Piètement Bois",
+   "icon": "🌲",
+   "parentId": "pietement"
+  },
+  {
+   "id": "pietement-plastique",
+   "label": "Piètement Plastique",
+   "icon": "🟡",
+   "parentId": "pietement"
+  },
+  {
+   "id": "socle",
+   "label": "Socles & Tables",
+   "icon": "🔲",
+   "desc": "Bases, socles et tables — modèles métal, bois et ensembles prêts à l'emploi."
+  },
+  {
+   "id": "socle-metal",
+   "label": "Socle Métal",
+   "icon": "🔧",
+   "parentId": "socle"
+  },
+  {
+   "id": "socle-bois",
+   "label": "Socle & Table Bois",
+   "icon": "🌲",
+   "parentId": "socle"
+  },
+  {
+   "id": "chaise",
+   "label": "Carcasses de Chaise",
+   "icon": "🪑",
+   "desc": "Carcasses et squelettes de chaises pour tapisserie — modèles tapissés et carcasses bois brut."
+  },
+  {
+   "id": "chaise-tapissee",
+   "label": "Carcasse Tapissée",
+   "icon": "🧵",
+   "parentId": "chaise"
+  },
+  {
+   "id": "chaise-bois",
+   "label": "Carcasse Bois",
+   "icon": "🌲",
+   "parentId": "chaise"
+  },
+  {
+   "id": "chaise-inox",
+   "label": "Carcasse Inox",
+   "icon": "✨",
+   "parentId": "chaise"
+  },
+  {
+   "id": "accessoires",
+   "label": "Accessoires de Meuble",
+   "icon": "🔩",
+   "desc": "Accessoires et connecteurs pour canapés et sièges — chaque article est accompagné d'un exemple d'utilisation."
+  },
+  {
+   "id": "bordures",
+   "label": "Bordures Décoratives",
+   "icon": "〰️",
+   "desc": "Bordures et kitans décoratifs pour tapisserie et ameublement — vendus au mètre."
+  },
+  {
+   "id": "coussins",
+   "label": "Coussins",
+   "icon": "🛋️",
+   "desc": "Coussins disponibles en 2 dimensions — chaque dimension existe en 3 matières : Fibre (7 DT), Mélange (5 DT) et Repol (2,5 DT)."
+  },
+  {
+   "id": "agrafes",
+   "label": "Agrafes",
+   "icon": "📌",
+   "desc": "Agrafes et clous pour tapisserie professionnelle — plusieurs types et calibres."
+  },
+  {
+   "id": "miroirs",
+   "label": "Miroirs",
+   "icon": "🪞",
+   "desc": "Miroirs décoratifs pour chambres, salons et espaces professionnels — formats ronds, rectangulaires et séries Genova."
+  },
+  {
+   "id": "mecanisme",
+   "label": "Mécanismes",
+   "icon": "⚙️",
+   "desc": "Mécanismes et ferrures pour meubles tapissés — canapés, lits, tables relevables et systèmes clic-clac."
+  },
+  {
+   "id": "poignees",
+   "label": "Poignées de Meuble",
+   "icon": "🪝",
+   "desc": "Poignées et triangles de meuble — séries Fumé, Noir mat, Chrome et Mira pour tous types de meubles."
+  },
+  {
+   "id": "colle",
+   "label": "Colles & Adhésifs",
+   "icon": "🔧",
+   "desc": "Colles professionnelles pour tapisserie, menuiserie, MDF et vitrerie — marques Selsil, Panda, Apel."
+  },
+  {
+   "id": "outils",
+   "label": "Outils de Tapisserie",
+   "icon": "🛠️",
+   "desc": "Tout le matériel professionnel pour tapissiers : outils, colles, fixations, finitions."
+  },
+  {
+   "id": "outils-0",
+   "label": "Agrafes Tapisserie",
+   "icon": "📌",
+   "desc": "Agrafes standard — Réf. QNR — boîte 10 000 unités",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-1",
+   "label": "Pointes Têtes & Clous",
+   "icon": "🔩",
+   "desc": "Pointes H14 + Clou F10 — boîte de 12 barettes",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-2",
+   "label": "Pistolets",
+   "icon": "🔫",
+   "desc": "Pistolets pour capitonnage professionnel — pneumatique et manuel",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-3",
+   "label": "Ciseaux & Coupe-Fil",
+   "icon": "✂️",
+   "desc": "Ciseaux de tapisserie et coupe-fil professionnel",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-4",
+   "label": "Vis de Tapisserie",
+   "icon": "🔩",
+   "desc": "Vis N°5 et N°7 — prix à l'unité",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-5",
+   "label": "Curseur & Patin-Glisseur",
+   "icon": "🛝",
+   "desc": "Accessoires de glissement pour pieds de meubles",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-6",
+   "label": "Fermeture, Film & Sangle",
+   "icon": "📦",
+   "desc": "Fermeture éclair au rouleau, film étirable et sangle de protection",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-7",
+   "label": "Cordons & Attaches",
+   "icon": "🪢",
+   "desc": "Cordons décoratifs pour canapé",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-8",
+   "label": "TNT (Toile Non Tissée)",
+   "icon": "🧻",
+   "desc": "Toile non tissée pour doublure et renfort — vendue au rouleau ou au mètre",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-9",
+   "label": "Soufflette d'Air",
+   "icon": "💨",
+   "desc": "Soufflettes pneumatiques ANI — Made in Italy",
+   "parentId": "outils"
+  }
+ ],
+ "articles": [
+  {
+   "id": "TISSU-PERLA",
+   "name": "Tissu PERLA",
+   "desc": "Collection PERLA — 9 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/perla.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "PERLA-1",
+     "price": 25
+    },
+    {
+     "label": "PERLA-2",
+     "price": 25
+    },
+    {
+     "label": "PERLA-3",
+     "price": 25
+    },
+    {
+     "label": "PERLA-4",
+     "price": 25
+    },
+    {
+     "label": "PERLA-5",
+     "price": 25
+    },
+    {
+     "label": "PERLA-11",
+     "price": 25
+    },
+    {
+     "label": "PERLA-13",
+     "price": 25
+    },
+    {
+     "label": "PERLA-16",
+     "price": 25
+    },
+    {
+     "label": "PERLA-28",
+     "price": 25
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "TISSU-PRADA",
+   "name": "Tissu PRADA",
+   "desc": "Collection PRADA — 9 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/prada.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "PRADA-3",
+     "price": 24
+    },
+    {
+     "label": "PRADA-4",
+     "price": 24
+    },
+    {
+     "label": "PRADA-5",
+     "price": 24
+    },
+    {
+     "label": "PRADA-6",
+     "price": 24
+    },
+    {
+     "label": "PRADA-8",
+     "price": 24
+    },
+    {
+     "label": "PRADA-23",
+     "price": 24
+    },
+    {
+     "label": "PRADA-35",
+     "price": 24
+    },
+    {
+     "label": "PRADA-36",
+     "price": 24
+    },
+    {
+     "label": "PRADA-38",
+     "price": 24
+    }
+   ],
+   "priceFrom": 24
+  },
+  {
+   "id": "TISSU-DIVA",
+   "name": "Tissu DIVA",
+   "desc": "Collection DIVA — 11 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/diva.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "DIVA-5",
+     "price": 29
+    },
+    {
+     "label": "DIVA-6",
+     "price": 29
+    },
+    {
+     "label": "DIVA-7",
+     "price": 29
+    },
+    {
+     "label": "DIVA-8",
+     "price": 29
+    },
+    {
+     "label": "DIVA-10",
+     "price": 29
+    },
+    {
+     "label": "DIVA-12",
+     "price": 29
+    },
+    {
+     "label": "DIVA-13",
+     "price": 29
+    },
+    {
+     "label": "DIVA-14",
+     "price": 29
+    },
+    {
+     "label": "DIVA-16",
+     "price": 29
+    },
+    {
+     "label": "DIVA-18",
+     "price": 29
+    },
+    {
+     "label": "DIVA-19",
+     "price": 29
+    }
+   ],
+   "priceFrom": 29
+  },
+  {
+   "id": "TISSU-LUNA",
+   "name": "Tissu LUNA",
+   "desc": "Collection LUNA — 11 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/luna.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "LUNA-1",
+     "price": 29
+    },
+    {
+     "label": "LUNA-2",
+     "price": 29
+    },
+    {
+     "label": "LUNA-3",
+     "price": 29
+    },
+    {
+     "label": "LUNA-4",
+     "price": 29
+    },
+    {
+     "label": "LUNA-6",
+     "price": 29
+    },
+    {
+     "label": "LUNA-9",
+     "price": 29
+    },
+    {
+     "label": "LUNA-10",
+     "price": 29
+    },
+    {
+     "label": "LUNA-12",
+     "price": 29
+    },
+    {
+     "label": "LUNA-13",
+     "price": 29
+    },
+    {
+     "label": "LUNA-16",
+     "price": 29
+    },
+    {
+     "label": "LUNA-18",
+     "price": 29
+    }
+   ],
+   "priceFrom": 29
+  },
+  {
+   "id": "TISSU-PALERMO",
+   "name": "Tissu PALERMO",
+   "desc": "Collection PALERMO — 11 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/palermo.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "PALERMO-1",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-2",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-3",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-4",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-5",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-6",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-7",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-9",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-14",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-16",
+     "price": 26
+    },
+    {
+     "label": "PALERMO-19",
+     "price": 26
+    }
+   ],
+   "priceFrom": 26
+  },
+  {
+   "id": "TISSU-ROMA",
+   "name": "Tissu ROMA",
+   "desc": "Collection ROMA — 6 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/roma.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "ROMA-1",
+     "price": 37
+    },
+    {
+     "label": "ROMA-2",
+     "price": 37
+    },
+    {
+     "label": "ROMA-3",
+     "price": 37
+    },
+    {
+     "label": "ROMA-4",
+     "price": 37
+    },
+    {
+     "label": "ROMA-5",
+     "price": 37
+    },
+    {
+     "label": "ROMA-6",
+     "price": 37
+    }
+   ],
+   "priceFrom": 37
+  },
+  {
+   "id": "TISSU-AURORA",
+   "name": "Tissu AURORA",
+   "desc": "Collection AURORA — 6 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/aurora.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "AURORA-1",
+     "price": 25
+    },
+    {
+     "label": "AURORA-2",
+     "price": 25
+    },
+    {
+     "label": "AURORA-4",
+     "price": 25
+    },
+    {
+     "label": "AURORA-5",
+     "price": 25
+    },
+    {
+     "label": "AURORA-8",
+     "price": 25
+    },
+    {
+     "label": "AURORA-24",
+     "price": 25
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "TISSU-PRESTIGE",
+   "name": "Tissu PRESTIGE",
+   "desc": "Collection PRESTIGE — 9 coloris. Prix au mètre.",
+   "categoryId": "tissu",
+   "img": "images/tissue/prestige.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "unit": "m",
+   "variants": [
+    {
+     "label": "PRESTIGE-1",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-2",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-3",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-4",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-5",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-6",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-7",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-11",
+     "price": 25
+    },
+    {
+     "label": "PRESTIGE-12",
+     "price": 25
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "MM-15-17",
+   "name": "Matelas Mousse 15/17",
+   "desc": "Densité légère économique — usage occasionnel et appoint.",
+   "categoryId": "mousse-matelas",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Économique",
+   "variants": [
+    {
+     "label": "190×65×13 cm",
+     "code": "MM001",
+     "price": 46
+    },
+    {
+     "label": "190×70×13 cm",
+     "code": "MM002",
+     "price": 47
+    }
+   ],
+   "priceFrom": 46
+  },
+  {
+   "id": "MM-extra20-24",
+   "name": "Matelas Mousse Extra 20/24",
+   "desc": "Densité renforcée — bon compromis confort/prix.",
+   "categoryId": "mousse-matelas",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Renforcée",
+   "variants": [
+    {
+     "label": "190×65×13 cm",
+     "code": "MM003",
+     "price": 48
+    },
+    {
+     "label": "190×70×13 cm",
+     "code": "MM004",
+     "price": 49
+    }
+   ],
+   "priceFrom": 48
+  },
+  {
+   "id": "MM-souple",
+   "name": "Matelas Mousse 20/22 SOUPLE",
+   "desc": "Mousse souple idéale pour dossiers, têtes de lit et confort cocooning.",
+   "categoryId": "mousse-matelas",
+   "img": "images/matelas mousse/20x22.webp",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Souple",
+   "variants": [
+    {
+     "label": "190×60×14 cm",
+     "code": "MM005",
+     "price": null
+    },
+    {
+     "label": "190×65×13 cm",
+     "code": "MM006",
+     "price": null
+    },
+    {
+     "label": "190×65×14 cm",
+     "code": "MM007",
+     "price": null
+    },
+    {
+     "label": "190×65×10 cm",
+     "code": "MM008",
+     "price": null
+    },
+    {
+     "label": "190×70×13 cm",
+     "code": "MM009",
+     "price": null
+    },
+    {
+     "label": "190×70×14 cm",
+     "code": "MM010",
+     "price": null
+    },
+    {
+     "label": "190×80×13 cm",
+     "code": "MM011",
+     "price": null
+    },
+    {
+     "label": "190×80×14 cm",
+     "code": "MM012",
+     "price": null
+    }
+   ],
+   "priceFrom": 0
+  },
+  {
+   "id": "MM-22-24-souple",
+   "name": "Matelas Mousse 22/24 Souple",
+   "desc": "Densité souple renforcée — confort accru.",
+   "categoryId": "mousse-matelas",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Souple+",
+   "variants": [
+    {
+     "label": "190×70×13 cm",
+     "code": "MM013",
+     "price": 62
+    }
+   ],
+   "priceFrom": 62
+  },
+  {
+   "id": "MM-standard",
+   "name": "Matelas Mousse 28/30",
+   "desc": "Densité standard — équilibre parfait entre confort et maintien. La plus polyvalente.",
+   "categoryId": "mousse-matelas",
+   "img": "images/matelas mousse/28x30.webp",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Populaire",
+   "variants": [
+    {
+     "label": "190×60×13 cm",
+     "code": "MM014",
+     "price": null
+    },
+    {
+     "label": "190×60×14 cm",
+     "code": "MM015",
+     "price": null
+    },
+    {
+     "label": "190×65×13 cm",
+     "code": "MM016",
+     "price": 67
+    },
+    {
+     "label": "190×65×14 cm",
+     "code": "MM017",
+     "price": null
+    },
+    {
+     "label": "190×65×15 cm",
+     "code": "MM018",
+     "price": null
+    },
+    {
+     "label": "190×65×10 cm",
+     "code": "MM019",
+     "price": null
+    },
+    {
+     "label": "190×70×10 cm",
+     "code": "MM020",
+     "price": 58
+    },
+    {
+     "label": "190×70×13 cm",
+     "code": "MM021",
+     "price": 72
+    },
+    {
+     "label": "190×70×14 cm",
+     "code": "MM022",
+     "price": 82
+    },
+    {
+     "label": "190×70×20 cm",
+     "code": "MM023",
+     "price": null
+    },
+    {
+     "label": "190×75×13 cm",
+     "code": "MM024",
+     "price": null
+    },
+    {
+     "label": "190×75×14 cm",
+     "code": "MM025",
+     "price": null
+    },
+    {
+     "label": "190×80×10 cm",
+     "code": "MM026",
+     "price": null
+    },
+    {
+     "label": "190×80×13 cm",
+     "code": "MM027",
+     "price": 93
+    },
+    {
+     "label": "190×80×14 cm",
+     "code": "MM028",
+     "price": 100
+    },
+    {
+     "label": "190×80×20 cm",
+     "code": "MM029",
+     "price": 150
+    },
+    {
+     "label": "190×90×14 cm",
+     "code": "MM030",
+     "price": 126
+    },
+    {
+     "label": "190×95×14 cm",
+     "code": "MM031",
+     "price": null
+    }
+   ],
+   "priceFrom": 0
+  },
+  {
+   "id": "MM-magic30",
+   "name": "Matelas Mousse Magic 30",
+   "desc": "Qualité Magic 30 — mousse haute performance, confort premium et longue durée.",
+   "categoryId": "mousse-matelas",
+   "img": "images/matelas mousse/magic30.webp",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Premium",
+   "variants": [
+    {
+     "label": "190×65×13 cm",
+     "code": "MM032",
+     "price": null
+    },
+    {
+     "label": "190×65×14 cm",
+     "code": "MM033",
+     "price": null
+    },
+    {
+     "label": "190×70×10 cm",
+     "code": "MM034",
+     "price": 77
+    },
+    {
+     "label": "190×70×13 cm",
+     "code": "MM035",
+     "price": 96
+    },
+    {
+     "label": "190×70×14 cm",
+     "code": "MM036",
+     "price": 107
+    },
+    {
+     "label": "190×75×13 cm",
+     "code": "MM037",
+     "price": null
+    },
+    {
+     "label": "190×75×14 cm",
+     "code": "MM038",
+     "price": null
+    },
+    {
+     "label": "190×80×14 cm",
+     "code": "MM039",
+     "price": null
+    },
+    {
+     "label": "190×90×13 cm",
+     "code": "MM040",
+     "price": null
+    },
+    {
+     "label": "190×90×14 cm",
+     "code": "MM041",
+     "price": null
+    }
+   ],
+   "priceFrom": 0
+  },
+  {
+   "id": "MM-hr",
+   "name": "Matelas Mousse HR",
+   "desc": "Haute Résilience — mousse technique professionnelle, très résistante à l'affaissement.",
+   "categoryId": "mousse-matelas",
+   "img": "images/matelas mousse/HR.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Pro",
+   "variants": [
+    {
+     "label": "190×70×13 cm",
+     "code": "MM042",
+     "price": 152
+    },
+    {
+     "label": "190×70×14 cm",
+     "code": "MM043",
+     "price": 180
+    },
+    {
+     "label": "190×80×13 cm",
+     "code": "MM044",
+     "price": null
+    },
+    {
+     "label": "190×80×14 cm",
+     "code": "MM045",
+     "price": null
+    }
+   ],
+   "priceFrom": 0
+  },
+  {
+   "id": "MM-confort",
+   "name": "Matelas Mousse CONFORT",
+   "desc": "Qualité Confort — mousse haute gamme, excellente durabilité.",
+   "categoryId": "mousse-matelas",
+   "img": "images/matelas mousse/HR.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Confort",
+   "variants": [
+    {
+     "label": "190×70×14 cm",
+     "code": "MM046",
+     "price": 190
+    }
+   ],
+   "priceFrom": 190
+  },
+  {
+   "id": "MT-12-14",
+   "name": "Plaque Mousse 12/14",
+   "desc": "Densité économique — dossiers et accoudoirs",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/15x17.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Économique",
+   "variants": [
+    {
+     "label": "0.5 cm — 180×130 cm",
+     "code": "MT001",
+     "price": 4.5
+    },
+    {
+     "label": "0.8 cm — 180×130 cm",
+     "code": "MT002",
+     "price": 6.5
+    },
+    {
+     "label": "2 cm — 180×130 cm",
+     "code": "MT003",
+     "price": 13.5
+    },
+    {
+     "label": "3 cm — 180×130 cm",
+     "code": "MT004",
+     "price": 20.5
+    },
+    {
+     "label": "4 cm — 180×130 cm",
+     "code": "MT005",
+     "price": 27.5
+    },
+    {
+     "label": "5 cm — 180×130 cm",
+     "code": "MT006",
+     "price": 34
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "MT-13-15",
+   "name": "Plaque Mousse 13/15",
+   "desc": "Densité légère — dossiers et accoudoirs",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/13x15.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Légère",
+   "variants": [
+    {
+     "label": "0.8 cm — 190×140 cm",
+     "code": "MT007",
+     "price": 5.5
+    }
+   ],
+   "priceFrom": 5.5
+  },
+  {
+   "id": "MT-15-17",
+   "name": "Plaque Mousse 15/17",
+   "desc": "Densité standard — usage général tapisserie",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/15x17.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Standard",
+   "variants": [
+    {
+     "label": "0.9 cm — 190×140 cm",
+     "code": "MT008",
+     "price": 8.5
+    },
+    {
+     "label": "1 cm — 190×140 cm",
+     "code": "MT009",
+     "price": 9.5
+    },
+    {
+     "label": "2 cm — 190×140 cm",
+     "code": "MT010",
+     "price": 19
+    },
+    {
+     "label": "3 cm — 190×140 cm",
+     "code": "MT011",
+     "price": 28.5
+    },
+    {
+     "label": "4 cm — 190×140 cm",
+     "code": "MT012",
+     "price": 37
+    },
+    {
+     "label": "5 cm — 190×140 cm",
+     "code": "MT013",
+     "price": 46.5
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "MT-20-22",
+   "name": "Plaque Mousse 20/22 Souple",
+   "desc": "Densité souple — assises confortables",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/20x22.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Souple",
+   "variants": [
+    {
+     "label": "1 cm — 190×140 cm",
+     "code": "MT014",
+     "price": 10.8
+    },
+    {
+     "label": "2 cm — 190×140 cm",
+     "code": "MT015",
+     "price": 21.5
+    },
+    {
+     "label": "3 cm — 190×140 cm",
+     "code": "MT016",
+     "price": 32.4
+    },
+    {
+     "label": "4 cm — 190×140 cm",
+     "code": "MT017",
+     "price": 43
+    },
+    {
+     "label": "5 cm — 190×140 cm",
+     "code": "MT018",
+     "price": 54
+    }
+   ],
+   "priceFrom": 10.8
+  },
+  {
+   "id": "MT-22-24",
+   "name": "Plaque Mousse 22/24",
+   "desc": "Densité intermédiaire — confort et durabilité équilibrés",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/15x17.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Intermédiaire",
+   "variants": [
+    {
+     "label": "2 cm — 190×140 cm",
+     "code": "MT019",
+     "price": 25.5
+    },
+    {
+     "label": "3 cm — 190×140 cm",
+     "code": "MT020",
+     "price": 36
+    },
+    {
+     "label": "4 cm — 190×140 cm",
+     "code": "MT021",
+     "price": 47
+    },
+    {
+     "label": "5 cm — 190×140 cm",
+     "code": "MT022",
+     "price": 60
+    }
+   ],
+   "priceFrom": 25.5
+  },
+  {
+   "id": "MT-28-30",
+   "name": "Plaque Mousse 28/30",
+   "desc": "Haute densité — assises et sièges durables",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/28x30.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Haute densité",
+   "variants": [
+    {
+     "label": "1 cm — 190×140 cm",
+     "code": "MT023",
+     "price": 11
+    },
+    {
+     "label": "2 cm — 190×140 cm",
+     "code": "MT024",
+     "price": 27.5
+    },
+    {
+     "label": "3 cm — 190×140 cm",
+     "code": "MT025",
+     "price": 42.5
+    },
+    {
+     "label": "4 cm — 190×140 cm",
+     "code": "MT026",
+     "price": 54.5
+    },
+    {
+     "label": "5 cm — 190×140 cm",
+     "code": "MT027",
+     "price": 71
+    }
+   ],
+   "priceFrom": 11
+  },
+  {
+   "id": "MT-hr",
+   "name": "Plaque Mousse HR",
+   "desc": "Haute résilience — usage intensif professionnel",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/hr.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "HR Premium",
+   "variants": [
+    {
+     "label": "1 cm — 190×140 cm",
+     "code": "MT028",
+     "price": 24
+    },
+    {
+     "label": "2 cm — 190×140 cm",
+     "code": "MT029",
+     "price": 48
+    },
+    {
+     "label": "3 cm — 190×140 cm",
+     "code": "MT030",
+     "price": 72
+    },
+    {
+     "label": "4 cm — 190×140 cm",
+     "code": "MT031",
+     "price": 96
+    },
+    {
+     "label": "5 cm — 190×140 cm",
+     "code": "MT032",
+     "price": 115
+    }
+   ],
+   "priceFrom": 24
+  },
+  {
+   "id": "MT-magic30",
+   "name": "Plaque Mousse Magic 30",
+   "desc": "Qualité Magic 30 — confort premium haut de gamme",
+   "categoryId": "mousse-tabka",
+   "img": "images/plaque mousse/magic.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Premium",
+   "variants": [
+    {
+     "label": "5 cm — 190×140 cm",
+     "code": "MT033",
+     "price": 85
+    }
+   ],
+   "priceFrom": 85
+  },
+  {
+   "id": "FP01",
+   "name": "Fibre Super Mousse 5 kg Vierge",
+   "desc": "Fibre polyester vierge haute qualité — sac de 5 kg.",
+   "categoryId": "polyester",
+   "img": "images/fibre/fibre.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sac 5 kg"
+    }
+   ],
+   "priceFrom": 70
+  },
+  {
+   "id": "FP02",
+   "name": "Fibre 10 kg",
+   "desc": "Fibre polyester — sac de 10 kg.",
+   "categoryId": "polyester",
+   "img": "images/fibre/fibre1.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sac 10 kg"
+    }
+   ],
+   "priceFrom": 110
+  },
+  {
+   "id": "FP03",
+   "name": "Fibre Super Mousse 10 kg Vierge",
+   "desc": "Fibre polyester vierge haute qualité — sac de 10 kg.",
+   "categoryId": "polyester",
+   "img": "images/fibre/fibre.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sac 10 kg"
+    }
+   ],
+   "priceFrom": 140
+  },
+  {
+   "id": "OAT01",
+   "name": "OAT Rouleau 240cm — 150g",
+   "desc": "Rouleau complet largeur 240 cm, densité 150g/m². Vendu en rouleau entier — poids variable selon le rouleau. Prix confirmé par notre équipe.",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Rouleau complet 240cm (m²)",
+     "price": null,
+     "raw": "Rouleau complet 240cm — 150g/m²"
+    }
+   ],
+   "priceFrom": 195
+  },
+  {
+   "id": "OAT02",
+   "name": "OAT Rouleau 240cm — 250g",
+   "desc": "Rouleau complet largeur 240 cm, densité 250g/m². Vendu en rouleau entier — poids variable selon le rouleau. Prix confirmé par notre équipe.",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Rouleau complet 240cm (m²)",
+     "price": null,
+     "raw": "Rouleau complet 240cm — 250g/m²"
+    }
+   ],
+   "priceFrom": 220
+  },
+  {
+   "id": "OAT03",
+   "name": "OAT Rouleau 240cm — 350g",
+   "desc": "Rouleau complet largeur 240 cm, densité 350g/m². Vendu en rouleau entier — poids variable selon le rouleau. Prix confirmé par notre équipe.",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Rouleau complet 240cm (m²)",
+     "price": null,
+     "raw": "Rouleau complet 240cm — 350g/m²"
+    }
+   ],
+   "priceFrom": 220
+  },
+  {
+   "id": "OAT04",
+   "name": "OAT Rouleau 180cm — 150g",
+   "desc": "Rouleau complet largeur 180 cm, densité 150g/m². Vendu en rouleau entier — poids variable selon le rouleau. Prix confirmé par notre équipe.",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Rouleau complet 180cm (m²)",
+     "price": null,
+     "raw": "Rouleau complet 180cm — 150g/m²"
+    }
+   ],
+   "priceFrom": 195
+  },
+  {
+   "id": "OAT05",
+   "name": "OAT Rouleau 180cm — 250g",
+   "desc": "Rouleau complet largeur 180 cm, densité 250g/m². Vendu en rouleau entier — poids variable selon le rouleau. Prix confirmé par notre équipe.",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Rouleau complet 180cm (m²)",
+     "price": null,
+     "raw": "Rouleau complet 180cm — 250g/m²"
+    }
+   ],
+   "priceFrom": 220
+  },
+  {
+   "id": "OAT06",
+   "name": "OAT Rouleau 180cm — 350g",
+   "desc": "Rouleau complet largeur 180 cm, densité 350g/m². Vendu en rouleau entier — poids variable selon le rouleau. Prix confirmé par notre équipe.",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Rouleau complet 180cm (m²)",
+     "price": null,
+     "raw": "Rouleau complet 180cm — 350g/m²"
+    }
+   ],
+   "priceFrom": 220
+  },
+  {
+   "id": "OAT07",
+   "name": "Ouate 250g — Par Mètre (larg. 1.8m)",
+   "desc": "Ouate souple vendue au mètre linéaire, largeur 1.8m, densité 250g/m².",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Au mètre",
+     "price": null,
+     "raw": "Au mètre — 1.8m larg."
+    }
+   ],
+   "priceFrom": 7
+  },
+  {
+   "id": "OAT08",
+   "name": "Polyster 150g — Par Mètre (larg. 2.4m)",
+   "desc": "Polyester léger vendu au mètre, largeur 2.4m, densité 150g/m².",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Au mètre",
+     "price": null,
+     "raw": "Au mètre — 2.4m larg."
+    }
+   ],
+   "priceFrom": 6
+  },
+  {
+   "id": "OAT09",
+   "name": "Polyster 250g — Par Mètre (larg. 2.4m)",
+   "desc": "Polyester standard vendu au mètre, largeur 2.4m, densité 250g/m².",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Au mètre",
+     "price": null,
+     "raw": "Au mètre — 2.4m larg."
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "OAT10",
+   "name": "Polyster 350g — Par Mètre (larg. 2.4m)",
+   "desc": "Polyester épais vendu au mètre, largeur 2.4m, densité 350g/m².",
+   "categoryId": "polystyrene",
+   "img": "images/polyester/rouleau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Au mètre",
+     "price": null,
+     "raw": "Au mètre — 2.4m larg."
+    }
+   ],
+   "priceFrom": 14
+  },
+  {
+   "id": "MR-soft",
+   "name": "Matelas Ressort SOFT+",
+   "desc": "Confort doux idéal pour usage quotidien",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/soft.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Entrée de gamme",
+   "specs": [
+    "📏 Hauteur : 22 cm",
+    "⚖️ Supporte jusqu'à 80 kg/pers. (160 kg couple)",
+    "🔩 Ressorts box diamètre 2.1mm",
+    "🔄 Réversible été/hiver",
+    "🧵 80% coton anti-acarien",
+    "🛡️ Garantie : 3 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 200
+    },
+    {
+     "label": "190×80 cm",
+     "price": 260
+    },
+    {
+     "label": "190×90 cm",
+     "price": 290
+    },
+    {
+     "label": "190×100 cm",
+     "price": 440
+    },
+    {
+     "label": "190×110 cm",
+     "price": 480
+    },
+    {
+     "label": "190×120 cm",
+     "price": 400
+    },
+    {
+     "label": "190×140 cm",
+     "price": 410
+    },
+    {
+     "label": "190×150 cm",
+     "price": 540
+    },
+    {
+     "label": "190×160 cm",
+     "price": 460
+    },
+    {
+     "label": "200×90 cm",
+     "price": 410
+    },
+    {
+     "label": "200×100 cm",
+     "price": 460
+    },
+    {
+     "label": "200×120 cm",
+     "price": 540
+    },
+    {
+     "label": "200×160 cm",
+     "price": 520
+    },
+    {
+     "label": "200×180 cm",
+     "price": 620
+    }
+   ],
+   "priceFrom": 200
+  },
+  {
+   "id": "MR-venise",
+   "name": "Matelas Ressort Venise+",
+   "desc": "Confort équilibré avec bonne durabilité",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/venise.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Milieu de gamme",
+   "specs": [
+    "📏 Hauteur : 23 cm",
+    "⚖️ Supporte jusqu'à 90 kg/pers. (180 kg couple)",
+    "🔩 Ressorts Bonnell",
+    "🔄 Réversible été/hiver",
+    "🧵 100% coton anti-acarien",
+    "🔥 Résistant au feu",
+    "🛡️ Garantie : 5 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 240
+    },
+    {
+     "label": "190×80 cm",
+     "price": 310
+    },
+    {
+     "label": "190×90 cm",
+     "price": 340
+    },
+    {
+     "label": "190×100 cm",
+     "price": 490
+    },
+    {
+     "label": "190×110 cm",
+     "price": 530
+    },
+    {
+     "label": "190×120 cm",
+     "price": 460
+    },
+    {
+     "label": "190×140 cm",
+     "price": 480
+    },
+    {
+     "label": "190×150 cm",
+     "price": 630
+    },
+    {
+     "label": "190×160 cm",
+     "price": 540
+    },
+    {
+     "label": "200×90 cm",
+     "price": 490
+    },
+    {
+     "label": "200×100 cm",
+     "price": 530
+    },
+    {
+     "label": "200×120 cm",
+     "price": 630
+    },
+    {
+     "label": "200×160 cm",
+     "price": 610
+    },
+    {
+     "label": "200×180 cm",
+     "price": 730
+    }
+   ],
+   "priceFrom": 240
+  },
+  {
+   "id": "MR-venise-pt",
+   "name": "Matelas Ressort Venise+ Pillow Top",
+   "desc": "Venise+ avec couche mémoire de forme 8 cm",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/venise.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Confort amélioré",
+   "specs": [
+    "🧠 8 cm de mousse à mémoire de forme",
+    "📏 Hauteur : 31 cm",
+    "⚖️ Supporte jusqu'à 90 kg/pers.",
+    "🔩 Ressorts Bonnell",
+    "🔄 Réversible été/hiver",
+    "🧵 100% coton anti-acarien",
+    "🔥 Résistant au feu",
+    "🛡️ Garantie : 5 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 450
+    },
+    {
+     "label": "190×80 cm",
+     "price": 620
+    },
+    {
+     "label": "190×90 cm",
+     "price": 650
+    },
+    {
+     "label": "190×100 cm",
+     "price": 900
+    },
+    {
+     "label": "190×110 cm",
+     "price": 940
+    },
+    {
+     "label": "190×120 cm",
+     "price": 960
+    },
+    {
+     "label": "190×140 cm",
+     "price": 930
+    },
+    {
+     "label": "190×150 cm",
+     "price": 1100
+    },
+    {
+     "label": "190×160 cm",
+     "price": 990
+    },
+    {
+     "label": "200×90 cm",
+     "price": 900
+    },
+    {
+     "label": "200×100 cm",
+     "price": 940
+    },
+    {
+     "label": "200×120 cm",
+     "price": 1100
+    },
+    {
+     "label": "200×160 cm",
+     "price": 1030
+    },
+    {
+     "label": "200×180 cm",
+     "price": 1400
+    }
+   ],
+   "priceFrom": 450
+  },
+  {
+   "id": "MR-medico",
+   "name": "Matelas Ressort MEDICO+",
+   "desc": "Soutien orthopédique recommandé pour le dos",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/medico.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Orthopédique",
+   "specs": [
+    "📏 Hauteur : 25 cm",
+    "⚖️ Supporte jusqu'à 110 kg/pers.",
+    "🔩 Ressorts Bonnell",
+    "🔵 Face 1 : mi-ferme (contours du corps)",
+    "🟢 Face 2 : souple et relaxante (Nouveau)",
+    "🧵 Tissu anti-acarien",
+    "🔥 Ignifugé (résistant au feu)",
+    "🛡️ Garantie : 9 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 340
+    },
+    {
+     "label": "190×80 cm",
+     "price": 440
+    },
+    {
+     "label": "190×90 cm",
+     "price": 490
+    },
+    {
+     "label": "190×100 cm",
+     "price": 670
+    },
+    {
+     "label": "190×110 cm",
+     "price": 780
+    },
+    {
+     "label": "190×120 cm",
+     "price": 720
+    },
+    {
+     "label": "190×140 cm",
+     "price": 720
+    },
+    {
+     "label": "190×150 cm",
+     "price": 910
+    },
+    {
+     "label": "190×160 cm",
+     "price": 830
+    },
+    {
+     "label": "200×90 cm",
+     "price": 670
+    },
+    {
+     "label": "200×100 cm",
+     "price": 750
+    },
+    {
+     "label": "200×120 cm",
+     "price": 880
+    },
+    {
+     "label": "200×160 cm",
+     "price": 910
+    },
+    {
+     "label": "200×180 cm",
+     "price": 1090
+    }
+   ],
+   "priceFrom": 340
+  },
+  {
+   "id": "MR-medico-pt",
+   "name": "Matelas Ressort MEDICO+ Pillow Top",
+   "desc": "Medico+ gamme souple avec mémoire de forme",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/medico.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Ortho + Confort",
+   "specs": [
+    "🌊 Gamme souple",
+    "🧠 8 cm de mousse à mémoire de forme",
+    "📏 Hauteur : 32 cm",
+    "⚖️ Supporte jusqu'à 110 kg/pers.",
+    "🔩 Ressorts Bonnell (soutien homogène)",
+    "🔵 Face mi-ferme avec mousse épaisse",
+    "🔄 Réversible été/hiver",
+    "🧵 Tissu anti-acarien",
+    "🔥 Résistant au feu",
+    "🛡️ Garantie : 9 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 550
+    },
+    {
+     "label": "190×80 cm",
+     "price": 750
+    },
+    {
+     "label": "190×90 cm",
+     "price": 800
+    },
+    {
+     "label": "190×100 cm",
+     "price": 1090
+    },
+    {
+     "label": "190×110 cm",
+     "price": 1190
+    },
+    {
+     "label": "190×120 cm",
+     "price": 1130
+    },
+    {
+     "label": "190×140 cm",
+     "price": 1180
+    },
+    {
+     "label": "190×150 cm",
+     "price": 1450
+    },
+    {
+     "label": "190×160 cm",
+     "price": 1310
+    },
+    {
+     "label": "200×90 cm",
+     "price": 1090
+    },
+    {
+     "label": "200×100 cm",
+     "price": 1160
+    },
+    {
+     "label": "200×120 cm",
+     "price": 1340
+    },
+    {
+     "label": "200×160 cm",
+     "price": 1540
+    },
+    {
+     "label": "200×180 cm",
+     "price": 1810
+    }
+   ],
+   "priceFrom": 550
+  },
+  {
+   "id": "MR-relax",
+   "name": "Matelas Ressort RELAX+",
+   "desc": "Ressorts ensachés — indépendance de couchage",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/relax.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Haut de gamme",
+   "specs": [
+    "📏 Épaisseur : 27 cm",
+    "⚖️ Supporte jusqu'à 130 kg/pers.",
+    "🔩 Ressorts ensachés (indépendance de couchage)",
+    "💪 Mousse 33 kg/m³ côté mi-ferme",
+    "😌 Mousse 35 kg/m³ côté relaxante",
+    "🔄 Réversible face été / face hiver",
+    "🧵 Tissu anti-acarien",
+    "🔥 Retardateur de flamme",
+    "🔢 210 ressorts/m²",
+    "🛡️ Garantie : 10 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 420
+    },
+    {
+     "label": "190×80 cm",
+     "price": 530
+    },
+    {
+     "label": "190×90 cm",
+     "price": 590
+    },
+    {
+     "label": "190×100 cm",
+     "price": 850
+    },
+    {
+     "label": "190×110 cm",
+     "price": 930
+    },
+    {
+     "label": "190×120 cm",
+     "price": 840
+    },
+    {
+     "label": "190×140 cm",
+     "price": 860
+    },
+    {
+     "label": "190×150 cm",
+     "price": 1100
+    },
+    {
+     "label": "190×160 cm",
+     "price": 990
+    },
+    {
+     "label": "200×90 cm",
+     "price": 780
+    },
+    {
+     "label": "200×100 cm",
+     "price": 860
+    },
+    {
+     "label": "200×120 cm",
+     "price": 1080
+    },
+    {
+     "label": "200×160 cm",
+     "price": 1140
+    },
+    {
+     "label": "200×180 cm",
+     "price": 1340
+    }
+   ],
+   "priceFrom": 420
+  },
+  {
+   "id": "MR-relax-pt",
+   "name": "Matelas Ressort RELAX+ Pillow Top",
+   "desc": "Relax+ avec couche mémoire de forme luxueuse",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/relax.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Premium",
+   "specs": [
+    "🧠 8 cm de mousse à mémoire de forme",
+    "📏 Hauteur : 33 cm",
+    "⚖️ Supporte jusqu'à 130 kg/pers.",
+    "🔩 Ressorts ensachés (excellente indépendance)",
+    "🔵 Deuxième face mi-ferme",
+    "🧵 100% coton anti-acarien",
+    "💨 Aérateur anti-humidité",
+    "🔥 Résistant au feu",
+    "🛡️ Garantie : 10 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 620
+    },
+    {
+     "label": "190×80 cm",
+     "price": 880
+    },
+    {
+     "label": "190×90 cm",
+     "price": 950
+    },
+    {
+     "label": "190×100 cm",
+     "price": 1260
+    },
+    {
+     "label": "190×110 cm",
+     "price": 1340
+    },
+    {
+     "label": "190×120 cm",
+     "price": 1320
+    },
+    {
+     "label": "190×140 cm",
+     "price": 1400
+    },
+    {
+     "label": "190×150 cm",
+     "price": 1550
+    },
+    {
+     "label": "190×160 cm",
+     "price": 1550
+    },
+    {
+     "label": "200×90 cm",
+     "price": 1190
+    },
+    {
+     "label": "200×100 cm",
+     "price": 1270
+    },
+    {
+     "label": "200×120 cm",
+     "price": 1550
+    },
+    {
+     "label": "200×160 cm",
+     "price": 1730
+    },
+    {
+     "label": "200×180 cm",
+     "price": 2030
+    }
+   ],
+   "priceFrom": 620
+  },
+  {
+   "id": "MR-tendresse",
+   "name": "Matelas Ressort Tendresse",
+   "desc": "Ressorts ensachés haute qualité, supporte 150 kg",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/tendresse.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Top gamme",
+   "specs": [
+    "✨ Ressorts de haute qualité",
+    "📏 Hauteur : 30 cm",
+    "⚖️ Supporte jusqu'à 150 kg/pers.",
+    "🔩 Ressorts ensachés",
+    "💪 Mousse 33,5 kg/m³ côté mi-ferme",
+    "😌 Mousse 35 kg/m³ côté relaxante",
+    "🔄 Conception réversible",
+    "🧵 Anti-acarien, antitaches, anti-humidité",
+    "🔥 Résistance au feu",
+    "🛡️ Garantie : 11 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 570
+    },
+    {
+     "label": "190×80 cm",
+     "price": 730
+    },
+    {
+     "label": "190×90 cm",
+     "price": 800
+    },
+    {
+     "label": "190×100 cm",
+     "price": 1230
+    },
+    {
+     "label": "190×110 cm",
+     "price": 1290
+    },
+    {
+     "label": "190×120 cm",
+     "price": 1140
+    },
+    {
+     "label": "190×140 cm",
+     "price": 1189
+    },
+    {
+     "label": "190×150 cm",
+     "price": 1500
+    },
+    {
+     "label": "190×160 cm",
+     "price": 1370
+    },
+    {
+     "label": "200×90 cm",
+     "price": 1070
+    },
+    {
+     "label": "200×100 cm",
+     "price": 1190
+    },
+    {
+     "label": "200×120 cm",
+     "price": 1480
+    },
+    {
+     "label": "200×160 cm",
+     "price": 1520
+    },
+    {
+     "label": "200×180 cm",
+     "price": 1810
+    }
+   ],
+   "priceFrom": 570
+  },
+  {
+   "id": "MR-tendresse-pt",
+   "name": "Matelas Ressort Tendresse Pillow Top",
+   "desc": "Tendresse avec mémoire de forme — le summum du luxe",
+   "categoryId": "ressort",
+   "img": "images/matelas ressort/tendresse.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "badge": "Luxe",
+   "specs": [
+    "✨ Ressorts de haute qualité",
+    "🌊 Gamme souple",
+    "🧠 8 cm de mousse à mémoire de forme",
+    "📏 Hauteur : 35 cm",
+    "⚖️ Supporte jusqu'à 150 kg/pers.",
+    "🔩 Ressorts ensachés (indépendance optimale)",
+    "🔄 Matelas réversible",
+    "🧵 Anti-acarien, antitaches, anti-humidité",
+    "🔥 Résistant au feu",
+    "🛡️ Garantie : 11 ans"
+   ],
+   "variants": [
+    {
+     "label": "120×60 cm",
+     "price": 780
+    },
+    {
+     "label": "190×80 cm",
+     "price": 1090
+    },
+    {
+     "label": "190×90 cm",
+     "price": 1160
+    },
+    {
+     "label": "190×100 cm",
+     "price": 1860
+    },
+    {
+     "label": "190×110 cm",
+     "price": 1700
+    },
+    {
+     "label": "190×120 cm",
+     "price": 1710
+    },
+    {
+     "label": "190×140 cm",
+     "price": 1790
+    },
+    {
+     "label": "190×150 cm",
+     "price": 2170
+    },
+    {
+     "label": "190×160 cm",
+     "price": 2090
+    },
+    {
+     "label": "200×90 cm",
+     "price": 1480
+    },
+    {
+     "label": "200×100 cm",
+     "price": 1600
+    },
+    {
+     "label": "200×120 cm",
+     "price": 1940
+    },
+    {
+     "label": "200×160 cm",
+     "price": 2250
+    },
+    {
+     "label": "200×180 cm",
+     "price": 2630
+    }
+   ],
+   "priceFrom": 780
+  },
+  {
+   "id": "PB001",
+   "name": "Sabot Bois SL006 Avec Doré",
+   "desc": "Pied bois incliné avec embout doré — 14,5cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/slj006.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "14,5cm",
+     "price": 4.5,
+     "raw": "14,5cm — 4,500 DT"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PB002",
+   "name": "Sabot Bois SL005 Avec Doré",
+   "desc": "Pied bois incliné avec embout doré — 15cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sl005.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "15cm",
+     "price": 4.5,
+     "raw": "15cm — 4,500 DT"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PB003",
+   "name": "Sabot Bois Classique",
+   "desc": "Pied bois incliné style classique naturel — 15cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/classique.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "15cm",
+     "price": 3.5,
+     "raw": "15cm — 3,500 DT"
+    }
+   ],
+   "priceFrom": 3.5
+  },
+  {
+   "id": "PB004",
+   "name": "Sabot Bois SL003",
+   "desc": "Pied bois en V design moderne — 14cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sl003.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "14cm",
+     "price": 4,
+     "raw": "14cm — 4,000 DT"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "PB005",
+   "name": "Sabot Bois SL001",
+   "desc": "Pied bois incliné compact — 12cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sl001.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "12cm",
+     "price": 3.5,
+     "raw": "12cm — 3,500 DT"
+    }
+   ],
+   "priceFrom": 3.5
+  },
+  {
+   "id": "PB006",
+   "name": "Sabot Bois SL004",
+   "desc": "Pied bois incliné élevé — 13cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sl004.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "13cm",
+     "price": 4.5,
+     "raw": "13cm — 4,500 DT"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PB007",
+   "name": "Sabot Bois SL002 Avec Doré",
+   "desc": "Sabot bois plat rectangulaire avec finition dorée — 4,4cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sl002.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "4,4cm",
+     "price": 4,
+     "raw": "4,4cm — 4,000 DT"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "PB010",
+   "name": "Sabot Bois 20/20",
+   "desc": "Sabot bois carré angulaire massif — 5,5cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/20x20.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "5,5cm",
+     "price": 11.5,
+     "raw": "5,5cm — 11,500 DT"
+    }
+   ],
+   "priceFrom": 11.5
+  },
+  {
+   "id": "PB011",
+   "name": "Sabot Bois SL008",
+   "desc": "Pied bois en T compact — 5,5cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sl008.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "5,5cm",
+     "price": 6,
+     "raw": "5,5cm — 6,000 DT"
+    }
+   ],
+   "priceFrom": 6
+  },
+  {
+   "id": "PB012",
+   "name": "Sabot en Bois",
+   "desc": "Sabot en bois naturel — 13cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sabot en bois.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "13cm (pièce)",
+     "price": 4.5,
+     "raw": "13cm — 4,500 DT / pièce"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PB013",
+   "name": "Sabot en Bois Rayé",
+   "desc": "Sabot en bois avec motif rayé — 13cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sabot en bois réyé.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "13cm (pièce)",
+     "price": 4.5,
+     "raw": "13cm — 4,500 DT / pièce"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PB014",
+   "name": "Sabot 3 Boules",
+   "desc": "Sabot en bois sculpté à 3 boules — 13cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sabot 3 boule.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "13cm (pièce)",
+     "price": 4,
+     "raw": "13cm — 4,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "PB015",
+   "name": "Sabot 4 Boules",
+   "desc": "Sabot en bois sculpté à 4 boules — 13cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sabot 4 boule.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "13cm (pièce)",
+     "price": 4.5,
+     "raw": "13cm — 4,500 DT / pièce"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PB016",
+   "name": "Boule en Bois",
+   "desc": "Boule décorative en bois pour piètement — 5cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/boule en bois.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "5cm (pièce)",
+     "price": 1.2,
+     "raw": "5cm — 1,200 DT / pièce"
+    }
+   ],
+   "priceFrom": 1.2
+  },
+  {
+   "id": "PB017",
+   "name": "Pied en Bois 40cm",
+   "desc": "Pied en bois massif — 40cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/pied en bois 40cm.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "40cm (pièce)",
+     "price": 8,
+     "raw": "40cm — 8,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 8
+  },
+  {
+   "id": "PB018",
+   "name": "Pied en Bois 75cm",
+   "desc": "Pied en bois massif — 75cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/pied en bois 75cm.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "75cm (pièce)",
+     "price": 15,
+     "raw": "75cm — 15,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 15
+  },
+  {
+   "id": "PB020",
+   "name": "Sabot en Bois 42cm avec Boulon",
+   "desc": "Sabot en bois avec boulon de fixation — 42cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sabot en bois 42 cm avec boulon .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "42cm (pièce)",
+     "price": 8,
+     "raw": "42cm — 8,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 8
+  },
+  {
+   "id": "PB019",
+   "name": "Pied en Bois 85cm",
+   "desc": "Pied en bois massif — 85cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/pied en bois 75cm.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "85cm (pièce)",
+     "price": 20,
+     "raw": "85cm — 20,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 20
+  },
+  {
+   "id": "PB021",
+   "name": "Sabot en Bois 10cm",
+   "desc": "Sabot en bois naturel d'angle — 10cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sabot en bois 10cm.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "10cm (pièce)",
+     "price": 3.5,
+     "raw": "10cm — 3,500 DT / pièce"
+    }
+   ],
+   "priceFrom": 3.5
+  },
+  {
+   "id": "PB022",
+   "name": "Sabot en Bois Rond 13cm",
+   "desc": "Sabot en bois naturel rond d'angle — 13cm.",
+   "categoryId": "pietement-bois",
+   "img": "images/pietement-bois/sabot en bois rond 13cm.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "13cm (pièce)",
+     "price": 4.5,
+     "raw": "13cm — 4,500 DT / pièce"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PM001",
+   "name": "Sabot EM 32",
+   "desc": "Piètement métallique angulaire 3 branches — 12cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/em32.png",
+   "gallery": [
+    "images/pietement-metal/em32.png",
+    "images/pietement-metal/em32-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 12cm",
+     "price": 7.5,
+     "raw": "Gold — 12cm — 7,500 DT"
+    },
+    {
+     "label": "Fumé — 12cm",
+     "price": 7.5,
+     "raw": "Fumé — 12cm — 7,500 DT"
+    },
+    {
+     "label": "Noir — 12cm",
+     "price": 6.5,
+     "raw": "Noir — 12cm — 6,500 DT"
+    }
+   ],
+   "priceFrom": 6.5
+  },
+  {
+   "id": "PM002",
+   "name": "Sabot Gl 99",
+   "desc": "Sabot plat horizontal, design contemporain — 5cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl99.png",
+   "gallery": [
+    "images/pietement-metal/gl99.png",
+    "images/pietement-metal/gl99-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 5cm",
+     "price": 13.5,
+     "raw": "Gold — 5cm — 13,500 DT"
+    },
+    {
+     "label": "Fumé — 5cm",
+     "price": 11.5,
+     "raw": "Fumé — 5cm — 11,500 DT"
+    },
+    {
+     "label": "Noir — 5cm",
+     "price": 10.5,
+     "raw": "Noir — 5cm — 10,500 DT"
+    },
+    {
+     "label": "Chrome — 5cm",
+     "price": 10.5,
+     "raw": "Chrome — 5cm — 10,500 DT"
+    }
+   ],
+   "priceFrom": 10.5
+  },
+  {
+   "id": "PM003",
+   "name": "Sabot Gl 19",
+   "desc": "Pied métal géométrique épuré — 13cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl19.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 13cm",
+     "price": 7,
+     "raw": "Gold — 13cm — 7,000 DT"
+    },
+    {
+     "label": "Chrome — 13cm",
+     "price": 5,
+     "raw": "Chrome — 13cm — 5,000 DT"
+    }
+   ],
+   "priceFrom": 5
+  },
+  {
+   "id": "PM004",
+   "name": "Sabot Gl 21",
+   "desc": "Pied métal design moderne 4 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl21.png",
+   "gallery": [
+    "images/pietement-metal/gl21.png",
+    "images/pietement-metal/gl21-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 9,
+     "raw": "Fumé — 15cm — 9,000 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 7.5,
+     "raw": "Noir — 15cm — 7,500 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 8.5,
+     "raw": "Chrome — 15cm — 8,500 DT"
+    },
+    {
+     "label": "Gold — 15cm",
+     "price": 9,
+     "raw": "Gold — 15cm — 9,000 DT"
+    }
+   ],
+   "priceFrom": 7.5
+  },
+  {
+   "id": "PM005",
+   "name": "Sabot Gl 43 (15cm)",
+   "desc": "Pied métal incliné 4 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl43.png",
+   "gallery": [
+    "images/pietement-metal/gl43.png",
+    "images/pietement-metal/gl43-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 6.5,
+     "raw": "Fumé — 15cm — 6,500 DT"
+    },
+    {
+     "label": "Gold — 15cm",
+     "price": 6.5,
+     "raw": "Gold — 15cm — 6,500 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 6,
+     "raw": "Noir — 15cm — 6,000 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 6.5,
+     "raw": "Chrome — 15cm — 6,500 DT"
+    }
+   ],
+   "priceFrom": 6
+  },
+  {
+   "id": "PM006",
+   "name": "Sabot B011 3D",
+   "desc": "Pied métal 3D design tridimensionnel — 13cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/b011.png",
+   "gallery": [
+    "images/pietement-metal/b011.png",
+    "images/pietement-metal/b011-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 13cm",
+     "price": 7,
+     "raw": "Gold — 13cm — 7,000 DT"
+    },
+    {
+     "label": "Fumé — 13cm",
+     "price": 6.5,
+     "raw": "Fumé — 13cm — 6,500 DT"
+    },
+    {
+     "label": "Noir — 13cm",
+     "price": 6,
+     "raw": "Noir — 13cm — 6,000 DT"
+    },
+    {
+     "label": "Chrome — 13cm",
+     "price": 6,
+     "raw": "Chrome — 13cm — 6,000 DT"
+    }
+   ],
+   "priceFrom": 6
+  },
+  {
+   "id": "PM007",
+   "name": "Sabot Gl 102",
+   "desc": "Pied métal en éventail, 4 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl102.png",
+   "gallery": [
+    "images/pietement-metal/gl102.png",
+    "images/pietement-metal/gl102-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 15cm",
+     "price": 8.5,
+     "raw": "Gold — 15cm — 8,500 DT"
+    },
+    {
+     "label": "Fumé — 15cm",
+     "price": 8.5,
+     "raw": "Fumé — 15cm — 8,500 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 8.5,
+     "raw": "Noir — 15cm — 8,500 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 8.5,
+     "raw": "Chrome — 15cm — 8,500 DT"
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "PM008",
+   "name": "Sabot Gl 24",
+   "desc": "Pied métal cylindrique élancé, 3 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl24.png",
+   "gallery": [
+    "images/pietement-metal/gl24.png",
+    "images/pietement-metal/gl24-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 9.5,
+     "raw": "Fumé — 15cm — 9,500 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 8.5,
+     "raw": "Noir — 15cm — 8,500 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 9.5,
+     "raw": "Chrome — 15cm — 9,500 DT"
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "PM009",
+   "name": "Sabot Gl 81",
+   "desc": "Socle boule métal, disponible en 8cm et 10cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl81.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 10cm",
+     "price": 10,
+     "raw": "Fumé — 10cm — 10,000 DT"
+    },
+    {
+     "label": "Chrome — 10cm",
+     "price": 10,
+     "raw": "Chrome — 10cm — 10,000 DT"
+    },
+    {
+     "label": "Fumé — 8cm",
+     "price": 9,
+     "raw": "Fumé — 8cm — 9,000 DT"
+    },
+    {
+     "label": "Chrome — 8cm",
+     "price": 9,
+     "raw": "Chrome — 8cm — 9,000 DT"
+    }
+   ],
+   "priceFrom": 9
+  },
+  {
+   "id": "PM010",
+   "name": "Sabot Gl 49",
+   "desc": "Pied métal texturé élégant, 3 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl49.png",
+   "gallery": [
+    "images/pietement-metal/gl49.png",
+    "images/pietement-metal/gl49-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 8,
+     "raw": "Fumé — 15cm — 8,000 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 7,
+     "raw": "Noir — 15cm — 7,000 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 8,
+     "raw": "Chrome — 15cm — 8,000 DT"
+    }
+   ],
+   "priceFrom": 7
+  },
+  {
+   "id": "PM011",
+   "name": "Sabot Gl 29",
+   "desc": "Pied métal ailé design, 3 coloris — 8cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl29.png",
+   "gallery": [
+    "images/pietement-metal/gl29.png",
+    "images/pietement-metal/gl29-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 8cm",
+     "price": 7,
+     "raw": "Fumé — 8cm — 7,000 DT"
+    },
+    {
+     "label": "Gold — 8cm",
+     "price": 6,
+     "raw": "Gold — 8cm — 6,000 DT"
+    },
+    {
+     "label": "Chrome — 8cm",
+     "price": 3,
+     "raw": "Chrome — 8cm — 3,000 DT"
+    }
+   ],
+   "priceFrom": 3
+  },
+  {
+   "id": "PM012",
+   "name": "Sabot GL 8",
+   "desc": "Sabot cube métal compact — 8cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl8.png",
+   "gallery": [
+    "images/pietement-metal/gl8.png",
+    "images/pietement-metal/gl8-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 8cm",
+     "price": 5.5,
+     "raw": "Fumé — 8cm — 5,500 DT"
+    },
+    {
+     "label": "Chrome — 8cm",
+     "price": 5.5,
+     "raw": "Chrome — 8cm — 5,500 DT"
+    }
+   ],
+   "priceFrom": 5.5
+  },
+  {
+   "id": "PM013",
+   "name": "Sabot Gl 5",
+   "desc": "Sabot cylindrique diamètre 5cm — 2 hauteurs : 44cm et 65cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl5.png",
+   "gallery": [
+    "images/pietement-metal/gl5.png",
+    "images/pietement-metal/gl5-5x65-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 5×44cm",
+     "price": 5.5,
+     "raw": "Fumé — 5×44cm — 5,500 DT"
+    },
+    {
+     "label": "Noir — 5×44cm",
+     "price": 5,
+     "raw": "Noir — 5×44cm — 5,000 DT"
+    },
+    {
+     "label": "Chrome — 5×44cm",
+     "price": 5,
+     "raw": "Chrome — 5×44cm — 5,000 DT"
+    },
+    {
+     "label": "Fumé — 5×65cm",
+     "price": 7,
+     "raw": "Fumé — 5×65cm — 7,000 DT"
+    },
+    {
+     "label": "Chrome — 5×65cm",
+     "price": 6,
+     "raw": "Chrome — 5×65cm — 6,000 DT"
+    }
+   ],
+   "priceFrom": 5
+  },
+  {
+   "id": "PM014",
+   "name": "Sabot Gl 2",
+   "desc": "Pied métal cylindrique Noir, 5 hauteurs disponibles.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl2.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Noir — 5cm",
+     "price": 4,
+     "raw": "Noir — 5cm — 4,000 DT"
+    },
+    {
+     "label": "Noir — 8cm",
+     "price": 4.5,
+     "raw": "Noir — 8cm — 4,500 DT"
+    },
+    {
+     "label": "Noir — 10cm",
+     "price": 5,
+     "raw": "Noir — 10cm — 5,000 DT"
+    },
+    {
+     "label": "Noir — 13cm",
+     "price": 5.5,
+     "raw": "Noir — 13cm — 5,500 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 6,
+     "raw": "Noir — 15cm — 6,000 DT"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "PM015",
+   "name": "SLJ 005 Pied Chaise",
+   "desc": "Pied chaise inox épingle élancé — 42cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/slj005-42.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 42cm",
+     "price": 19,
+     "raw": "Fumé — 42cm — 19,000 DT"
+    },
+    {
+     "label": "Chrome — 42cm",
+     "price": 18,
+     "raw": "Chrome — 42cm — 18,000 DT"
+    }
+   ],
+   "priceFrom": 18
+  },
+  {
+   "id": "PM016",
+   "name": "SLJ 005 Pied Table",
+   "desc": "Pied table central inox haut — 75cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/slj005-75.png",
+   "gallery": [
+    "images/pietement-metal/slj005-75.png",
+    "images/pietement-metal/slj005-75-exemple.png",
+    "images/pietement-metal/slj005-75-exemple2.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 75cm",
+     "price": 33,
+     "raw": "Fumé — 75cm — 33,000 DT"
+    },
+    {
+     "label": "Chrome — 75cm",
+     "price": 30,
+     "raw": "Chrome — 75cm — 30,000 DT"
+    }
+   ],
+   "priceFrom": 30
+  },
+  {
+   "id": "PM017",
+   "name": "Sabot Gl 197",
+   "desc": "Piètement décoratif Fumé — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl197.png",
+   "gallery": [
+    "images/pietement-metal/gl197.png",
+    "images/pietement-metal/gl197-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 13.5,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 11,
+     "raw": "Fumé — 15cm — 11,000 DT",
+     "oldPrice": 13.5
+    }
+   ],
+   "priceFrom": 11
+  },
+  {
+   "id": "PM018",
+   "name": "Sabot Gl 199",
+   "desc": "Piètement décoratif, disponible en 15cm et 18cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl199.png",
+   "gallery": [
+    "images/pietement-metal/gl199.png",
+    "images/pietement-metal/gl199-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 10,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 8,
+     "raw": "Fumé — 15cm — 8,000 DT",
+     "oldPrice": 10
+    },
+    {
+     "label": "Fumé — 18cm",
+     "price": 8,
+     "raw": "Fumé — 18cm — 8,000 DT",
+     "oldPrice": 10
+    }
+   ],
+   "priceFrom": 8
+  },
+  {
+   "id": "PM019",
+   "name": "Sabot GL 189",
+   "desc": "Piètement métal design moderne Fumé — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl189.png",
+   "gallery": [],
+   "video": null,
+   "promo": true,
+   "oldPrice": 9,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 7,
+     "raw": "Fumé — 15cm — 7,000 DT",
+     "oldPrice": 9
+    }
+   ],
+   "priceFrom": 7
+  },
+  {
+   "id": "PM020",
+   "name": "Sabot GL 186",
+   "desc": "Piètement métal élancé Fumé — 18cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl186.png",
+   "gallery": [
+    "images/pietement-metal/gl186.png",
+    "images/pietement-metal/gl186-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 11,
+   "variants": [
+    {
+     "label": "Fumé — 18cm",
+     "price": 8.5,
+     "raw": "Fumé — 18cm — 8,500 DT",
+     "oldPrice": 11
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "PM021",
+   "name": "Sabot GL 188",
+   "desc": "Piètement métal angulaire Fumé — 17cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl188.png",
+   "gallery": [
+    "images/pietement-metal/gl188.png",
+    "images/pietement-metal/gl188-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 17cm",
+     "price": 11.5,
+     "raw": "Fumé — 17cm — 11,500 DT"
+    }
+   ],
+   "priceFrom": 11.5
+  },
+  {
+   "id": "PM022",
+   "name": "Sabot GL 201",
+   "desc": "Piètement métal spirale doré Gold — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl201.png",
+   "gallery": [
+    "images/pietement-metal/gl201.png",
+    "images/pietement-metal/gl201-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 10,
+   "variants": [
+    {
+     "label": "Gold — 15cm",
+     "price": 7,
+     "raw": "Gold — 15cm — 7,000 DT",
+     "oldPrice": 10
+    }
+   ],
+   "priceFrom": 7
+  },
+  {
+   "id": "PM023",
+   "name": "Sabot Gl 202",
+   "desc": "Piètement métal spirale Fumé — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl202.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 10,
+     "raw": "Fumé — 15cm — 10,000 DT"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "PM024",
+   "name": "Sabot Gl 196",
+   "desc": "Piètement métal ressort Gold — 18cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl196.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 18cm",
+     "price": 10,
+     "raw": "Gold — 18cm — 10,000 DT"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "PM025",
+   "name": "Sabot Gl 195",
+   "desc": "Piètement métal ressort Fumé — 18cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl195.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 18cm",
+     "price": 10,
+     "raw": "Fumé — 18cm — 10,000 DT"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "PM026",
+   "name": "Sabot Gl 162",
+   "desc": "Pied métal incliné design, 2 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl162.png",
+   "gallery": [
+    "images/pietement-metal/gl162.png",
+    "images/pietement-metal/gl162-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome — 15cm",
+     "price": 10,
+     "raw": "Chrome — 15cm — 10,000 DT"
+    },
+    {
+     "label": "Fumé — 15cm",
+     "price": 11,
+     "raw": "Fumé — 15cm — 11,000 DT"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "PM027",
+   "name": "Sabot Gl 48",
+   "desc": "Pied métal en Y design, 2 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl48.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome — 15cm",
+     "price": 15,
+     "raw": "Chrome — 15cm — 15,000 DT"
+    },
+    {
+     "label": "Fumé — 15cm",
+     "price": 16,
+     "raw": "Fumé — 15cm — 16,000 DT"
+    }
+   ],
+   "priceFrom": 15
+  },
+  {
+   "id": "PM028",
+   "name": "Sabot IN 1801",
+   "desc": "Piètement métal plat tridimensionnel, 3 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/in1801.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold Foncé — 15cm",
+     "price": 5,
+     "raw": "Gold Foncé — 15cm — 5,000 DT"
+    },
+    {
+     "label": "Gold Clair — 15cm",
+     "price": 6,
+     "raw": "Gold Clair — 15cm — 6,000 DT"
+    },
+    {
+     "label": "Noir Matt — 15cm",
+     "price": 7,
+     "raw": "Noir Matt — 15cm — 7,000 DT"
+    }
+   ],
+   "priceFrom": 5
+  },
+  {
+   "id": "PM029",
+   "name": "Sabot GL 15",
+   "desc": "Pied métal en T élégant, 4 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl15.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome — 15cm",
+     "price": 10,
+     "raw": "Chrome — 15cm — 10,000 DT"
+    },
+    {
+     "label": "Gold — 15cm",
+     "price": 10.5,
+     "raw": "Gold — 15cm — 10,500 DT"
+    },
+    {
+     "label": "Fumé — 15cm",
+     "price": 10.5,
+     "raw": "Fumé — 15cm — 10,500 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 10.5,
+     "raw": "Noir — 15cm — 10,500 DT"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "PM030",
+   "name": "Sabot GL 52",
+   "desc": "Pied métal 4 branches premium, 4 coloris — 16cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl52.png",
+   "gallery": [],
+   "video": null,
+   "promo": true,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 16cm",
+     "price": 7,
+     "raw": "Gold — 16cm — 7,000 DT",
+     "oldPrice": 14.5
+    },
+    {
+     "label": "Fumé — 16cm",
+     "price": 7,
+     "raw": "Fumé — 16cm — 7,000 DT",
+     "oldPrice": 18
+    },
+    {
+     "label": "Chrome — 16cm",
+     "price": 7,
+     "raw": "Chrome — 16cm — 7,000 DT",
+     "oldPrice": 15
+    },
+    {
+     "label": "Noir — 16cm",
+     "price": 7,
+     "raw": "Noir — 16cm — 7,000 DT"
+    }
+   ],
+   "priceFrom": 7
+  },
+  {
+   "id": "PM031",
+   "name": "Sabot GL 198",
+   "desc": "Pied métal décoratif avec détail — 15cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl198.png",
+   "gallery": [
+    "images/pietement-metal/gl198.png",
+    "images/pietement-metal/gl198-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 15,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 13.5,
+     "raw": "Fumé — 15cm — 13,500 DT",
+     "oldPrice": 15
+    }
+   ],
+   "priceFrom": 13.5
+  },
+  {
+   "id": "PM032",
+   "name": "Sabot GL 203",
+   "desc": "Piètement métal design contemporain — 15cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl203.png",
+   "gallery": [
+    "images/pietement-metal/gl203.png",
+    "images/pietement-metal/gl203-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 14,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 11,
+     "raw": "Fumé — 15cm — 11,000 DT",
+     "oldPrice": 14
+    }
+   ],
+   "priceFrom": 11
+  },
+  {
+   "id": "PM033",
+   "name": "Sabot GL 184",
+   "desc": "Pied métal plat incliné — 10cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl184.png",
+   "gallery": [
+    "images/pietement-metal/gl184.png",
+    "images/pietement-metal/gl184-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 16,
+   "variants": [
+    {
+     "label": "Fumé — 10cm",
+     "price": 14,
+     "raw": "Fumé — 10cm — 14,000 DT",
+     "oldPrice": 16
+    }
+   ],
+   "priceFrom": 14
+  },
+  {
+   "id": "PM034",
+   "name": "Sabot GL 187",
+   "desc": "Pied métal avec décoration — 18cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl187.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 18cm",
+     "price": 13,
+     "raw": "Fumé — 18cm — 13,000 DT"
+    }
+   ],
+   "priceFrom": 13
+  },
+  {
+   "id": "PM035",
+   "name": "Sabot GL 185",
+   "desc": "Piètement métal avec détail doré — 18cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl185.png",
+   "gallery": [
+    "images/pietement-metal/gl185.png",
+    "images/pietement-metal/gl185-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 15,
+   "variants": [
+    {
+     "label": "Fumé — 18cm",
+     "price": 13,
+     "raw": "Fumé — 18cm — 13,000 DT",
+     "oldPrice": 15
+    }
+   ],
+   "priceFrom": 13
+  },
+  {
+   "id": "PM036",
+   "name": "Sabot GL 183",
+   "desc": "Pied métal avec ornement — 18cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl183.png",
+   "gallery": [
+    "images/pietement-metal/gl183.png",
+    "images/pietement-metal/gl183-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 13,
+   "variants": [
+    {
+     "label": "Fumé — 18cm",
+     "price": 11,
+     "raw": "Fumé — 18cm — 11,000 DT",
+     "oldPrice": 13
+    }
+   ],
+   "priceFrom": 11
+  },
+  {
+   "id": "PM037",
+   "name": "Sabot GL 191",
+   "desc": "Pied métal haut avec accent — 21cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl191.png",
+   "gallery": [
+    "images/pietement-metal/gl191.png",
+    "images/pietement-metal/gl191-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 15,
+   "variants": [
+    {
+     "label": "Fumé — 21cm",
+     "price": 12,
+     "raw": "Fumé — 21cm — 12,000 DT",
+     "oldPrice": 15
+    }
+   ],
+   "priceFrom": 12
+  },
+  {
+   "id": "PM038",
+   "name": "Sabot GL 200",
+   "desc": "Pied métal incliné compact — 15cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl200.png",
+   "gallery": [
+    "images/pietement-metal/gl200.png",
+    "images/pietement-metal/gl200-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 9,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 6,
+     "raw": "Fumé — 15cm — 6,000 DT",
+     "oldPrice": 9
+    }
+   ],
+   "priceFrom": 6
+  },
+  {
+   "id": "PM039",
+   "name": "Sabot GL 157",
+   "desc": "Pied métal angulaire élancé — 20cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl157.png",
+   "gallery": [
+    "images/pietement-metal/gl157.png",
+    "images/pietement-metal/gl157-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 15,
+   "variants": [
+    {
+     "label": "Fumé — 20cm",
+     "price": 12,
+     "raw": "Fumé — 20cm — 12,000 DT",
+     "oldPrice": 15
+    }
+   ],
+   "priceFrom": 12
+  },
+  {
+   "id": "PM040",
+   "name": "Sabot GL 193",
+   "desc": "Piètement métal boule décoratif, 2 coloris — 18cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl193.png",
+   "gallery": [
+    "images/pietement-metal/gl193.png",
+    "images/pietement-metal/gl193-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 18cm",
+     "price": 12.5,
+     "raw": "Fumé — 18cm — 12,500 DT"
+    },
+    {
+     "label": "Gold — 18cm",
+     "price": 12.5,
+     "raw": "Gold — 18cm — 12,500 DT"
+    }
+   ],
+   "priceFrom": 12.5
+  },
+  {
+   "id": "PM041",
+   "name": "Sabot GL 192",
+   "desc": "Piètement métal incliné avec accent — 18cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl192.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 18cm",
+     "price": 15,
+     "raw": "Fumé — 18cm — 15,000 DT"
+    }
+   ],
+   "priceFrom": 15
+  },
+  {
+   "id": "PM042",
+   "name": "Sabot GL 204",
+   "desc": "Pied métal H-design moderne — 15cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl204.png",
+   "gallery": [
+    "images/pietement-metal/gl204.png",
+    "images/pietement-metal/gl204-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 11,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 8.5,
+     "raw": "Fumé — 15cm — 8,500 DT",
+     "oldPrice": 11
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "PM043",
+   "name": "Sabot GL58",
+   "desc": "Pied métal incliné moderne, 3 tailles disponibles.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl58.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome — 25cm",
+     "price": 9,
+     "raw": "Chrome — 25cm — 9,000 DT"
+    },
+    {
+     "label": "Gold — 25cm",
+     "price": 10,
+     "raw": "Gold — 25cm — 10,000 DT"
+    },
+    {
+     "label": "Fumé — 25cm",
+     "price": 10,
+     "raw": "Fumé — 25cm — 10,000 DT"
+    },
+    {
+     "label": "Chrome — 20cm",
+     "price": 8.5,
+     "raw": "Chrome — 20cm — 8,500 DT"
+    },
+    {
+     "label": "Fumé — 20cm",
+     "price": 9.5,
+     "raw": "Fumé — 20cm — 9,500 DT"
+    },
+    {
+     "label": "Gold — 15cm",
+     "price": 10,
+     "raw": "Gold — 15cm — 10,000 DT"
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "PM044",
+   "name": "Sabot Gl 34",
+   "desc": "Pied métal incliné chrome ou doré, 2 tailles.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl34-15cm.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome — 20cm",
+     "price": 7.5,
+     "raw": "Chrome — 20cm — 7,500 DT"
+    },
+    {
+     "label": "Gold — 15cm",
+     "price": 8,
+     "raw": "Gold — 15cm — 8,000 DT"
+    }
+   ],
+   "priceFrom": 7.5
+  },
+  {
+   "id": "PM045",
+   "name": "Sabot GL 92",
+   "desc": "Pied métal 4 tiges double rangée, 3 coloris.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl92.png",
+   "gallery": [
+    "images/pietement-metal/gl92.png",
+    "images/pietement-metal/gl92-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Noir — 15cm",
+     "price": 13,
+     "raw": "Noir — 15cm — 13,000 DT"
+    },
+    {
+     "label": "Gold — 15cm",
+     "price": 13,
+     "raw": "Gold — 15cm — 13,000 DT"
+    },
+    {
+     "label": "Chrome — 18cm",
+     "price": 12,
+     "raw": "Chrome — 18cm — 12,000 DT"
+    }
+   ],
+   "priceFrom": 12
+  },
+  {
+   "id": "PM046",
+   "name": "Sabot GL 62",
+   "desc": "Pied métal en T incliné, 3 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl62.png",
+   "gallery": [
+    "images/pietement-metal/gl62.png",
+    "images/pietement-metal/gl62-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 15cm",
+     "price": 15,
+     "raw": "Fumé — 15cm — 15,000 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 14,
+     "raw": "Chrome — 15cm — 14,000 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 14,
+     "raw": "Noir — 15cm — 14,000 DT"
+    }
+   ],
+   "priceFrom": 14
+  },
+  {
+   "id": "PM047",
+   "name": "Sabot GL 16",
+   "desc": "Pied métal cylindrique noir avec base dorée — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl16.png",
+   "gallery": [
+    "images/pietement-metal/gl16.png",
+    "images/pietement-metal/gl16-exemple.png"
+   ],
+   "video": null,
+   "promo": true,
+   "oldPrice": 10,
+   "variants": [
+    {
+     "label": "Noir/Gold — 15cm",
+     "price": 6,
+     "raw": "Noir/Gold — 15cm — 6,000 DT",
+     "oldPrice": 10
+    }
+   ],
+   "priceFrom": 6
+  },
+  {
+   "id": "PM048",
+   "name": "Sabot GL 30",
+   "desc": "Pied métal en V Noir/Gold — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl30.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Noir/Gold — 15cm",
+     "price": 11.5,
+     "raw": "Noir/Gold — 15cm — 11,500 DT"
+    }
+   ],
+   "priceFrom": 11.5
+  },
+  {
+   "id": "PM049",
+   "name": "Sabot GL 41",
+   "desc": "Pied métal cylindrique classique, 3 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl41.png",
+   "gallery": [
+    "images/pietement-metal/gl41.png",
+    "images/pietement-metal/gl41-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 15cm",
+     "price": 5.5,
+     "raw": "Gold — 15cm — 5,500 DT"
+    },
+    {
+     "label": "Fumé — 15cm",
+     "price": 5.5,
+     "raw": "Fumé — 15cm — 5,500 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 5,
+     "raw": "Chrome — 15cm — 5,000 DT"
+    }
+   ],
+   "priceFrom": 5
+  },
+  {
+   "id": "PM050",
+   "name": "Sabot GL 38",
+   "desc": "Pied métal angulaire élégant, 2 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl38.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 15cm",
+     "price": 10,
+     "raw": "Gold — 15cm — 10,000 DT"
+    },
+    {
+     "label": "Chrome — 15cm",
+     "price": 10,
+     "raw": "Chrome — 15cm — 10,000 DT"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "PM057",
+   "name": "Sabot GL 55",
+   "desc": "Pied métal — 13,000 DT / pièce.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl55.png",
+   "gallery": [
+    "images/pietement-metal/gl55.png",
+    "images/pietement-metal/gl55-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 13,
+     "raw": "13,000 DT"
+    }
+   ],
+   "priceFrom": 13
+  },
+  {
+   "id": "PM051",
+   "name": "Sabot 3D Rose Gold / Noir",
+   "desc": "Pied métal 3D design premium, 2 coloris — 15cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/3D.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Rose Gold — 15cm",
+     "price": 25,
+     "raw": "Rose Gold — 15cm — 25,000 DT"
+    },
+    {
+     "label": "Noir — 15cm",
+     "price": 25,
+     "raw": "Noir — 15cm — 25,000 DT"
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "PM052",
+   "name": "Sabot GL 43 (18cm)",
+   "desc": "Pied métal doré premium — 18cm Gold.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/gl43-18cm.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold — 18cm",
+     "price": 12,
+     "raw": "Gold — 18cm — 12,000 DT"
+    }
+   ],
+   "priceFrom": 12
+  },
+  {
+   "id": "PM053",
+   "name": "Sabot IMJ 102",
+   "desc": "Pied métal chrome irisé — 17cm Chrome.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/imj102-17.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome — 17cm",
+     "price": 10,
+     "raw": "Chrome — 17cm — 10,000 DT"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "PM054",
+   "name": "Sabot SLJ 001",
+   "desc": "Pied métal incliné premium — 17cm Fumé.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/slj001-17cm.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fumé — 17cm",
+     "price": 13,
+     "raw": "Fumé — 17cm — 13,000 DT"
+    }
+   ],
+   "priceFrom": 13
+  },
+  {
+   "id": "PM055",
+   "name": "Tube Métal 300cm",
+   "desc": "Tube métal brut pour piètements sur mesure — longueur 300cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/tube-chrome.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome — 300cm",
+     "price": 21,
+     "raw": "Chrome — 300cm — 21,000 DT"
+    },
+    {
+     "label": "Noir — 300cm",
+     "price": 22,
+     "raw": "Noir — 300cm — 22,000 DT"
+    },
+    {
+     "label": "Fumé — 300cm",
+     "price": 25,
+     "raw": "Fumé — 300cm — 25,000 DT"
+    }
+   ],
+   "priceFrom": 21
+  },
+  {
+   "id": "PM056",
+   "name": "Sabot Sofa 85cm",
+   "desc": "Piètement métal sofa — 85cm.",
+   "categoryId": "pietement-metal",
+   "img": "images/pietement-metal/sabot sofa 85.jpg",
+   "gallery": [
+    "images/pietement-metal/sabot sofa 85.jpg",
+    "images/pietement-metal/sabot sofa 85-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 125,
+     "raw": "125,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 125
+  },
+  {
+   "id": "PP001",
+   "name": "Sabot Mankoucha",
+   "desc": "Pied baroque sculpté style arabesque doré — 13,5cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/mankoucha.png",
+   "gallery": [
+    "images/pietement-plastique/mankoucha.png",
+    "images/pietement-plastique/mankoucha-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Doré — 13,5cm",
+     "price": 5.3,
+     "raw": "Doré — 13,5cm — 5,300 DT"
+    }
+   ],
+   "priceFrom": 5.3
+  },
+  {
+   "id": "PP003",
+   "name": "Sabot Milano",
+   "desc": "Pied décoratif sculpté, 2 finitions — 13,5cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/milano.png",
+   "gallery": [
+    "images/pietement-plastique/milano.png",
+    "images/pietement-plastique/milano-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "P08 — 13,5cm",
+     "price": 5.5,
+     "raw": "P08 — 13,5cm — 5,500 DT"
+    },
+    {
+     "label": "Doré — 13,5cm",
+     "price": 4,
+     "raw": "Doré — 13,5cm — 4,000 DT"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "PP004",
+   "name": "Sabot Cristina",
+   "desc": "Pied angle bicolore design moderne, 4 coloris — 5cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/cristina.png",
+   "gallery": [
+    "images/pietement-plastique/cristina.png",
+    "images/pietement-plastique/cristina-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Noir/Gold — 5cm",
+     "price": 4.5,
+     "raw": "Noir/Gold — 5cm — 4,500 DT"
+    },
+    {
+     "label": "Blanc/Gold — 5cm",
+     "price": 4.5,
+     "raw": "Blanc/Gold — 5cm — 4,500 DT"
+    },
+    {
+     "label": "Grège/Gold — 5cm",
+     "price": 4.5,
+     "raw": "Grège/Gold — 5cm — 4,500 DT"
+    },
+    {
+     "label": "Taupe/Gold — 5cm",
+     "price": 4.5,
+     "raw": "Taupe/Gold — 5cm — 4,500 DT"
+    }
+   ],
+   "priceFrom": 4.5
+  },
+  {
+   "id": "PP005",
+   "name": "Sabot Eline",
+   "desc": "Pied conique avec couronne dorée, 6 coloris — 15cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/elina.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Noir — 15cm",
+     "price": 2.7,
+     "raw": "Noir — 15cm — 2,700 DT"
+    },
+    {
+     "label": "Blanc — 15cm",
+     "price": 2.7,
+     "raw": "Blanc — 15cm — 2,700 DT"
+    },
+    {
+     "label": "Gris — 15cm",
+     "price": 2.7,
+     "raw": "Gris — 15cm — 2,700 DT"
+    },
+    {
+     "label": "Chocolat — 15cm",
+     "price": 2.7,
+     "raw": "Chocolat — 15cm — 2,700 DT"
+    },
+    {
+     "label": "Marron — 15cm",
+     "price": 2.7,
+     "raw": "Marron — 15cm — 2,700 DT"
+    },
+    {
+     "label": "Grège — 15cm",
+     "price": 2.7,
+     "raw": "Grège — 15cm — 2,700 DT"
+    }
+   ],
+   "priceFrom": 2.7
+  },
+  {
+   "id": "PP007",
+   "name": "Sabot Ordinaire",
+   "desc": "Sabot plastique conique classique, 3 coloris — 6cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/ordinaire.png",
+   "gallery": [
+    "images/pietement-plastique/ordinaire.png",
+    "images/pietement-plastique/ordinaire-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Doré — 6cm",
+     "price": 2.5,
+     "raw": "Doré — 6cm — 2,500 DT"
+    },
+    {
+     "label": "Argent — 6cm",
+     "price": 2.5,
+     "raw": "Argent — 6cm — 2,500 DT"
+    },
+    {
+     "label": "Fumé — 6cm",
+     "price": 2.7,
+     "raw": "Fumé — 6cm — 2,700 DT"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "PP010",
+   "name": "Sabot Venise",
+   "desc": "Pied conique bicolore élégant, 5 coloris — 12cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/venise.png",
+   "gallery": [
+    "images/pietement-plastique/venise.png",
+    "images/pietement-plastique/venise-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "P09/Gold — 12cm",
+     "price": 4.2,
+     "raw": "P09/Gold — 12cm — 4,200 DT"
+    },
+    {
+     "label": "Blanc/Gold — 12cm",
+     "price": 3.5,
+     "raw": "Blanc/Gold — 12cm — 3,500 DT"
+    },
+    {
+     "label": "Grège/Gold — 12cm",
+     "price": 3.5,
+     "raw": "Grège/Gold — 12cm — 3,500 DT"
+    },
+    {
+     "label": "Taupe/Gold — 12cm",
+     "price": 3.5,
+     "raw": "Taupe/Gold — 12cm — 3,500 DT"
+    },
+    {
+     "label": "Noir/Gold — 12cm",
+     "price": 3.5,
+     "raw": "Noir/Gold — 12cm — 3,500 DT"
+    }
+   ],
+   "priceFrom": 3.5
+  },
+  {
+   "id": "PP011",
+   "name": "Sabot Parma",
+   "desc": "Pied en T plastique bicolore, 7 coloris — 14cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/parma.png",
+   "gallery": [
+    "images/pietement-plastique/parma.png",
+    "images/pietement-plastique/parma-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Grège/Gold — 14cm",
+     "price": 3.5,
+     "raw": "Grège/Gold — 14cm — 3,500 DT"
+    },
+    {
+     "label": "Doré/Gold — 14cm",
+     "price": 4.5,
+     "raw": "Doré/Gold — 14cm — 4,500 DT"
+    },
+    {
+     "label": "Taupe/Gold — 14cm",
+     "price": 3.5,
+     "raw": "Taupe/Gold — 14cm — 3,500 DT"
+    },
+    {
+     "label": "Noir/Gold — 14cm",
+     "price": 3.5,
+     "raw": "Noir/Gold — 14cm — 3,500 DT"
+    },
+    {
+     "label": "P07/Gold — 14cm",
+     "price": 4.5,
+     "raw": "P07/Gold — 14cm — 4,500 DT"
+    },
+    {
+     "label": "P09/Gold — 14cm",
+     "price": 4.5,
+     "raw": "P09/Gold — 14cm — 4,500 DT"
+    },
+    {
+     "label": "Blanc/Gold — 14cm",
+     "price": 3.5,
+     "raw": "Blanc/Gold — 14cm — 3,500 DT"
+    }
+   ],
+   "priceFrom": 3.5
+  },
+  {
+   "id": "PP013",
+   "name": "Sabot 15/15",
+   "desc": "Sabot plastique carré angulaire, 4 coloris — 5cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/15x15.png",
+   "gallery": [
+    "images/pietement-plastique/15x15.png",
+    "images/pietement-plastique/15x15-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Blanc — 5cm",
+     "price": 1.2,
+     "raw": "Blanc — 5cm — 1,200 DT"
+    },
+    {
+     "label": "Noir — 5cm",
+     "price": 1,
+     "raw": "Noir — 5cm — 1,000 DT"
+    },
+    {
+     "label": "Créme — 5cm",
+     "price": 1,
+     "raw": "Créme — 5cm — 1,000 DT"
+    },
+    {
+     "label": "Marron — 5cm",
+     "price": 1.2,
+     "raw": "Marron — 5cm — 1,200 DT"
+    }
+   ],
+   "priceFrom": 1
+  },
+  {
+   "id": "PP014",
+   "name": "Sabot 10/10",
+   "desc": "Sabot plastique carré compact, 7 coloris — 4,5cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/10x10.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Marron — 4,5cm",
+     "price": 0.5,
+     "raw": "Marron — 4,5cm — 0,500 DT"
+    },
+    {
+     "label": "Noir — 4,5cm",
+     "price": 0.5,
+     "raw": "Noir — 4,5cm — 0,500 DT"
+    },
+    {
+     "label": "Blanc — 4,5cm",
+     "price": 0.6,
+     "raw": "Blanc — 4,5cm — 0,600 DT"
+    },
+    {
+     "label": "Créme — 4,5cm",
+     "price": 0.6,
+     "raw": "Créme — 4,5cm — 0,600 DT"
+    },
+    {
+     "label": "Gris — 4,5cm",
+     "price": 0.6,
+     "raw": "Gris — 4,5cm — 0,600 DT"
+    },
+    {
+     "label": "Argent — 4,5cm",
+     "price": 2,
+     "raw": "Argent — 4,5cm — 2,000 DT"
+    },
+    {
+     "label": "Gold — 4,5cm",
+     "price": 2,
+     "raw": "Gold — 4,5cm — 2,000 DT"
+    }
+   ],
+   "priceFrom": 0.5
+  },
+  {
+   "id": "PP015",
+   "name": "Sabot Sabrine Carré",
+   "desc": "Sabot cube plastique, 6 coloris — 5,5cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/sabrine.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Argent — 5,5cm",
+     "price": 1.5,
+     "raw": "Argent — 5,5cm — 1,500 DT"
+    },
+    {
+     "label": "Gold — 5,5cm",
+     "price": 1.5,
+     "raw": "Gold — 5,5cm — 1,500 DT"
+    },
+    {
+     "label": "Marron — 5,5cm",
+     "price": 0.5,
+     "raw": "Marron — 5,5cm — 0,500 DT"
+    },
+    {
+     "label": "Noir — 5,5cm",
+     "price": 0.5,
+     "raw": "Noir — 5,5cm — 0,500 DT"
+    },
+    {
+     "label": "Gris — 5,5cm",
+     "price": 0.6,
+     "raw": "Gris — 5,5cm — 0,600 DT"
+    },
+    {
+     "label": "Créme — 5,5cm",
+     "price": 0.6,
+     "raw": "Créme — 5,5cm — 0,600 DT"
+    }
+   ],
+   "priceFrom": 0.5
+  },
+  {
+   "id": "PP016",
+   "name": "Sabot Mado",
+   "desc": "Pied décoratif brillant triangulaire, 3 coloris — 12,5cm.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/mado.png",
+   "gallery": [
+    "images/pietement-plastique/mado.png",
+    "images/pietement-plastique/mado-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Argent — 12,5cm",
+     "price": 5.5,
+     "raw": "Argent — 12,5cm — 5,500 DT"
+    },
+    {
+     "label": "Gold — 12,5cm",
+     "price": 5.5,
+     "raw": "Gold — 12,5cm — 5,500 DT"
+    },
+    {
+     "label": "Fumé — 12,5cm",
+     "price": 5.5,
+     "raw": "Fumé — 12,5cm — 5,500 DT"
+    }
+   ],
+   "priceFrom": 5.5
+  },
+  {
+   "id": "PP017",
+   "name": "Sabot Giraffe",
+   "desc": "Pied plastique triangulaire d'angle, 3 coloris.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/sabot giraffe blanc .jpg",
+   "gallery": [
+    "images/pietement-plastique/sabot giraffe blanc .jpg",
+    "images/pietement-plastique/sabot giraffe greage.jpg",
+    "images/pietement-plastique/sabot giraffe noire.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Blanc",
+     "price": 1,
+     "raw": "Blanc — 1,000 DT"
+    },
+    {
+     "label": "Grège",
+     "price": 1,
+     "raw": "Grège — 1,000 DT"
+    },
+    {
+     "label": "Noire",
+     "price": 1,
+     "raw": "Noire — 1,000 DT"
+    }
+   ],
+   "priceFrom": 1
+  },
+  {
+   "id": "PP018",
+   "name": "Sabot Marwa",
+   "desc": "Pied plastique pyramidal à encoche, 4 coloris.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/sabot marwa.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Blanc",
+     "price": 1.6,
+     "raw": "Blanc — 1,600 DT"
+    },
+    {
+     "label": "Marron Foncé",
+     "price": 1.6,
+     "raw": "Marron Foncé — 1,600 DT"
+    },
+    {
+     "label": "Taupe",
+     "price": 1.6,
+     "raw": "Taupe — 1,600 DT"
+    },
+    {
+     "label": "Beige",
+     "price": 1.6,
+     "raw": "Beige — 1,600 DT"
+    }
+   ],
+   "priceFrom": 1.6
+  },
+  {
+   "id": "PP019",
+   "name": "Sabot Italia",
+   "desc": "Pied plastique rond bulbeux, 2 coloris.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/sabot italia.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Champagne",
+     "price": 1.5,
+     "raw": "Champagne — 1,500 DT"
+    },
+    {
+     "label": "Cuivre",
+     "price": 1.5,
+     "raw": "Cuivre — 1,500 DT"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "PP020",
+   "name": "Sabot Italia 2",
+   "desc": "Pied plastique forme cloche, finition chromée.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/sabot iatlia2.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chromé",
+     "price": 1.5,
+     "raw": "Chromé — 1,500 DT"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "PP021",
+   "name": "Sabot Italia 3",
+   "desc": "Support rectangulaire chromé avec embase plastique.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/sabot italia3.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chromé/Marron",
+     "price": 1.5,
+     "raw": "Chromé/Marron — 1,500 DT"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "ST001",
+   "name": "Socle de Table Basse",
+   "desc": "Base de table basse en inox — disponible en finition chrome, dorée et fumée.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/ST001.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Chrome",
+     "price": 315,
+     "raw": "Chrome — 315 DT"
+    },
+    {
+     "label": "Fumée",
+     "price": 360,
+     "raw": "Fumée — 360 DT"
+    },
+    {
+     "label": "Dorée",
+     "price": 380,
+     "raw": "Dorée — 380 DT"
+    }
+   ],
+   "priceFrom": 315
+  },
+  {
+   "id": "ST002",
+   "name": "Socle de Table Bois en Étoile",
+   "desc": "Base de table en bois massif, forme étoile — design naturel et contemporain.",
+   "categoryId": "socle-bois",
+   "img": "images/socle table/ST002.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 210,
+     "raw": "210 DT"
+    }
+   ],
+   "priceFrom": 210
+  },
+  {
+   "id": "ST003",
+   "name": "Table de Café Noire",
+   "desc": "Table de café style industriel, pied central en métal noir mat.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/ST003.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 180,
+     "raw": "180 DT"
+    }
+   ],
+   "priceFrom": 180
+  },
+  {
+   "id": "ST004",
+   "name": "Table Pliable + 4 Chaises",
+   "desc": "Ensemble table pliable et 4 chaises en bois — idéal terrasse et jardin.",
+   "categoryId": "socle-bois",
+   "img": "images/socle table/ST004.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Table",
+     "price": 220,
+     "raw": "Table — 220 DT"
+    },
+    {
+     "label": "Chaise",
+     "price": 100,
+     "raw": "Chaise — 100 DT"
+    }
+   ],
+   "priceFrom": 100
+  },
+  {
+   "id": "ST005",
+   "name": "Table en Bois de Coins",
+   "desc": "Table de coin en bois massif, style contemporain élégant.",
+   "categoryId": "socle-bois",
+   "img": "images/socle table/ST005.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 120,
+     "raw": "120 DT"
+    }
+   ],
+   "priceFrom": 120
+  },
+  {
+   "id": "ST006",
+   "name": "Socle de Table à Manger Doré",
+   "desc": "Socle de table à manger en métal doré — finition élégante, robuste et design.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/ST006.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Doré",
+     "price": 700,
+     "raw": "Doré — 700 DT"
+    }
+   ],
+   "priceFrom": 700
+  },
+  {
+   "id": "ST007",
+   "name": "Socle de Table Inox SMI 01",
+   "desc": "Socle de table en inox — modèle SMI 01.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/scole table inoxe smi 01 .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 150,
+     "raw": "150 DT"
+    }
+   ],
+   "priceFrom": 150
+  },
+  {
+   "id": "ST008",
+   "name": "Socle de Table Inox SMI 04",
+   "desc": "Socle de table en inox — modèle SMI 04.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/socle de table inoxe smi 04.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 280,
+     "raw": "280 DT"
+    }
+   ],
+   "priceFrom": 280
+  },
+  {
+   "id": "ST009",
+   "name": "Socle de Table Inox SMI 05",
+   "desc": "Socle de table en inox — modèle SMI 05.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/socle de table inoxe smi 05.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 280,
+     "raw": "280 DT"
+    }
+   ],
+   "priceFrom": 280
+  },
+  {
+   "id": "ST010",
+   "name": "Socle de Table Bas Inox SMI 06",
+   "desc": "Socle de table bas en inox — modèle SMI 06.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/socle table bas inox smi 06.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 180,
+     "raw": "180 DT"
+    }
+   ],
+   "priceFrom": 180
+  },
+  {
+   "id": "ST011",
+   "name": "Socle de Table Inox SMI 02",
+   "desc": "Socle de table en inox — modèle SMI 02.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/socle table inox smi 02 .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 150,
+     "raw": "150 DT"
+    }
+   ],
+   "priceFrom": 150
+  },
+  {
+   "id": "ST012",
+   "name": "Socle de Table Inox SMI 03",
+   "desc": "Socle de table en inox — modèle SMI 03.",
+   "categoryId": "socle-metal",
+   "img": "images/socle table/socle table inox smi 03 .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 300,
+     "raw": "300 DT"
+    }
+   ],
+   "priceFrom": 300
+  },
+  {
+   "id": "CC001",
+   "name": "Asya-Tskelet",
+   "desc": "Carcasse de chaise design moderne pour tapisserie.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/asya.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 98,
+     "raw": "98,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 98
+  },
+  {
+   "id": "CC002",
+   "name": "Goda",
+   "desc": "Carcasse de chaise style contemporain pour tapisserie.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/goda.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 90,
+     "raw": "90,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 90
+  },
+  {
+   "id": "CC003",
+   "name": "Mozart",
+   "desc": "Carcasse de chaise élégante pour tapisserie haut de gamme.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/mozart.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 135,
+     "raw": "135,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 135
+  },
+  {
+   "id": "CC004",
+   "name": "Masal",
+   "desc": "Carcasse de chaise confortable pour tapisserie.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/masal.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 110,
+     "raw": "110,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 110
+  },
+  {
+   "id": "CC005",
+   "name": "Lizy",
+   "desc": "Carcasse de chaise compacte pour tapisserie.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/lizy.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 98,
+     "raw": "98,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 98
+  },
+  {
+   "id": "CC006",
+   "name": "Limon-v",
+   "desc": "Carcasse de chaise avec dossier structuré pour tapisserie.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/limon-v.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 115,
+     "raw": "115,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 115
+  },
+  {
+   "id": "CC007",
+   "name": "Windy",
+   "desc": "Carcasse de chaise grand confort pour tapisserie.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/windy.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 135,
+     "raw": "135,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 135
+  },
+  {
+   "id": "CC008",
+   "name": "Sultan",
+   "desc": "Carcasse de chaise classique pour tapisserie.",
+   "categoryId": "chaise-tapissee",
+   "img": "images/carcasses/sultan.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 90,
+     "raw": "90,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 90
+  },
+  {
+   "id": "CB001",
+   "name": "Carcasse Bois Modèle 1",
+   "desc": "Carcasse bois brut — structure légère arrondie.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c001.jpg",
+   "gallery": [
+    "images/carcasses/c001.jpg",
+    "images/carcasses/c001-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 150,
+     "raw": "150,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 150
+  },
+  {
+   "id": "CB002",
+   "name": "Carcasse Bois Modèle 2",
+   "desc": "Carcasse bois brut — dossier bas arrondi.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c002.jpg",
+   "gallery": [
+    "images/carcasses/c002.jpg",
+    "images/carcasses/c002-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 150,
+     "raw": "150,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 150
+  },
+  {
+   "id": "CB003",
+   "name": "Carcasse Bois Modèle 3",
+   "desc": "Carcasse bois brut — découpe décorative dossier.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c003.jpg",
+   "gallery": [
+    "images/carcasses/c003.jpg",
+    "images/carcasses/c003-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 190,
+     "raw": "190,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 190
+  },
+  {
+   "id": "CB004",
+   "name": "Carcasse Bois Modèle 4",
+   "desc": "Carcasse bois brut — structure compact avec accoudoirs.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c004.jpg",
+   "gallery": [
+    "images/carcasses/c004.jpg",
+    "images/carcasses/c004-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 195,
+     "raw": "195,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 195
+  },
+  {
+   "id": "CB005",
+   "name": "Carcasse Bois Modèle 5",
+   "desc": "Carcasse bois brut — cadre classique 4 pieds.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c005.jpg",
+   "gallery": [
+    "images/carcasses/c005.jpg",
+    "images/carcasses/c005-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 150,
+     "raw": "150,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 150
+  },
+  {
+   "id": "CB006",
+   "name": "Carcasse Bois Modèle 6",
+   "desc": "Carcasse bois brut avec accoudoirs rembourrés — premium.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c006.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 300,
+     "raw": "300,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 300
+  },
+  {
+   "id": "CB007",
+   "name": "Carcasse Bois Modèle 7",
+   "desc": "Carcasse bois brut — dossier large bas japonais.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c007.jpg",
+   "gallery": [
+    "images/carcasses/c007.jpg",
+    "images/carcasses/c007-exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 180,
+     "raw": "180,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 180
+  },
+  {
+   "id": "CB008",
+   "name": "Carcasse Bois C008",
+   "desc": "Carcasse bois brut — modèle C008.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c008.jpg",
+   "gallery": [
+    "images/carcasses/c008.jpg",
+    "images/carcasses/c008-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 160,
+     "raw": "160,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 160
+  },
+  {
+   "id": "CB009",
+   "name": "Carcasse Bois C009",
+   "desc": "Carcasse bois brut — modèle C009.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c009.jpg",
+   "gallery": [
+    "images/carcasses/c009.jpg",
+    "images/carcasses/c009-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 220,
+     "raw": "220,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 220
+  },
+  {
+   "id": "CB010",
+   "name": "Carcasse Bois C010",
+   "desc": "Carcasse bois brut — modèle C010.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/c010.jpg",
+   "gallery": [
+    "images/carcasses/c010.jpg",
+    "images/carcasses/c010-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 220,
+     "raw": "220,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 220
+  },
+  {
+   "id": "CB011",
+   "name": "Tabouret en Bois",
+   "desc": "Tabouret en bois brut pour tapisserie.",
+   "categoryId": "chaise-bois",
+   "img": "images/carcasses/tabouret en boit.png",
+   "gallery": [
+    "images/carcasses/tabouret en boit.png",
+    "images/carcasses/tabouret en boit-exemple .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 65,
+     "raw": "65,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 65
+  },
+  {
+   "id": "CI001",
+   "name": "Carcasse Inox 1",
+   "desc": "Carcasse de chaise en inox — modèle haut de gamme.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/inoxe1.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 600,
+     "raw": "600,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 600
+  },
+  {
+   "id": "CI002",
+   "name": "Carcasse Inox 2",
+   "desc": "Carcasse de chaise en inox — modèle intermédiaire.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/inoxe2.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 380,
+     "raw": "380,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 380
+  },
+  {
+   "id": "CI003",
+   "name": "Carcasse Inox 3",
+   "desc": "Carcasse de chaise en inox — modèle standard.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/inoxe3.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 210,
+     "raw": "210,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 210
+  },
+  {
+   "id": "CI004",
+   "name": "Carcasse Inox 4",
+   "desc": "Carcasse de chaise en inox — modèle standard.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/inoxe4.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 210,
+     "raw": "210,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 210
+  },
+  {
+   "id": "CI005",
+   "name": "Carcasse Inox SMI 02",
+   "desc": "Carcasse de chaise en inox — modèle SMI 02.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/socle chaise inox smi 02.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 250,
+     "raw": "250,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 250
+  },
+  {
+   "id": "CI008",
+   "name": "Socle de Fauteuil",
+   "desc": "Socle structure de fauteuil — base solide pour tapisserie.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/socle de fouteuille .jpg",
+   "gallery": [
+    "images/carcasses/socle de fouteuille .jpg",
+    "images/carcasses/socle de fouteuille-exemple .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 80,
+     "raw": "80,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 80
+  },
+  {
+   "id": "CI007",
+   "name": "Chaise Inox Haute",
+   "desc": "Carcasse de chaise en inox haute — modèle haut de gamme.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/chaise inoxe haute  .png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 400,
+     "raw": "400,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 400
+  },
+  {
+   "id": "CI006",
+   "name": "Carcasse Inox SMI 01",
+   "desc": "Carcasse de chaise en inox — modèle SMI 01.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/socle de chaise inoxe smi 01.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 65,
+     "raw": "65,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 65
+  },
+  {
+   "id": "ACC001",
+   "name": "Accessoire H",
+   "desc": "Connecteur horizontal pour canapé — assemble les éléments côte à côte.",
+   "categoryId": "accessoires",
+   "img": "images/socles/socle accodoire h.jpg",
+   "gallery": [
+    "images/socles/socle accodoire h.jpg",
+    "images/socles/socle accodoire h1.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 150,
+     "raw": "150,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 150
+  },
+  {
+   "id": "ACC002",
+   "name": "Accessoire V",
+   "desc": "Connecteur vertical pour canapé — fixe accoudoirs et dossiers.",
+   "categoryId": "accessoires",
+   "img": "images/socles/socle accodoire v.jpg",
+   "gallery": [
+    "images/socles/socle accodoire v.jpg",
+    "images/socles/socle accodoire v2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 150,
+     "raw": "150,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 150
+  },
+  {
+   "id": "ACC003",
+   "name": "Accessoire Rond",
+   "desc": "Connecteur rond pour canapé — fixation solide et discrète entre modules.",
+   "categoryId": "accessoires",
+   "img": "images/socles/soccle accodoire rond.jpg",
+   "gallery": [
+    "images/socles/soccle accodoire rond.jpg",
+    "images/socles/socle accofoire rond .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 350,
+     "raw": "350,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 350
+  },
+  {
+   "id": "ACC004",
+   "name": "Accessoire Lion",
+   "desc": "Accessoire décoratif tête de lion pour canapé et siège.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/accesoire lion.jpg",
+   "gallery": [
+    "images/outil de tapissserie/accesoire lion.jpg",
+    "images/outil de tapissserie/accesoire lion (exemple).jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 4,
+     "raw": "4,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "ACC005",
+   "name": "Accessoire Belié",
+   "desc": "Accessoire décoratif belié pour canapé et siège.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/accesoire belié.jpg",
+   "gallery": [
+    "images/outil de tapissserie/accesoire belié.jpg",
+    "images/outil de tapissserie/accesoire belié exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 4,
+     "raw": "4,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "ACC006",
+   "name": "Accessoire Sofa",
+   "desc": "Accessoire décoratif applique pour canapé.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/accesoire sofa .jpg",
+   "gallery": [
+    "images/outil de tapissserie/accesoire sofa .jpg",
+    "images/outil de tapissserie/accesoire sofa-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 12,
+     "raw": "12,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 12
+  },
+  {
+   "id": "ACC007",
+   "name": "Bouton Rectangle Doré",
+   "desc": "Bouton décoratif rectangle doré pour tapisserie.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/bouton rectongle dorée .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 2,
+     "raw": "2,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 2
+  },
+  {
+   "id": "ACC008",
+   "name": "Sofa Décoratif",
+   "desc": "Élément décoratif ornement pour canapé et siège.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/sofa decoratif .jpg",
+   "gallery": [
+    "images/outil de tapissserie/sofa decoratif .jpg",
+    "images/outil de tapissserie/sofa decoratif exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 10,
+     "raw": "10,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 10
+  },
+  {
+   "id": "ACC009",
+   "name": "Accessoire Ressort",
+   "desc": "Accessoire ressort pour canapé et siège.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/accesoire ressort .jpg",
+   "gallery": [
+    "images/outil de tapissserie/accesoire ressort .jpg",
+    "images/outil de tapissserie/accesoire ressort -exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 2,
+     "raw": "2,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 2
+  },
+  {
+   "id": "ACC010",
+   "name": "Plaque Décoratif",
+   "desc": "Plaque décoratif pour canapé et siège.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/plaque décoratif .jpg",
+   "gallery": [
+    "images/outil de tapissserie/plaque décoratif .jpg",
+    "images/outil de tapissserie/plaque décoratif-exemple .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 15,
+     "raw": "15,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 15
+  },
+  {
+   "id": "ACC011",
+   "name": "Lampe Murale",
+   "desc": "Lampe murale liseuse LED avec port USB.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/lampe mural.png",
+   "gallery": [
+    "images/outil de tapissserie/lampe mural.png",
+    "images/outil de tapissserie/lampe mural 2.png",
+    "images/outil de tapissserie/lampe mural 3.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 90,
+     "raw": "90,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 90
+  },
+  {
+   "id": "ACC012",
+   "name": "Lampe Murale avec Chargeur Sans Fil",
+   "desc": "Lampe murale liseuse LED avec tablette de recharge sans fil intégrée.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/lampe avec rechrage sans fil.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 120,
+     "raw": "120,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 120
+  },
+  {
+   "id": "ACC013",
+   "name": "Support Goblet pour Salon",
+   "desc": "Porte-gobelet encastrable pour accoudoir de canapé.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/support goblet pour salon.png",
+   "gallery": [
+    "images/outil de tapissserie/support goblet pour salon.png",
+    "images/outil de tapissserie/support goblet pour salon 2.png"
+   ],
+   "video": "images/outil de tapissserie/support goblet pour salon video.mp4",
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 20,
+     "raw": "20,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 20
+  },
+  {
+   "id": "ACC014",
+   "name": "Chargeur Encastrable Sans Fil",
+   "desc": "Module de charge sans fil encastrable dans un meuble — 2 sorties USB.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/charge no bleutooth noir .jpg",
+   "gallery": [
+    "images/outil de tapissserie/charge no bleutooth noir .jpg",
+    "images/outil de tapissserie/charge no bleutooth noir 1 .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 60,
+     "raw": "60,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 60
+  },
+  {
+   "id": "ACC015",
+   "name": "Plaque de Recharge Sans Fil \"Top Plate\"",
+   "desc": "Plaque de recharge sans fil à intégrer sur meuble — 47×38cm, 3 coloris.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/top plate wifi 3 colors 47x38cm .jpg",
+   "gallery": [
+    "images/outil de tapissserie/top plate wifi 3 colors 47x38cm .jpg",
+    "images/outil de tapissserie/top plate wifi 3 colors 47x38cm 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "47x38cm",
+     "price": 120,
+     "raw": "47x38cm — 120,000 DT"
+    }
+   ],
+   "priceFrom": 120
+  },
+  {
+   "id": "BD001",
+   "name": "Bordure Décorative 3m",
+   "desc": "Bordure décorative — vendue par tranche de 3 mètres.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure décoratif 3m.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "3m",
+     "price": 3,
+     "raw": "3,000 DT / 3m"
+    }
+   ],
+   "priceFrom": 3
+  },
+  {
+   "id": "BD002",
+   "name": "Bordure 1cm",
+   "desc": "Bordure fine 1cm.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure 1cm.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 1.5,
+     "raw": "1,500 DT / m"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "BD003",
+   "name": "Bordure Argent",
+   "desc": "Bordure couleur argent.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure argent.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2,
+     "raw": "2,000 DT / m"
+    }
+   ],
+   "priceFrom": 2
+  },
+  {
+   "id": "BD004",
+   "name": "Bordure Doré",
+   "desc": "Bordure couleur dorée.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure doré.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2,
+     "raw": "2,000 DT / m"
+    }
+   ],
+   "priceFrom": 2
+  },
+  {
+   "id": "BD005",
+   "name": "Bordure Gros Hauteur",
+   "desc": "Bordure grande hauteur.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure gros hauteur.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 4,
+     "raw": "4,000 DT / m"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "BD006",
+   "name": "Bordure Noire Dorée",
+   "desc": "Bordure noire avec finition dorée.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure noire dorée.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2.5,
+     "raw": "2,500 DT / m"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "BD007",
+   "name": "Bordure Petit Hauteur",
+   "desc": "Bordure petite hauteur.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure petit hauteur.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 1.5,
+     "raw": "1,500 DT / m"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "BD008",
+   "name": "Bordure Transparent",
+   "desc": "Bordure transparente.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure transparent.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 1.5,
+     "raw": "1,500 DT / m"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "BD009",
+   "name": "Bordure Zigzag",
+   "desc": "Bordure motif zigzag.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/bordure zigzag.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2.5,
+     "raw": "2,500 DT / m"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "BD010",
+   "name": "Kitan Ekrm",
+   "desc": "Kitan décoratif Ekrm.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/kitan ekrm.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2.5,
+     "raw": "2,500 DT / m"
+    },
+    {
+     "label": "m",
+     "price": 3.5,
+     "raw": "3,500 DT / m"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "BD011",
+   "name": "Kitan Ekobs",
+   "desc": "Kitan décoratif Ekobs.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/kitan ekobs.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2.5,
+     "raw": "2,500 DT / m"
+    },
+    {
+     "label": "m",
+     "price": 3.5,
+     "raw": "3,500 DT / m"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "BD012",
+   "name": "Kitan Ekodz",
+   "desc": "Kitan décoratif Ekodz.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/kitan ekodz.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 1.5,
+     "raw": "1,500 DT / m"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "BD013",
+   "name": "Kitan Ekokl",
+   "desc": "Kitan décoratif Ekokl.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/kitan ekokl.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2,
+     "raw": "2,000 DT / m"
+    }
+   ],
+   "priceFrom": 2
+  },
+  {
+   "id": "BD014",
+   "name": "Kitan Ekrm Petit",
+   "desc": "Kitan Ekrm petit format.",
+   "categoryId": "bordures",
+   "img": "images/bordure décoratif/kitan ekrem petit .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": 2,
+     "raw": "2,000 DT / m"
+    },
+    {
+     "label": "m",
+     "price": 2.5,
+     "raw": "2,500 DT / m"
+    }
+   ],
+   "priceFrom": 2
+  },
+  {
+   "id": "COS001",
+   "name": "Coussin 45×45",
+   "desc": "Disponible en 3 matières : Fibre, Mélange et Repol.",
+   "categoryId": "coussins",
+   "img": "images/coussin/coussin 45x45 fibre .jpg",
+   "gallery": [
+    "images/coussin/coussin 45x45 fibre .jpg",
+    "images/coussin/coussin mélange .jpg",
+    "images/coussin/coussin repol .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fibre",
+     "price": 7,
+     "raw": "Fibre — 7,000 DT"
+    },
+    {
+     "label": "Mélange",
+     "price": 5,
+     "raw": "Mélange — 5,000 DT"
+    },
+    {
+     "label": "Repol",
+     "price": 2.5,
+     "raw": "Repol — 2,500 DT"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "COS002",
+   "name": "Coussin 70×40",
+   "desc": "Disponible en 3 matières : Fibre, Mélange et Repol.",
+   "categoryId": "coussins",
+   "img": "images/coussin/coussin 70x40 fibre .jpg",
+   "gallery": [
+    "images/coussin/coussin 70x40 fibre .jpg",
+    "images/coussin/coussin mélange .jpg",
+    "images/coussin/coussin repol .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fibre",
+     "price": 7,
+     "raw": "Fibre — 7,000 DT"
+    },
+    {
+     "label": "Mélange",
+     "price": 5,
+     "raw": "Mélange — 5,000 DT"
+    },
+    {
+     "label": "Repol",
+     "price": 2.5,
+     "raw": "Repol — 2,500 DT"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "COS003",
+   "name": "Coussin 50×50",
+   "desc": "Disponible en 3 matières : Fibre, Mélange et Repol.",
+   "categoryId": "coussins",
+   "img": "images/coussin/coussin 50x50.avif",
+   "gallery": [
+    "images/coussin/coussin 50x50.avif",
+    "images/coussin/coussin mélange .jpg",
+    "images/coussin/coussin repol .jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Fibre",
+     "price": 7,
+     "raw": "Fibre — 7,000 DT"
+    },
+    {
+     "label": "Mélange",
+     "price": 5,
+     "raw": "Mélange — 5,000 DT"
+    },
+    {
+     "label": "Repol",
+     "price": 2.5,
+     "raw": "Repol — 2,500 DT"
+    }
+   ],
+   "priceFrom": 2.5
+  },
+  {
+   "id": "AGR01",
+   "name": "Agraphe 8",
+   "desc": "Agrafes tapisserie standard — Réf. QNR 004 — boîte 10 000 unités.",
+   "categoryId": "agrafes",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 7.8,
+     "raw": "7,800 DT"
+    }
+   ],
+   "priceFrom": 7.8
+  },
+  {
+   "id": "AGR02",
+   "name": "Agraphe 10",
+   "desc": "Agrafes tapisserie standard — Réf. QNR 001 — boîte 10 000 unités.",
+   "categoryId": "agrafes",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 8.8,
+     "raw": "8,800 DT"
+    }
+   ],
+   "priceFrom": 8.8
+  },
+  {
+   "id": "AGR03",
+   "name": "Agraphe 12",
+   "desc": "Agrafes tapisserie standard — Réf. QNR 002 — boîte 10 000 unités.",
+   "categoryId": "agrafes",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 10.3,
+     "raw": "10,300 DT"
+    }
+   ],
+   "priceFrom": 10.3
+  },
+  {
+   "id": "AGR04",
+   "name": "Agraphe 14",
+   "desc": "Agrafes tapisserie standard — Réf. QNR 003 — boîte 10 000 unités.",
+   "categoryId": "agrafes",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 11.8,
+     "raw": "11,800 DT"
+    }
+   ],
+   "priceFrom": 11.8
+  },
+  {
+   "id": "AGR05",
+   "name": "Agraphe 90/40",
+   "desc": "Agrafes larges — Réf. QNR 005 — boîte 10 000 unités.",
+   "categoryId": "agrafes",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 25,
+     "raw": "25,000 DT"
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "AGR06",
+   "name": "Pointe Tête T20 (×12)",
+   "desc": "Pointe tête H14/T20 — Réf. QNR0409 — boîte de 12 barettes.",
+   "categoryId": "agrafes",
+   "img": "images/outils/t20.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 8.5,
+     "raw": "8,500 DT"
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "AGR07",
+   "name": "Pointe Tête T25 (×12)",
+   "desc": "Pointe tête H14/T25 — Réf. QNR0410 — boîte de 12 barettes.",
+   "categoryId": "agrafes",
+   "img": "images/outils/t25.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.9,
+     "raw": "9,900 DT"
+    }
+   ],
+   "priceFrom": 9.9
+  },
+  {
+   "id": "AGR08",
+   "name": "Pointe Tête T30 (×12)",
+   "desc": "Pointe tête H14/T30 — Réf. QNR0411 — boîte de 12 barettes.",
+   "categoryId": "agrafes",
+   "img": "images/outils/t30.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 11.9,
+     "raw": "11,900 DT"
+    }
+   ],
+   "priceFrom": 11.9
+  },
+  {
+   "id": "AGR09",
+   "name": "Pointe Tête T40 (×12)",
+   "desc": "Pointe tête H14/T40 — Réf. QNR0412 — boîte de 12 barettes.",
+   "categoryId": "agrafes",
+   "img": "images/outils/t40.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 14,
+     "raw": "14,000 DT"
+    }
+   ],
+   "priceFrom": 14
+  },
+  {
+   "id": "AGR10",
+   "name": "Pointe Tête T50 (×12)",
+   "desc": "Pointe tête H14/T50 — Réf. QNR0413 — boîte de 12 barettes.",
+   "categoryId": "agrafes",
+   "img": "images/outils/t50.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 17,
+     "raw": "17,000 DT"
+    }
+   ],
+   "priceFrom": 17
+  },
+  {
+   "id": "AGR11",
+   "name": "Clou F10",
+   "desc": "Clou pour tapisserie — Réf. QNR0290.",
+   "categoryId": "agrafes",
+   "img": "images/outils/f10.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 4.2,
+     "raw": "4,200 DT"
+    }
+   ],
+   "priceFrom": 4.2
+  },
+  {
+   "id": "AGR12",
+   "name": "Pistolet de capitonnage",
+   "desc": "Pistolet spray manuel pour capitonnage.",
+   "categoryId": "agrafes",
+   "img": "images/outils/pistolet.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 60,
+     "raw": "60,000 DT"
+    }
+   ],
+   "priceFrom": 60
+  },
+  {
+   "id": "AGR13",
+   "name": "Pistolet pneumatique pro",
+   "desc": "Pistolet de capitonnage pneumatique professionnel.",
+   "categoryId": "agrafes",
+   "img": "images/outils/pisto-cap.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 450,
+     "raw": "450,000 DT"
+    }
+   ],
+   "priceFrom": 450
+  },
+  {
+   "id": "MR01",
+   "name": "Miroir 60×180 Blanc",
+   "desc": "Grand miroir pleine longueur 60×180 cm, cadre Blanc.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/miroire-60x180-blanc.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 399,
+     "raw": "399,000 DT"
+    }
+   ],
+   "priceFrom": 399
+  },
+  {
+   "id": "MR02",
+   "name": "Miroir 60×180 Noir",
+   "desc": "Grand miroir pleine longueur 60×180 cm, cadre Noir.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/miroire-60x180-blanc2.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 399,
+     "raw": "399,000 DT"
+    }
+   ],
+   "priceFrom": 399
+  },
+  {
+   "id": "MR03",
+   "name": "Miroir 60×60",
+   "desc": "Miroir carré 60×60 cm, sans cadre ou cadre fin.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 220,
+     "raw": "220,000 DT"
+    }
+   ],
+   "priceFrom": 220
+  },
+  {
+   "id": "MR04",
+   "name": "Miroir 120×53 Noir",
+   "desc": "Miroir rectangulaire 120×53 cm, cadre Noir mat.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/120x53-noire.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 360,
+     "raw": "360,000 DT"
+    }
+   ],
+   "priceFrom": 360
+  },
+  {
+   "id": "MR05",
+   "name": "Miroir 120×53 Dorée",
+   "desc": "Miroir rectangulaire 120×53 cm, cadre Doré.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/120x53-doree.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 360,
+     "raw": "360,000 DT"
+    }
+   ],
+   "priceFrom": 360
+  },
+  {
+   "id": "MR06",
+   "name": "Miroir 80×60 Noir",
+   "desc": "Miroir rectangulaire 80×60 cm, finition Noir mat.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 250,
+     "raw": "250,000 DT"
+    }
+   ],
+   "priceFrom": 250
+  },
+  {
+   "id": "MR07",
+   "name": "Miroir 80×60 Silver",
+   "desc": "Miroir rectangulaire 80×60 cm, finition Silver.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 250,
+     "raw": "250,000 DT"
+    }
+   ],
+   "priceFrom": 250
+  },
+  {
+   "id": "MR08",
+   "name": "Miroir Rond Ø50",
+   "desc": "Miroir circulaire diamètre 50 cm.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 199,
+     "raw": "199,000 DT"
+    }
+   ],
+   "priceFrom": 199
+  },
+  {
+   "id": "MR09",
+   "name": "Miroir Rond Ø40",
+   "desc": "Miroir circulaire diamètre 40 cm.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/miroire-rond-40.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 160,
+     "raw": "160,000 DT"
+    }
+   ],
+   "priceFrom": 160
+  },
+  {
+   "id": "MR10",
+   "name": "Miroir Gris/Fumée Ø70",
+   "desc": "Miroir rond Ø70 cm teinte Gris/Fumée.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 290,
+     "raw": "290,000 DT"
+    }
+   ],
+   "priceFrom": 290
+  },
+  {
+   "id": "MR11",
+   "name": "Miroir Claire Ø90",
+   "desc": "Miroir rond Ø90 cm verre Claire transparent.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 270,
+     "raw": "270,000 DT"
+    }
+   ],
+   "priceFrom": 270
+  },
+  {
+   "id": "MR12",
+   "name": "Miroir Gris/Fumée Ø60",
+   "desc": "Miroir rond Ø60 cm teinte Gris/Fumée.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/miroire-gris-fumee-o60.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 240,
+     "raw": "240,000 DT"
+    }
+   ],
+   "priceFrom": 240
+  },
+  {
+   "id": "MR13",
+   "name": "Miroir D80 Blanc",
+   "desc": "Miroir rond diamètre 80 cm, cadre Blanc.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 296,
+     "raw": "296,000 DT"
+    }
+   ],
+   "priceFrom": 296
+  },
+  {
+   "id": "MR14",
+   "name": "Miroir D80 Silver",
+   "desc": "Miroir rond diamètre 80 cm, finition Silver.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/miroire-d80-silver.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 280,
+     "raw": "280,000 DT"
+    }
+   ],
+   "priceFrom": 280
+  },
+  {
+   "id": "MR15",
+   "name": "Genova Silver 80×100",
+   "desc": "Miroir Genova rectangulaire 80×100 cm, finition Silver.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 370,
+     "raw": "370,000 DT"
+    }
+   ],
+   "priceFrom": 370
+  },
+  {
+   "id": "MR16",
+   "name": "Genova Dorée D60",
+   "desc": "Miroir Genova rond Ø60 cm, finition Dorée.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/genova-doree-d60.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 240,
+     "raw": "240,000 DT"
+    }
+   ],
+   "priceFrom": 240
+  },
+  {
+   "id": "MR17",
+   "name": "Genova Noir D60",
+   "desc": "Miroir Genova rond Ø60 cm, finition Noir mat.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/genova-noir-d60.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 240,
+     "raw": "240,000 DT"
+    }
+   ],
+   "priceFrom": 240
+  },
+  {
+   "id": "MR18",
+   "name": "Genova Blanc D70",
+   "desc": "Miroir Genova rond Ø70 cm, finition Blanc.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 270,
+     "raw": "270,000 DT"
+    }
+   ],
+   "priceFrom": 270
+  },
+  {
+   "id": "MR19",
+   "name": "Genova Silver D70",
+   "desc": "Miroir Genova rond Ø70 cm, finition Silver.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 270,
+     "raw": "270,000 DT"
+    }
+   ],
+   "priceFrom": 270
+  },
+  {
+   "id": "MR20",
+   "name": "Genova 70×50 Blanc",
+   "desc": "Miroir Genova rectangulaire 70×50 cm, finition Blanc.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 250,
+     "raw": "250,000 DT"
+    }
+   ],
+   "priceFrom": 250
+  },
+  {
+   "id": "MR21",
+   "name": "Genova 70×50 Dorée",
+   "desc": "Miroir Genova rectangulaire 70×50 cm, finition Dorée.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/70x50-doree.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 250,
+     "raw": "250,000 DT"
+    }
+   ],
+   "priceFrom": 250
+  },
+  {
+   "id": "MR22",
+   "name": "Genova Silver 80×100 (L)",
+   "desc": "Miroir Genova grand format 80×100 cm, Silver — version luxe.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 450,
+     "raw": "450,000 DT"
+    }
+   ],
+   "priceFrom": 450
+  },
+  {
+   "id": "MR23",
+   "name": "Miroir Genova Noir D80",
+   "desc": "Miroir Genova rond Ø80 cm, finition Noir mat.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 260,
+     "raw": "260,000 DT"
+    }
+   ],
+   "priceFrom": 260
+  },
+  {
+   "id": "MR24",
+   "name": "Miroir Genova Silver 60×80",
+   "desc": "Miroir Genova rectangulaire 60×80 cm, finition Silver.",
+   "categoryId": "miroirs",
+   "img": null,
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 250,
+     "raw": "250,000 DT"
+    }
+   ],
+   "priceFrom": 250
+  },
+  {
+   "id": "MR25",
+   "name": "Miroir Genova Silver 50×70",
+   "desc": "Miroir Genova rectangulaire 50×70 cm, finition Silver.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/70x50-silver.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 230,
+     "raw": "230,000 DT"
+    }
+   ],
+   "priceFrom": 230
+  },
+  {
+   "id": "MR26",
+   "name": "Miroir Eva Noir 50×70",
+   "desc": "Miroir Eva rectangulaire 50×70 cm, cadre Noir mat.",
+   "categoryId": "miroirs",
+   "img": "images/miroire/miroire-eve-noire-50x70.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 230,
+     "raw": "230,000 DT"
+    }
+   ],
+   "priceFrom": 230
+  },
+  {
+   "id": "MC001",
+   "name": "Attache Canapé",
+   "desc": "Ferrure de liaison et fixation pour structure de canapé.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/attach-canapé.png",
+   "gallery": [
+    "images/mecanismes/attach-canapé.png",
+    "images/mecanismes/attach-canapé(exemple).png.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 7,
+     "raw": "7,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 7
+  },
+  {
+   "id": "MC002",
+   "name": "Mécanisme Dos",
+   "desc": "Mécanisme de dossier réglable pour canapé et fauteuil relax.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme-dos.png",
+   "gallery": [
+    "images/mecanismes/mecanisme-dos.png",
+    "images/mecanismes/mecanisme-dos(exemple).jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 49,
+     "raw": "49,000 DT / unité"
+    }
+   ],
+   "priceFrom": 49
+  },
+  {
+   "id": "MC003",
+   "name": "Mécanisme Clic Clac",
+   "desc": "Mécanisme de transformation canapé-lit système clic-clac.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme-clic-clac.png",
+   "gallery": [
+    "images/mecanismes/mecanisme-clic-clac.png",
+    "images/mecanismes/mecanisme-clic-clac(exemple).png.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "paire",
+     "price": 24,
+     "raw": "24,000 DT / paire"
+    }
+   ],
+   "priceFrom": 24
+  },
+  {
+   "id": "MC005",
+   "name": "Mécanisme de Lit",
+   "desc": "Mécanisme relevable standard pour lit coffre.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme-lit.png",
+   "gallery": [
+    "images/mecanismes/mecanisme-lit.png",
+    "images/mecanismes/mecanisme-lit(exemple).png.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "paire",
+     "price": 55,
+     "raw": "55,000 DT / paire"
+    }
+   ],
+   "priceFrom": 55
+  },
+  {
+   "id": "MC006",
+   "name": "Mécanisme de Lit avec Vérin 1,50m",
+   "desc": "Mécanisme relevable avec vérins à gaz 1,50m pour lit coffre grand format.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme-lit-verin.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC007",
+   "name": "Mécanisme Table",
+   "desc": "Mécanisme relevable pour table basse transformable en table haute.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mécanism-table.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "paire",
+     "price": 55,
+     "raw": "55,000 DT / paire"
+    }
+   ],
+   "priceFrom": 55
+  },
+  {
+   "id": "MC008",
+   "name": "Charnière de Connexion Canapé",
+   "desc": "Charnière métallique de connexion pour assemblage de canapé modulable.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/charniére de connexion canapé.png",
+   "gallery": [
+    "images/mecanismes/charniére de connexion canapé.png",
+    "images/mecanismes/charniére de connexion canapé(exemple).png.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "pièce",
+     "price": 4,
+     "raw": "4,000 DT / pièce"
+    }
+   ],
+   "priceFrom": 4
+  },
+  {
+   "id": "MC009",
+   "name": "Mécanisme 15×15",
+   "desc": "Mécanisme compact 15×15 pour meubles tapissés.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mécanisme 15x15.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 15,
+     "raw": "15,000 DT / unité"
+    }
+   ],
+   "priceFrom": 15
+  },
+  {
+   "id": "MC010",
+   "name": "Mécanisme 20×20",
+   "desc": "Mécanisme 20×20 pour meubles tapissés.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mécanisme 20x20.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 18,
+     "raw": "18,000 DT / unité"
+    }
+   ],
+   "priceFrom": 18
+  },
+  {
+   "id": "MC011",
+   "name": "Mécanisme Canapé-Lit",
+   "desc": "Mécanisme de transformation canapé en lit.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mécanisme canapé lit.jpg",
+   "gallery": [
+    "images/mecanismes/mécanisme canapé lit.jpg",
+    "images/mecanismes/mécanisme canapé lit(exemple).jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 15,
+     "raw": "15,000 DT / unité"
+    }
+   ],
+   "priceFrom": 15
+  },
+  {
+   "id": "MC012",
+   "name": "Mécanisme de Table",
+   "desc": "Mécanisme de table multifonction.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mécanisme de table.jpg",
+   "gallery": [
+    "images/mecanismes/mécanisme de table.jpg",
+    "images/mecanismes/mécanisme de table(exemple).jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 55,
+     "raw": "55,000 DT / unité"
+    }
+   ],
+   "priceFrom": 55
+  },
+  {
+   "id": "MC013",
+   "name": "Mécanisme Table Lifting",
+   "desc": "Mécanisme relevable pour table basse — système lifting.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme table lifting .jpg",
+   "gallery": [
+    "images/mecanismes/mecanisme table lifting .jpg",
+    "images/mecanismes/mecanisme table lifting (exemple).jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 85,
+     "raw": "85,000 DT / unité"
+    }
+   ],
+   "priceFrom": 85
+  },
+  {
+   "id": "MC014",
+   "name": "Mécanisme Tournant",
+   "desc": "Mécanisme rotatif pivotant pour canapé et fauteuil — 2 variantes disponibles.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mécanisme tournant.png",
+   "gallery": [
+    "images/mecanismes/mécanisme tournant.png",
+    "images/mecanismes/mécanisme tournant 2.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 85,
+     "raw": "85,000 DT / unité"
+    }
+   ],
+   "priceFrom": 85
+  },
+  {
+   "id": "MC015",
+   "name": "Mécanisme Table Extensible",
+   "desc": "Mécanisme à coulisses pour table extensible.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mécanisme table extensible.jpg",
+   "gallery": [
+    "images/mecanismes/mécanisme table extensible.jpg",
+    "images/mecanismes/mécanisme table extensible(exemple).jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 190,
+     "raw": "190,000 DT / unité"
+    }
+   ],
+   "priceFrom": 190
+  },
+  {
+   "id": "MC017",
+   "name": "Mécanisme Canapé-Lit (modèle 2)",
+   "desc": "Mécanisme de transformation canapé en lit — nouveau modèle.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme canapé lit .png",
+   "gallery": [
+    "images/mecanismes/mecanisme canapé lit .png",
+    "images/mecanismes/mecanisme canapé lit -exemple.png"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 160,
+     "raw": "160,000 DT / unité"
+    }
+   ],
+   "priceFrom": 160
+  },
+  {
+   "id": "MC016",
+   "name": "Rouleau Attache Sofa",
+   "desc": "Rouleau attache pour canapé et meubles tapissés.",
+   "categoryId": "mecanisme",
+   "img": "images/outil de tapissserie/rouleau attach sofa .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "rouleau",
+     "price": 25,
+     "raw": "25,000 DT / rouleau"
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "MC018",
+   "name": "Mécanisme Chaise Basculant",
+   "desc": "Mécanisme pivotant et basculant pour fauteuil, avec base et roulettes.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme chaise basculant.png",
+   "gallery": [],
+   "video": "images/mecanismes/mecanisme chaise basculant video.mp4",
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 250,
+     "raw": "250,000 DT / unité"
+    }
+   ],
+   "priceFrom": 250
+  },
+  {
+   "id": "IM0328",
+   "name": "Poignée Fumé 856-0",
+   "desc": "Poignée bouton tubulaire striée finition Fumé — bouton simple (entraxe 0).",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0328.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 8.7,
+     "raw": "8,700 TND"
+    }
+   ],
+   "priceFrom": 8.7
+  },
+  {
+   "id": "IM0329",
+   "name": "Poignée Fumé 856-128",
+   "desc": "Poignée barre tubulaire striée finition Fumé — entraxe 128 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0329.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 14.85,
+     "raw": "14,850 TND"
+    }
+   ],
+   "priceFrom": 14.85
+  },
+  {
+   "id": "IM0330",
+   "name": "Poignée Fumé 856-192",
+   "desc": "Poignée barre tubulaire striée finition Fumé — entraxe 192 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0330.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 19.5,
+     "raw": "19,500 TND"
+    }
+   ],
+   "priceFrom": 19.5
+  },
+  {
+   "id": "IM0348",
+   "name": "Poignée Noir 853-0",
+   "desc": "Poignée bouton tubulaire striée Noir mat — bouton simple (entraxe 0).",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0348.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.45,
+     "raw": "9,450 TND"
+    }
+   ],
+   "priceFrom": 9.45
+  },
+  {
+   "id": "IM0349",
+   "name": "Poignée Noir 853-128",
+   "desc": "Poignée barre tubulaire striée Noir mat — entraxe 128 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0349.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 14.625,
+     "raw": "14,625 TND"
+    }
+   ],
+   "priceFrom": 14.625
+  },
+  {
+   "id": "IM0327",
+   "name": "Poignée Noir 853-192",
+   "desc": "Poignée barre tubulaire striée Noir mat — entraxe 192 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0327.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 19.125,
+     "raw": "19,125 TND"
+    }
+   ],
+   "priceFrom": 19.125
+  },
+  {
+   "id": "IM0337",
+   "name": "Poignée Fumé 8724-0",
+   "desc": "Poignée barre plate finition Fumé — bouton simple (entraxe 0).",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0337.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 6.95,
+     "raw": "6,950 TND"
+    }
+   ],
+   "priceFrom": 6.95
+  },
+  {
+   "id": "IM0338",
+   "name": "Poignée Fumé 8724-128",
+   "desc": "Poignée barre plate finition Fumé — entraxe 128 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0338.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 13.05,
+     "raw": "13,050 TND"
+    }
+   ],
+   "priceFrom": 13.05
+  },
+  {
+   "id": "IM0339",
+   "name": "Poignée Fumé 8724-192",
+   "desc": "Poignée barre plate finition Fumé — entraxe 192 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0339.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 17.775,
+     "raw": "17,775 TND"
+    }
+   ],
+   "priceFrom": 17.775
+  },
+  {
+   "id": "IM0331",
+   "name": "Poignée Noir 6013-0",
+   "desc": "Poignée bouton knurled texturé Noir mat — bouton T (entraxe 0).",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0331.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 6.45,
+     "raw": "6,450 TND"
+    }
+   ],
+   "priceFrom": 6.45
+  },
+  {
+   "id": "IM0332",
+   "name": "Poignée Noir 6013-128",
+   "desc": "Poignée barre knurled texturée Noir mat — entraxe 128 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0332.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.225,
+     "raw": "9,225 TND"
+    }
+   ],
+   "priceFrom": 9.225
+  },
+  {
+   "id": "IM0333",
+   "name": "Poignée Noir 6013-192",
+   "desc": "Poignée barre knurled texturée Noir mat — entraxe 192 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0333.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 11.025,
+     "raw": "11,025 TND"
+    }
+   ],
+   "priceFrom": 11.025
+  },
+  {
+   "id": "IM0334",
+   "name": "Poignée Noir 6012-0",
+   "desc": "Poignée bouton T knurled Noir mat — bouton T simple (entraxe 0).",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0334.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 4.274,
+     "raw": "4,274 TND"
+    }
+   ],
+   "priceFrom": 4.274
+  },
+  {
+   "id": "IM0335",
+   "name": "Poignée Noir 6012-128",
+   "desc": "Poignée barre T knurled Noir mat — entraxe 128 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0335.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 7.651,
+     "raw": "7,651 TND"
+    }
+   ],
+   "priceFrom": 7.651
+  },
+  {
+   "id": "IM0336",
+   "name": "Poignée Noir 6012-192",
+   "desc": "Poignée barre T knurled Noir mat — entraxe 192 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0336.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.45,
+     "raw": "9,450 TND"
+    }
+   ],
+   "priceFrom": 9.45
+  },
+  {
+   "id": "IM0340",
+   "name": "Poignée Chrome T12-128",
+   "desc": "Poignée barre tubulaire finition Chrome — entraxe 128 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0340.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 2.2,
+     "raw": "2,200 TND"
+    }
+   ],
+   "priceFrom": 2.2
+  },
+  {
+   "id": "IM0341",
+   "name": "Poignée Chrome T12-192",
+   "desc": "Poignée barre tubulaire finition Chrome — entraxe 192 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/IM0341.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 2.175,
+     "raw": "2,175 TND"
+    }
+   ],
+   "priceFrom": 2.175
+  },
+  {
+   "id": "QNR0053",
+   "name": "Poignée Mira 1350/32-100",
+   "desc": "Poignée longue bicolore or/chrome série Mira — longueur 100 mm, entraxe 32 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/QNR0053.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 6,
+     "raw": "6,000 TND"
+    }
+   ],
+   "priceFrom": 6
+  },
+  {
+   "id": "QNR0052",
+   "name": "Poignée Mira 1350/32-200",
+   "desc": "Poignée longue bicolore or/chrome série Mira — longueur 200 mm, entraxe 32 mm.",
+   "categoryId": "poignees",
+   "img": "images/poignee/QNR0052.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9,
+     "raw": "9,000 TND"
+    }
+   ],
+   "priceFrom": 9
+  },
+  {
+   "id": "QNR0351",
+   "name": "Poignée de Meuble Noire",
+   "desc": "Poignée encastrée plate Noir mat — disponible en 8 tailles pour tiroirs et portes de meuble.",
+   "categoryId": "poignees",
+   "img": "images/poignee/QNR0351.jpg",
+   "gallery": [
+    "images/poignee/QNR0351.jpg",
+    "images/poignee/QNR0351-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "15cm",
+     "price": 3.5,
+     "raw": "15cm — 3,500 TND"
+    },
+    {
+     "label": "20cm",
+     "price": 3.8,
+     "raw": "20cm — 3,800 TND"
+    },
+    {
+     "label": "30cm",
+     "price": 5.2,
+     "raw": "30cm — 5,200 TND"
+    },
+    {
+     "label": "40cm",
+     "price": 7,
+     "raw": "40cm — 7,000 TND"
+    },
+    {
+     "label": "50cm",
+     "price": 9,
+     "raw": "50cm — 9,000 TND"
+    },
+    {
+     "label": "60cm",
+     "price": 11,
+     "raw": "60cm — 11,000 TND"
+    },
+    {
+     "label": "80cm",
+     "price": 13.9,
+     "raw": "80cm — 13,900 TND"
+    },
+    {
+     "label": "100cm",
+     "price": 16,
+     "raw": "100cm — 16,000 TND"
+    }
+   ],
+   "priceFrom": 3.5
+  },
+  {
+   "id": "QNR0326",
+   "name": "Triangle de Meuble 2-3",
+   "desc": "Poignée triangulaire — style contemporain pour meubles modernes. Disponible en 3 finitions.",
+   "categoryId": "poignees",
+   "img": "images/poignee/TRIANGLE.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Noir",
+     "price": 1.5,
+     "raw": "Noir — 1,500 TND"
+    },
+    {
+     "label": "Fumé",
+     "price": 2.5,
+     "raw": "Fumé — 2,500 TND"
+    },
+    {
+     "label": "Chrome",
+     "price": 2,
+     "raw": "Chrome — 2,000 TND"
+    }
+   ],
+   "priceFrom": 1.5
+  },
+  {
+   "id": "COL01",
+   "name": "Selsil PU Marine 500ml",
+   "desc": "Silicone polyuréthane marine imperméable, idéal pour sanitaires et vitrages.",
+   "categoryId": "colle",
+   "img": "images/colle/SELSIL PU MARINE 500ML.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 19.5,
+     "raw": "19,500 DT"
+    }
+   ],
+   "priceFrom": 19.5
+  },
+  {
+   "id": "COL02",
+   "name": "Selsil Miroir Adhesive Blanc 280ml",
+   "desc": "Colle adhésive neutre pour miroirs, ne corrode pas le tain.",
+   "categoryId": "colle",
+   "img": "images/colle/SELSIL MIROIR ADHESIVE BLANC 280 ML.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 20.5,
+     "raw": "20,500 DT"
+    }
+   ],
+   "priceFrom": 20.5
+  },
+  {
+   "id": "COL03",
+   "name": "Selsil Ultra Clear 290ml",
+   "desc": "Silicone ultra transparent pour assemblages invisibles.",
+   "categoryId": "colle",
+   "img": "images/colle/SELSIL ULTRA CLEAR 290ML.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 20.5,
+     "raw": "20,500 DT"
+    }
+   ],
+   "priceFrom": 20.5
+  },
+  {
+   "id": "COL04",
+   "name": "Selsil Miroir Adhesive Blanc 280ml (2)",
+   "desc": "Colle adhésive neutre pour miroirs, formule sans acide.",
+   "categoryId": "colle",
+   "img": "images/colle/SELSIL MIROIR ADHESIVE BLANC 280 ML (2).jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 20.5,
+     "raw": "20,500 DT"
+    }
+   ],
+   "priceFrom": 20.5
+  },
+  {
+   "id": "COL05",
+   "name": "Selsil Ultra Tack 290ml Blanc",
+   "desc": "Mastic-colle polyvalent haute adhérence, joints élastiques.",
+   "categoryId": "colle",
+   "img": "images/colle/SELSIL ULTRA TACK 290ML BLANC.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 20.5,
+     "raw": "20,500 DT"
+    }
+   ],
+   "priceFrom": 20.5
+  },
+  {
+   "id": "COL06",
+   "name": "Colle Kit 200ml + 50g Apel",
+   "desc": "Kit colle bicomposant rapide pour bois, MDF et stratifié.",
+   "categoryId": "colle",
+   "img": "images/colle/COLLE KIT 200ML+50G APEL.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.5,
+     "raw": "9,500 DT"
+    }
+   ],
+   "priceFrom": 9.5
+  },
+  {
+   "id": "COL07",
+   "name": "Colle Panda Adhesive 13 kg",
+   "desc": "Colle de contact néoprène en seau 13 kg pour tapisserie et meubles rembourrés.",
+   "categoryId": "colle",
+   "img": "images/colle/COLLE PANDA ADHESIVE 13 KG.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 140,
+     "raw": "140,000 DT"
+    }
+   ],
+   "priceFrom": 140
+  },
+  {
+   "id": "COL16",
+   "name": "Colle Panda Adhesive 3 kg",
+   "desc": "Colle de contact néoprène en seau 3 kg pour tapisserie et meubles rembourrés.",
+   "categoryId": "colle",
+   "img": "images/colle/colle 3kg panda.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 40,
+     "raw": "40,000 DT"
+    }
+   ],
+   "priceFrom": 40
+  },
+  {
+   "id": "COL08",
+   "name": "Colle Kit 500ml + 130g Apel",
+   "desc": "Kit colle bicomposant grande capacité pour assemblages professionnels.",
+   "categoryId": "colle",
+   "img": "images/colle/COLLE KIT 500ML+130G APEL.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 16.5,
+     "raw": "16,500 DT"
+    }
+   ],
+   "priceFrom": 16.5
+  },
+  {
+   "id": "COL09",
+   "name": "Selsil All In One Spray 200ml",
+   "desc": "Colle spray polyvalente toutes surfaces, prise rapide.",
+   "categoryId": "colle",
+   "img": "images/colle/SELSIL ALL IN ONE SPRAY 200ML.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.5,
+     "raw": "9,500 DT"
+    }
+   ],
+   "priceFrom": 9.5
+  },
+  {
+   "id": "COL10",
+   "name": "Selsil All In Spray 400ml",
+   "desc": "Colle spray contact grande surface pour mousse et tissu.",
+   "categoryId": "colle",
+   "img": "images/colle/SELSIL ALL IN SPRAY 400ML.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 16.5,
+     "raw": "16,500 DT"
+    }
+   ],
+   "priceFrom": 16.5
+  },
+  {
+   "id": "COL11",
+   "name": "Colle MDF Rapid Kit 100×400ml",
+   "desc": "Kit colle MDF rapide, compatible panneaux mélaminés et stratifiés.",
+   "categoryId": "colle",
+   "img": "images/colle/COLLE MDF RAPID KIT 100400ML.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 13,
+     "raw": "13,000 DT"
+    }
+   ],
+   "priceFrom": 13
+  },
+  {
+   "id": "COL12",
+   "name": "Colle Ninja MDF 100ml + 50g",
+   "desc": "Colle bicomposant ultra-résistante pour MDF et aggloméré.",
+   "categoryId": "colle",
+   "img": "images/colle/COLLE NINJA MDF 100ML +50G.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.5,
+     "raw": "9,500 DT"
+    }
+   ],
+   "priceFrom": 9.5
+  },
+  {
+   "id": "COL13",
+   "name": "Colle Glue MDF 100g",
+   "desc": "Colle blanche liquide pour bois et panneaux de particules.",
+   "categoryId": "colle",
+   "img": "images/colle/COLLE GLUE MDF 100G.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 7.9,
+     "raw": "7,900 DT"
+    }
+   ],
+   "priceFrom": 7.9
+  },
+  {
+   "id": "COL14",
+   "name": "Power Fix Glue 707 + 807 (20g)",
+   "desc": "Super glue cyanoacrylate double formule pour réparations rapides sur tous matériaux.",
+   "categoryId": "colle",
+   "img": "images/colle/POWER FIX GLUE 707 20GR et 807.jpeg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 4.6,
+     "raw": "4,600 DT"
+    }
+   ],
+   "priceFrom": 4.6
+  },
+  {
+   "id": "COL15",
+   "name": "Colle Vinylique 5 kg",
+   "desc": "Colle vinylique 5 kg pour tapisserie et menuiserie.",
+   "categoryId": "colle",
+   "img": "images/colle/colle 5kg.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 48,
+     "raw": "48,000 DT"
+    }
+   ],
+   "priceFrom": 48
+  },
+  {
+   "id": "OUT001",
+   "name": "Agraphe 8",
+   "desc": "Réf. QNR 004",
+   "categoryId": "outils-0",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 7.8,
+     "raw": "7,800 DT"
+    }
+   ],
+   "priceFrom": 7.8
+  },
+  {
+   "id": "OUT002",
+   "name": "Agraphe 10",
+   "desc": "Réf. QNR 001",
+   "categoryId": "outils-0",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 8.8,
+     "raw": "8,800 DT"
+    }
+   ],
+   "priceFrom": 8.8
+  },
+  {
+   "id": "OUT003",
+   "name": "Agraphe 12",
+   "desc": "Réf. QNR 002",
+   "categoryId": "outils-0",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 10.3,
+     "raw": "10,300 DT"
+    }
+   ],
+   "priceFrom": 10.3
+  },
+  {
+   "id": "OUT004",
+   "name": "Agraphe 14",
+   "desc": "Réf. QNR 003",
+   "categoryId": "outils-0",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 11.8,
+     "raw": "11,800 DT"
+    }
+   ],
+   "priceFrom": 11.8
+  },
+  {
+   "id": "OUT005",
+   "name": "Agraphe 90/40",
+   "desc": "Réf. QNR 005",
+   "categoryId": "outils-0",
+   "img": "images/outils/agr.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 25,
+     "raw": "25,000 DT"
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "OUT006",
+   "name": "Pointe Tête H14/T20 (boîte 12)",
+   "desc": "Réf. QNR0409",
+   "categoryId": "outils-1",
+   "img": "images/outils/t20.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 8.5,
+     "raw": "8,500 DT"
+    }
+   ],
+   "priceFrom": 8.5
+  },
+  {
+   "id": "OUT007",
+   "name": "Pointe Tête H14/T25 (boîte 12)",
+   "desc": "Réf. QNR0410",
+   "categoryId": "outils-1",
+   "img": "images/outils/t25.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 9.9,
+     "raw": "9,900 DT"
+    }
+   ],
+   "priceFrom": 9.9
+  },
+  {
+   "id": "OUT008",
+   "name": "Pointe Tête H14/T30 (boîte 12)",
+   "desc": "Réf. QNR0411",
+   "categoryId": "outils-1",
+   "img": "images/outils/t30.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 11.9,
+     "raw": "11,900 DT"
+    }
+   ],
+   "priceFrom": 11.9
+  },
+  {
+   "id": "OUT009",
+   "name": "Pointe Tête H14/T40 (boîte 12)",
+   "desc": "Réf. QNR0412",
+   "categoryId": "outils-1",
+   "img": "images/outils/t40.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 14,
+     "raw": "14,000 DT"
+    }
+   ],
+   "priceFrom": 14
+  },
+  {
+   "id": "OUT010",
+   "name": "Pointe Tête H14/T50 (boîte 12)",
+   "desc": "Réf. QNR0413",
+   "categoryId": "outils-1",
+   "img": "images/outils/t50.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 17,
+     "raw": "17,000 DT"
+    }
+   ],
+   "priceFrom": 17
+  },
+  {
+   "id": "OUT011",
+   "name": "Clou F10",
+   "desc": "Réf. QNR0290",
+   "categoryId": "outils-1",
+   "img": "images/outils/f10.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 4.2,
+     "raw": "4,200 DT"
+    }
+   ],
+   "priceFrom": 4.2
+  },
+  {
+   "id": "OUT012",
+   "name": "Pistolet de capitonnage (spray)",
+   "desc": "",
+   "categoryId": "outils-2",
+   "img": "images/outils/pistolet.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 60,
+     "raw": "60,000 DT"
+    }
+   ],
+   "priceFrom": 60
+  },
+  {
+   "id": "OUT013",
+   "name": "Pistolet de capitonnage pneumatique professionnel",
+   "desc": "",
+   "categoryId": "outils-2",
+   "img": "images/outils/pisto-cap.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 450,
+     "raw": "450,000 DT"
+    }
+   ],
+   "priceFrom": 450
+  },
+  {
+   "id": "OUT028",
+   "name": "Pistolet de Peinture — Réservoir Bas",
+   "desc": "",
+   "categoryId": "outils-2",
+   "img": "images/outil de tapissserie/pistolet de colle.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 48,
+     "raw": "48,000 DT"
+    }
+   ],
+   "priceFrom": 48
+  },
+  {
+   "id": "OUT029",
+   "name": "Pistolet de Peinture — Réservoir Gravité (Haut)",
+   "desc": "",
+   "categoryId": "outils-2",
+   "img": "images/outil de tapissserie/pistolet de peinture.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 48,
+     "raw": "48,000 DT"
+    }
+   ],
+   "priceFrom": 48
+  },
+  {
+   "id": "OUT014",
+   "name": "Ciseaux",
+   "desc": "",
+   "categoryId": "outils-3",
+   "img": "images/outil de tapissserie/ciseaux.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 15,
+     "raw": "15,000 DT"
+    }
+   ],
+   "priceFrom": 15
+  },
+  {
+   "id": "OUT015",
+   "name": "Coupe-Fil",
+   "desc": "",
+   "categoryId": "outils-3",
+   "img": "images/outil de tapissserie/coupe fil.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 3,
+     "raw": "3,000 DT"
+    }
+   ],
+   "priceFrom": 3
+  },
+  {
+   "id": "OUT016",
+   "name": "Vis N°5",
+   "desc": "",
+   "categoryId": "outils-4",
+   "img": "images/outil de tapissserie/vis 5.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 25,
+     "raw": "25,000 DT"
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "OUT017",
+   "name": "Vis N°7",
+   "desc": "",
+   "categoryId": "outils-4",
+   "img": "images/outil de tapissserie/vis 7.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 25,
+     "raw": "25,000 DT"
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "OUT018",
+   "name": "Curseur",
+   "desc": "",
+   "categoryId": "outils-5",
+   "img": "images/outil de tapissserie/Curseur.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 0.15,
+     "raw": "0,150 DT"
+    }
+   ],
+   "priceFrom": 0.15
+  },
+  {
+   "id": "OUT019",
+   "name": "Patin-Glisseur",
+   "desc": "",
+   "categoryId": "outils-5",
+   "img": "images/outil de tapissserie/Patin-glisseur.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 0.15,
+     "raw": "0,150 DT"
+    }
+   ],
+   "priceFrom": 0.15
+  },
+  {
+   "id": "OUT020",
+   "name": "Fermeture Éclair (rouleau)",
+   "desc": "",
+   "categoryId": "outils-6",
+   "img": "images/outil de tapissserie/fermeture.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 38,
+     "raw": "38,000 DT"
+    }
+   ],
+   "priceFrom": 38
+  },
+  {
+   "id": "OUT021",
+   "name": "Film Étirable",
+   "desc": "",
+   "categoryId": "outils-6",
+   "img": "images/outil de tapissserie/film étirable.jpg",
+   "gallery": [
+    "images/outil de tapissserie/film étirable.jpg",
+    "images/outil de tapissserie/film étirable-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 25,
+     "raw": "25,000 DT"
+    }
+   ],
+   "priceFrom": 25
+  },
+  {
+   "id": "OUT022",
+   "name": "Sangle",
+   "desc": "",
+   "categoryId": "outils-6",
+   "img": "images/outil de tapissserie/sangle.jpg",
+   "gallery": [
+    "images/outil de tapissserie/sangle.jpg",
+    "images/outil de tapissserie/sangle-exemple.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 50,
+     "raw": "50,000 DT"
+    }
+   ],
+   "priceFrom": 50
+  },
+  {
+   "id": "OUT026",
+   "name": "Sangle Noire Jaune",
+   "desc": "",
+   "categoryId": "outils-6",
+   "img": "images/outil de tapissserie/sangle noire jaune.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 70,
+     "raw": "70,000 DT"
+    }
+   ],
+   "priceFrom": 70
+  },
+  {
+   "id": "OUT023",
+   "name": "Cordon Petit",
+   "desc": "",
+   "categoryId": "outils-7",
+   "img": "images/outil de tapissserie/cordon petit.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 11,
+     "raw": "11,000 DT"
+    }
+   ],
+   "priceFrom": 11
+  },
+  {
+   "id": "OUT024",
+   "name": "Cordon Moyen",
+   "desc": "",
+   "categoryId": "outils-7",
+   "img": "images/outil de tapissserie/cordon moyen .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 22,
+     "raw": "22,000 DT"
+    }
+   ],
+   "priceFrom": 22
+  },
+  {
+   "id": "OUT027",
+   "name": "TNT — Toile Non Tissée",
+   "desc": "Largeur 1m — Disponible en Noir et Blanc",
+   "categoryId": "outils-8",
+   "img": "images/outil de tapissserie/tnt.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Au mètre",
+     "price": 3.2
+    },
+    {
+     "label": "Rouleau 100 m",
+     "price": 300
+    }
+   ],
+   "priceFrom": 3.2
+  },
+  {
+   "id": "OUT030",
+   "name": "Soufflette d'Air ANI 25/B2 (buse longue)",
+   "desc": "Cod. AH050301",
+   "categoryId": "outils-9",
+   "img": "images/outil de tapissserie/souflette d'aire 1.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 39,
+     "raw": "39,000 DT"
+    }
+   ],
+   "priceFrom": 39
+  },
+  {
+   "id": "OUT031",
+   "name": "Soufflette d'Air ANI 25/B1",
+   "desc": "Cod. AH050101",
+   "categoryId": "outils-9",
+   "img": "images/outil de tapissserie/souflette d'aire 2.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 39,
+     "raw": "39,000 DT"
+    }
+   ],
+   "priceFrom": 39
+  }
+ ]
+}
