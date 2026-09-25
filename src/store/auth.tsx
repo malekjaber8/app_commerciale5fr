@@ -21,6 +21,8 @@ interface AuthCtx {
   email: string | null
   profile: Profile | null
   role: Role | null
+  /** Vrai pour le compte proprietaire (celui de config.ts) : seul a pouvoir creer ou gerer d'autres administrateurs. */
+  isOwner: boolean
   login: (email: string, password: string) => Promise<void>
   logout: () => Promise<void>
 }
@@ -56,7 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const snap = await getDoc(doc(db, 'users', u.uid))
         const data = snap.exists() ? (snap.data() as Profile) : null
-        if (data && data.active && data.role === 'commercial') {
+        if (data && data.active && (data.role === 'commercial' || data.role === 'admin')) {
           setProfile(data)
           setStatus('ready')
         } else {
@@ -73,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthCtx>(() => ({
     status, uid, email, profile,
     role: profile?.role ?? null,
+    isOwner: (email || '').toLowerCase() === ADMIN_EMAIL.toLowerCase(),
     login: async (id, p) => { await signInWithEmailAndPassword(auth, loginToEmail(id), p) },
     logout: async () => { await signOut(auth) },
   }), [status, uid, email, profile])
