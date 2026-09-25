@@ -10,10 +10,15 @@ export const ADMIN_EMAIL = 'malekjaber955@gmail.com'
  */
 export const USERNAME_DOMAIN = '@commerciaux.5freres.app'
 export const cleanUsername = (u: string) => u.trim().toLowerCase()
-export const isValidUsername = (u: string) => /^[a-z0-9._-]{3,30}$/.test(cleanUsername(u))
+export const isValidUsername = (u: string) => /^[a-z0-9._-]{3,30}$/.test(cleanUsername(u)) && cleanUsername(u) !== OWNER_LOGIN
 export const usernameToEmail = (u: string) => cleanUsername(u) + USERNAME_DOMAIN
 /** Identifiant saisi a la connexion : un nom d'utilisateur (commercial) ou une vraie adresse e-mail (admin). */
-export const loginToEmail = (id: string) => (id.includes('@') ? id.trim() : usernameToEmail(id))
+export const OWNER_LOGIN = 'malek'
+export const loginToEmail = (id: string) => {
+  const clean = cleanUsername(id)
+  if (clean === OWNER_LOGIN) return ADMIN_EMAIL // alias : « malek » = le compte proprietaire
+  return id.includes('@') ? id.trim() : usernameToEmail(id)
+}
 /** Nom d'utilisateur lisible a partir de l'e-mail technique (ou l'e-mail tel quel s'il est reel). */
 export const emailToLogin = (email: string) => (email.endsWith(USERNAME_DOMAIN) ? email.slice(0, -USERNAME_DOMAIN.length) : email)
 
