@@ -8,3 +8,8 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+// Application installable (tablette / telephone) : uniquement pour la version web, pas pour l'application bureau
+if (import.meta.env.PROD && import.meta.env.VITE_DESKTOP !== '1' && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => { /* installation impossible : sans consequence */ }) })
+}
