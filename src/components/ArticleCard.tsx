@@ -1,6 +1,9 @@
-import { Flame, ImageOff } from 'lucide-react'
+import { Flame, ImageOff, Ruler } from 'lucide-react'
 import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
+
+/** Categories dont les articles sont des « types » (densites) : le prix depend de la dimension, on ne l'affiche qu'a l'ouverture de la fiche. */
+const DIMENSION_CATEGORIES = new Set(['mousse-matelas', 'mousse-tabka'])
 
 export function ArticleCard({ article, onOpen }: { article: Article; onOpen: () => void }) {
   return (
@@ -26,6 +29,11 @@ export function ArticleCard({ article, onOpen }: { article: Article; onOpen: () 
       </div>
       <div className="flex flex-1 flex-col gap-1 p-3">
         <div className="line-clamp-2 text-sm font-semibold text-navy">{article.name}</div>
+        {DIMENSION_CATEGORIES.has(article.categoryId) ? (
+          <div className="mt-auto flex items-center gap-1.5 pt-2 text-xs font-semibold text-teal-dark">
+            <Ruler size={14} /> {article.variants.length} dimension{article.variants.length > 1 ? 's' : ''} — voir les prix
+          </div>
+        ) : (
         <div className="mt-auto flex items-baseline gap-2 pt-2">
           {article.variants.length > 1 && article.priceFrom != null && (
             <span className="text-[11px] text-slate-500">dès</span>
@@ -37,6 +45,7 @@ export function ArticleCard({ article, onOpen }: { article: Article; onOpen: () 
             <span className="text-xs text-slate-400 line-through">{dt(article.oldPrice)}</span>
           )}
         </div>
+        )}
         <div className="text-[11px] text-slate-400">{article.id}</div>
       </div>
     </button>
