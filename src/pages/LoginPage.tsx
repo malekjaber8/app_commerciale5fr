@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { LogIn } from 'lucide-react'
 import { authErrorMessage, useAuth } from '../store/auth'
 import { IS_DESKTOP, emailToLogin } from '../config'
+import { InstallButton } from '../components/InstallButton'
 
 export function LoginPage() {
   const { login } = useAuth()
@@ -43,6 +44,7 @@ export function LoginPage() {
         <button disabled={busy} className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal to-navy-soft py-3 text-sm font-bold text-white shadow disabled:opacity-60">
           <LogIn size={16} /> {busy ? 'Connexion...' : 'Se connecter'}
         </button>
+        {!IS_DESKTOP && <InstallButton className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-teal py-2.5 text-sm font-bold text-teal-dark" />}
       </form>
     </div>
   )
