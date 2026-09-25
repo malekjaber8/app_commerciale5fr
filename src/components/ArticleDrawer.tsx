@@ -83,17 +83,24 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
 
           <div>
             <h3 className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-500">Variantes et prix</h3>
-            <div className="max-h-64 overflow-y-auto rounded-xl border border-slate-200">
-              <table className="w-full text-sm">
+            <div className="overflow-hidden rounded-xl border border-slate-200">
+              <table className="w-full text-base">
                 <tbody>
                   {article.variants.map((v, i) => (
                     <tr key={v.label + i} onClick={() => setVariantIdx(i)}
                       className={`cursor-pointer border-b border-slate-100 last:border-0 ${i === variantIdx ? 'bg-teal/10' : 'hover:bg-slate-50'}`}>
-                      <td className="p-2.5">
-                        <div className="font-medium text-slate-700">{v.label}</div>
-                        {v.code && <div className="text-[11px] text-slate-400">{v.code}</div>}
+                      <td className="px-3 py-3.5">
+                        <div className="flex items-center gap-3">
+                          <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${i === variantIdx ? 'border-teal bg-teal' : 'border-slate-300'}`}>
+                            {i === variantIdx && <span className="h-2 w-2 rounded-full bg-white" />}
+                          </span>
+                          <div>
+                            <div className="font-medium text-slate-700">{v.label}</div>
+                            {v.code && <div className="text-[11px] text-slate-400">{v.code}</div>}
+                          </div>
+                        </div>
                       </td>
-                      <td className="p-2.5 text-right">
+                      <td className="px-3 py-3.5 text-right">
                         {v.oldPrice != null && <div className="text-xs text-slate-400 line-through">{dt(v.oldPrice)}</div>}
                         <div className={`font-bold ${v.oldPrice != null ? 'text-red-600' : 'text-navy'}`}>
                           {dt(v.price)}{article.unit ? ` / ${article.unit}` : ''}
@@ -122,18 +129,26 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
           )}
         </div>
 
-        <footer className="mt-auto flex items-center gap-3 border-t border-slate-200 bg-white p-5">
-          <div className="flex items-center rounded-xl border border-slate-200">
-            <button onClick={() => setQty(q => Math.max(1, q - 1))} className="p-2.5 hover:bg-slate-50"><Minus size={14} /></button>
-            <input value={qty} onChange={e => setQty(Math.max(1, parseInt(e.target.value) || 1))}
-              className="w-12 text-center text-sm font-semibold outline-none" />
-            <button onClick={() => setQty(q => q + 1)} className="p-2.5 hover:bg-slate-50"><Plus size={14} /></button>
+        <footer className="sticky bottom-0 mt-auto border-t border-slate-200 bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 shadow-[0_-6px_16px_rgba(0,0,0,0.06)]">
+          <div className="mb-3 flex items-baseline justify-between gap-3 text-sm">
+            <span className="min-w-0 truncate text-slate-500">Choix : <b className="text-navy">{variant.label}</b></span>
+            <span className="shrink-0 text-slate-500">{variant.price != null ? `${dt(variant.price)}${article.unit ? ` / ${article.unit}` : ''}` : 'Sur devis'}</span>
           </div>
-          <button onClick={addToQuote} disabled={variant.price == null}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal to-navy-soft px-4 py-3 text-sm font-bold text-white shadow disabled:opacity-40">
-            <ShoppingBag size={16} />
-            {added ? 'Ajouté au panier ✓' : variant.price == null ? 'Sur devis' : `Ajouter au panier — ${dt(variant.price * qty)}`}
-          </button>
+          <div className="flex items-stretch gap-3">
+            <div className="flex items-center rounded-2xl border-2 border-slate-200">
+              <button onClick={() => setQty(q => Math.max(1, q - 1))} className="flex h-14 w-14 items-center justify-center rounded-l-2xl hover:bg-slate-50 active:bg-slate-100"><Minus size={22} /></button>
+              <input value={qty} inputMode="numeric" onChange={e => setQty(Math.max(1, parseInt(e.target.value) || 1))}
+                className="w-14 text-center text-xl font-bold outline-none" />
+              <button onClick={() => setQty(q => q + 1)} className="flex h-14 w-14 items-center justify-center rounded-r-2xl hover:bg-slate-50 active:bg-slate-100"><Plus size={22} /></button>
+            </div>
+            <button onClick={addToQuote} disabled={variant.price == null}
+              className="flex min-h-14 flex-1 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-teal to-navy-soft px-4 text-lg font-extrabold text-white shadow-lg active:scale-[0.99] disabled:opacity-40">
+              <ShoppingBag size={24} />
+              <span className="text-left leading-tight">
+                {added ? 'Ajouté au panier ✓' : variant.price == null ? 'Sur devis' : (<>Ajouter au panier<span className="block text-sm font-semibold opacity-90">{dt(variant.price * qty)}</span></>)}
+              </span>
+            </button>
+          </div>
         </footer>
       </aside>
     </div>
