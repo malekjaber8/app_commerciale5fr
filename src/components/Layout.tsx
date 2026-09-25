@@ -29,7 +29,7 @@ export function Layout() {
           {!IS_DESKTOP && (
             <>
               <NavLink to="/devis" className={link}>
-                <FileText size={16} /> {label('Devis')}
+                <FileText size={16} /> {label('Panier')}
                 {count > 0 && <span className="rounded-full bg-teal px-1.5 text-[11px] font-bold text-navy">{count}</span>}
               </NavLink>
               <NavLink to="/mes-devis" className={link}><History size={16} /> {label('Mes devis')}</NavLink>

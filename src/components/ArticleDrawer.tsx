@@ -114,7 +114,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
           <button onClick={addToQuote} disabled={variant.price == null}
             className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal to-navy-soft px-4 py-3 text-sm font-bold text-white shadow disabled:opacity-40">
             <ShoppingBag size={16} />
-            {added ? 'Ajouté au devis ✓' : variant.price == null ? 'Sur devis' : `Ajouter au devis — ${dt(variant.price * qty)}`}
+            {added ? 'Ajouté au panier ✓' : variant.price == null ? 'Sur devis' : `Ajouter au panier — ${dt(variant.price * qty)}`}
           </button>
         </footer>
       </aside>
