@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Minus, Play, Plus, ShoppingBag, X } from 'lucide-react'
+import { Minus, Play, Plus, ShoppingBag, X, ZoomIn } from 'lucide-react'
 import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
 import { findCategory } from '../lib/catalogue'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { AdminPriceEditor } from './AdminPriceEditor'
+import { ImageLightbox } from './ImageLightbox'
 import { ArticleFormModal } from './ArticleFormModal'
 import { deleteProduct, isCustomId } from '../lib/products'
 import { useSettings } from '../store/settings'
@@ -19,6 +20,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
   const [qty, setQty] = useState(1)
   const [imgIdx, setImgIdx] = useState(0)
   const [showVideo, setShowVideo] = useState(false)
+  const [zoom, setZoom] = useState(false)
   const [added, setAdded] = useState(false)
 
   const images = article.gallery.length ? article.gallery : article.img ? [article.img] : []
@@ -54,7 +56,11 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
                 {showVideo && article.video ? (
                   <video src={asset(article.video)} controls autoPlay className="h-full w-full rounded-2xl" />
                 ) : (
-                  <img src={asset(images[imgIdx])} alt={article.name} className="max-h-full max-w-full object-contain p-3" />
+                  <button type="button" onClick={() => setZoom(true)} aria-label="Agrandir la photo"
+                    className="group relative flex h-full w-full cursor-zoom-in items-center justify-center">
+                    <img src={asset(images[imgIdx])} alt={article.name} className="max-h-full max-w-full object-contain p-3" />
+                    <span className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-semibold text-white"><ZoomIn size={13} /> Agrandir</span>
+                  </button>
                 )}
               </div>
               <div className="mt-2 flex flex-wrap gap-2">
@@ -151,6 +157,9 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
           </div>
         </footer>
       </aside>
+      {zoom && images.length > 0 && (
+        <ImageLightbox images={images} index={imgIdx} alt={article.name} onIndex={i => { setImgIdx(i); setShowVideo(false) }} onClose={() => setZoom(false)} />
+      )}
     </div>
   )
 }
