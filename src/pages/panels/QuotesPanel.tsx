@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { CheckCircle2, Pencil } from 'lucide-react'
 import { db } from '../../firebase'
@@ -6,9 +6,11 @@ import { fetchAllQuotes, fetchMyQuotes, type QuoteDoc } from '../../lib/quotes'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { QuoteList } from '../../components/QuoteList'
-import { QuoteEditor } from '../../components/QuoteEditor'
-import { ValidateQuoteModal } from '../../components/ValidateQuoteModal'
 import { inputCls } from '../../components/ui'
+
+// Fenetres d'administration : presentes uniquement dans l'application bureau (absentes du build web)
+const QuoteEditor = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/QuoteEditor').then(m => ({ default: m.QuoteEditor }))) : null
+const ValidateQuoteModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/ValidateQuoteModal').then(m => ({ default: m.ValidateQuoteModal }))) : null
 
 interface Props { ownerUid?: string; admin?: boolean }
 
@@ -77,8 +79,10 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           ) : undefined}
         />
       )}
-      {editing && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
-      {validating && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}
+      <Suspense fallback={null}>
+        {editing && QuoteEditor && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
+        {validating && ValidateQuoteModal && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}
+      </Suspense>
     </div>
   )
 }
