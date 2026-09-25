@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { doc, onSnapshot, setDoc } from 'firebase/firestore'
+import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useAuth } from './auth'
 import { articles as baseArticles } from '../lib/catalogue'
+import { productToArticle, type ProductRow } from '../lib/products'
 import type { Article, Settings } from '../types'
 
 export const DEFAULT_SETTINGS: Settings = { hiddenIds: [], priceOverrides: {}, maxDiscountPct: 10 }
@@ -11,6 +12,8 @@ interface SettingsCtx {
   settings: Settings
   loaded: boolean
   save: (s: Settings) => Promise<void>
+  /** Articles ajoutes par l'admin (donnees brutes, pour la modification). */
+  products: ProductRow[]
   /** Catalogue tel que le voit l'utilisateur courant (masques et prix ajustes appliques). */
   articles: Article[]
 }
@@ -21,6 +24,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const { status, role } = useAuth()
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
   const [loaded, setLoaded] = useState(false)
+  const [products, setProducts] = useState<ProductRow[]>([])
 
   useEffect(() => {
     if (status !== 'ready') { setLoaded(false); return }
@@ -34,10 +38,21 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     )
   }, [status])
 
+  // Articles ajoutes par l'admin : lus en direct, visibles par l'admin et les commerciaux seulement
+  useEffect(() => {
+    if (status !== 'ready') { setProducts([]); return }
+    return onSnapshot(
+      collection(db, 'products'),
+      (snap) => setProducts(snap.docs.map(d => ({ id: d.id, ...(d.data() as object) }) as ProductRow)),
+      () => setProducts([]),
+    )
+  }, [status])
+
   const articles = useMemo(() => {
     const hidden = new Set(settings.hiddenIds)
     const out: Article[] = []
-    for (const a of baseArticles) {
+    const all = [...products.map(productToArticle).reverse(), ...baseArticles]
+    for (const a of all) {
       const isHidden = hidden.has(a.id)
       if (isHidden && role !== 'admin') continue
       const ov = settings.priceOverrides[a.id]
@@ -50,12 +65,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       out.push(isHidden ? { ...art, hidden: true } : art)
     }
     return out
-  }, [settings, role])
+  }, [settings, role, products])
 
   const value = useMemo<SettingsCtx>(() => ({
-    settings, loaded, articles,
+    settings, loaded, articles, products,
     save: async (s) => { await setDoc(doc(db, 'settings', 'catalogue'), s) },
-  }), [settings, loaded, articles])
+  }), [settings, loaded, articles, products])
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

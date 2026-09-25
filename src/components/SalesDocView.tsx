@@ -3,7 +3,8 @@ import { doc as fsDoc, getDoc } from 'firebase/firestore'
 import { Printer, X } from 'lucide-react'
 import { db } from '../firebase'
 import { TIMBRE, TVA_RATE } from '../lib/db'
-import { findArticle } from '../lib/catalogue'
+import { useSettings } from '../store/settings'
+import { isCustomId } from '../lib/products'
 import type { Client, DocLine } from '../types'
 
 export interface SalesDoc {
@@ -29,6 +30,7 @@ const num = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 3,
 /** Devis / bon de commande imprimable, sur le modele du bon de livraison de la societe. */
 export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => void }) {
   const [client, setClient] = useState<Client | null>(null)
+  const { articles } = useSettings()
 
   // Feuille A4 sans marges navigateur, uniquement pendant l'affichage de ce document
   useEffect(() => {
@@ -45,7 +47,7 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
 
   const rows = doc.lines.map(l => {
     const puht = l.unitPrice / (1 + TVA_RATE)
-    const code = findArticle(l.articleId)?.variants.find(v => v.label === l.variant)?.code || l.articleId
+    const code = articles.find(a => a.id === l.articleId)?.variants.find(v => v.label === l.variant)?.code || (isCustomId(l.articleId) ? '' : l.articleId)
     return { ...l, code, puht, mntHT: puht * l.qty }
   })
   const subTTC = doc.lines.reduce((s, l) => s + l.unitPrice * l.qty, 0)

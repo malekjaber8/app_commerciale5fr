@@ -6,10 +6,15 @@ import { findCategory } from '../lib/catalogue'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { AdminPriceEditor } from './AdminPriceEditor'
+import { ArticleFormModal } from './ArticleFormModal'
+import { deleteProduct, isCustomId } from '../lib/products'
+import { useSettings } from '../store/settings'
 
 export function ArticleDrawer({ article, onClose }: { article: Article; onClose: () => void }) {
   const { add } = useQuote()
   const { role } = useAuth()
+  const { products } = useSettings()
+  const [editing, setEditing] = useState(false)
   const [variantIdx, setVariantIdx] = useState(0)
   const [qty, setQty] = useState(1)
   const [imgIdx, setImgIdx] = useState(0)
@@ -101,7 +106,20 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
             </div>
           </div>
 
+          {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && isCustomId(article.id) && (
+            <div className="flex gap-2 rounded-xl border-2 border-dashed border-navy/30 bg-navy/5 p-3">
+              <div className="flex-1 text-xs text-slate-600">Article ajoute par vous (absent du site officiel).</div>
+              <button onClick={() => setEditing(true)} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white">Modifier la fiche</button>
+              <button onClick={async () => {
+                if (!confirm(`Supprimer definitivement « ${article.name} » ?`)) return
+                await deleteProduct(article.id.slice(7)); onClose()
+              }} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50">Supprimer</button>
+            </div>
+          )}
           {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && <AdminPriceEditor article={article} />}
+          {import.meta.env.VITE_DESKTOP === '1' && editing && (
+            <ArticleFormModal initial={products.find(p => p.id === article.id.slice(7))} onClose={() => { setEditing(false); onClose() }} />
+          )}
         </div>
 
         <footer className="mt-auto flex items-center gap-3 border-t border-slate-200 bg-white p-5">

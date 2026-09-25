@@ -1,15 +1,19 @@
 import { useMemo, useState } from 'react'
-import { ChevronDown, ChevronRight, Search, X } from 'lucide-react'
+import { ChevronDown, ChevronRight, PackagePlus, Search, X } from 'lucide-react'
 import { categoryScope, childrenOf, findCategory, topCategories } from '../lib/catalogue'
 import { useSettings } from '../store/settings'
+import { useAuth } from '../store/auth'
 import type { Article } from '../types'
 import { ArticleCard } from '../components/ArticleCard'
 import { ArticleDrawer } from '../components/ArticleDrawer'
+import { ArticleFormModal } from '../components/ArticleFormModal'
 
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 export function CataloguePage() {
   const { articles } = useSettings()
+  const { role } = useAuth()
+  const [adding, setAdding] = useState(false)
   const [catId, setCatId] = useState<string | null>(null)
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
   const [query, setQuery] = useState('')
@@ -127,6 +131,9 @@ export function CataloguePage() {
             Promos uniquement
           </label>
           <div className="text-sm text-slate-500">{list.length} article{list.length > 1 ? 's' : ''}</div>
+          {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && (
+            <button onClick={() => setAdding(true)} className="flex items-center gap-2 rounded-xl bg-navy px-4 py-2.5 text-sm font-bold text-white shadow"><PackagePlus size={16} /> Ajouter un article</button>
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto p-4">
@@ -140,6 +147,7 @@ export function CataloguePage() {
         </div>
       </section>
 
+      {import.meta.env.VITE_DESKTOP === '1' && adding && <ArticleFormModal defaultCategoryId={catId} onClose={() => setAdding(false)} />}
       {open && <ArticleDrawer key={open.id} article={open} onClose={() => setOpen(null)} />}
     </div>
   )

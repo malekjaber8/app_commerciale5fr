@@ -7,6 +7,8 @@ export function dt(n: number | null | undefined): string {
 /** Chemin d'image relatif a la racine de l'app (fonctionne sous GitHub Pages et en application bureau). */
 export function asset(path: string | null | undefined): string {
   if (!path) return ''
+  // Photos des articles ajoutes par l'admin : stockees directement dans la base (data URL)
+  if (path.startsWith('data:') || path.startsWith('http')) return path
   return import.meta.env.BASE_URL + encodeURI(path)
 }
 

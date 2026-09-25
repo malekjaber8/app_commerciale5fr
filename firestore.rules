@@ -28,6 +28,12 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Articles ajoutes par l'admin (propres a cette application) : lecture admin + commerciaux, ecriture admin
+    match /products/{productId} {
+      allow read: if isAdmin() || isCommercial();
+      allow write: if isAdmin();
+    }
+
     // Devis : le commercial cree les siens (toujours « en attente ») et les lit ; l'admin les modifie et les valide
     match /quotes/{quoteId} {
       allow create: if (isCommercial() || isAdmin())
