@@ -148,7 +148,7 @@ export function CataloguePage() {
       </section>
 
       {import.meta.env.VITE_DESKTOP === '1' && adding && <ArticleFormModal defaultCategoryId={catId} onClose={() => setAdding(false)} />}
-      {open && <ArticleDrawer key={open.id} article={open} onClose={() => setOpen(null)} />}
+      {open && <ArticleDrawer key={open.id} article={articles.find(a => a.id === open.id) ?? open} onClose={() => setOpen(null)} />}
     </div>
   )
 }

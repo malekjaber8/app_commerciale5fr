@@ -6,7 +6,7 @@ import { articles as baseArticles } from '../lib/catalogue'
 import { productToArticle, type ProductRow } from '../lib/products'
 import type { Article, Settings } from '../types'
 
-export const DEFAULT_SETTINGS: Settings = { hiddenIds: [], priceOverrides: {}, maxDiscountPct: 10 }
+export const DEFAULT_SETTINGS: Settings = { hiddenIds: [], priceOverrides: {}, extraVariants: {}, maxDiscountPct: 10 }
 
 interface SettingsCtx {
   settings: Settings
@@ -56,11 +56,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       const isHidden = hidden.has(a.id)
       if (isHidden && role !== 'admin') continue
       const ov = settings.priceOverrides[a.id]
+      const extra = settings.extraVariants?.[a.id]
       let art = a
-      if (ov) {
-        const variants = a.variants.map(v => (ov[v.label] != null ? { ...v, price: ov[v.label] } : v))
+      if (ov || extra?.length) {
+        const variants = [...a.variants, ...(extra ?? [])].map(v => (ov?.[v.label] != null ? { ...v, price: ov[v.label] } : v))
         const prices = variants.map(v => v.price).filter((x): x is number => x != null)
-        art = { ...a, variants, priceFrom: prices.length ? Math.min(...prices) : a.priceFrom, adjusted: true }
+        art = { ...a, variants, priceFrom: prices.length ? Math.min(...prices) : a.priceFrom, adjusted: !!ov }
       }
       out.push(isHidden ? { ...art, hidden: true } : art)
     }
