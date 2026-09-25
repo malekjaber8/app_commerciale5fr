@@ -1,72 +1,71 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { deleteDoc, doc } from 'firebase/firestore'
-import { Activity, Package, Users } from 'lucide-react'
-import { db } from '../../firebase'
-import { fetchAllQuotes, type QuoteDoc } from '../../lib/quotes'
-import { dt } from '../../lib/format'
-import { QuoteList } from '../../components/QuoteList'
+import { useState } from 'react'
+import { ArrowLeft, Activity, FileText, Package, Receipt, ShoppingCart, Users, UserSquare2 } from 'lucide-react'
 import { UsersTab } from './UsersTab'
 import { ContentTab } from './ContentTab'
+import { ClientsPanel } from '../panels/ClientsPanel'
+import { OrdersPanel } from '../panels/OrdersPanel'
+import { QuotesPanel } from '../panels/QuotesPanel'
+import { InvoicesPanel } from '../panels/InvoicesPanel'
 
-type Tab = 'users' | 'content' | 'quotes'
+type Tab = 'users' | 'orders' | 'clients' | 'invoices' | 'quotes' | 'content'
+type SubTab = 'orders' | 'quotes' | 'clients'
+interface Commercial { id: string; name: string; email: string }
 
-function QuotesTab() {
-  const [quotes, setQuotes] = useState<QuoteDoc[]>([])
-  const [loading, setLoading] = useState(true)
-  const [owner, setOwner] = useState('')
-
-  const load = useCallback(async () => {
-    setLoading(true)
-    try { setQuotes(await fetchAllQuotes()) } finally { setLoading(false) }
-  }, [])
-  useEffect(() => { load() }, [load])
-
-  const owners = useMemo(() => [...new Set(quotes.map(q => q.ownerName || q.ownerEmail))], [quotes])
-  const shown = owner ? quotes.filter(q => (q.ownerName || q.ownerEmail) === owner) : quotes
-  const total = shown.reduce((s, q) => s + q.total, 0)
-
-  const remove = async (q: QuoteDoc) => {
-    if (!confirm(`Supprimer le devis ${q.number} ?`)) return
-    await deleteDoc(doc(db, 'quotes', q.id))
-    await load()
-  }
-
+function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => void }) {
+  const [sub, setSub] = useState<SubTab>('orders')
+  const subs: { id: SubTab; label: string }[] = [
+    { id: 'orders', label: 'Commandes' }, { id: 'quotes', label: 'Devis' }, { id: 'clients', label: 'Clients' },
+  ]
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <select value={owner} onChange={e => setOwner(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none">
-          <option value="">Tous les commerciaux</option>
-          {owners.map(o => <option key={o} value={o}>{o}</option>)}
-        </select>
-        <div className="text-sm text-slate-500">{shown.length} devis — total {dt(total)}</div>
-        <button onClick={load} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
+      <button onClick={onBack} className="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-navy"><ArrowLeft size={16} /> Retour aux commerciaux</button>
+      <div className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="text-lg font-bold text-navy">{user.name}</div>
+        <div className="text-sm text-slate-500">{user.email}</div>
       </div>
-      {loading ? <div className="p-10 text-center text-slate-400">Chargement...</div> : <QuoteList quotes={shown} showOwner onDelete={remove} />}
+      <div className="flex gap-1 border-b border-slate-200">
+        {subs.map(s => (
+          <button key={s.id} onClick={() => setSub(s.id)}
+            className={`-mb-px border-b-2 px-4 py-2 text-sm font-semibold ${sub === s.id ? 'border-teal text-teal-dark' : 'border-transparent text-slate-500 hover:text-slate-700'}`}>{s.label}</button>
+        ))}
+      </div>
+      {sub === 'orders' && <OrdersPanel ownerUid={user.id} admin />}
+      {sub === 'quotes' && <QuotesPanel ownerUid={user.id} admin />}
+      {sub === 'clients' && <ClientsPanel ownerUid={user.id} ownerName={user.name} admin />}
     </div>
   )
 }
 
 export function AdminPage() {
   const [tab, setTab] = useState<Tab>('users')
+  const [selected, setSelected] = useState<Commercial | null>(null)
   const tabs: { id: Tab; label: string; icon: typeof Users }[] = [
     { id: 'users', label: 'Commerciaux', icon: Users },
+    { id: 'orders', label: 'Commandes', icon: ShoppingCart },
+    { id: 'clients', label: 'Clients', icon: UserSquare2 },
+    { id: 'invoices', label: 'Factures', icon: Receipt },
+    { id: 'quotes', label: 'Devis', icon: FileText },
     { id: 'content', label: 'Contenu et prix', icon: Package },
-    { id: 'quotes', label: 'Suivi des devis', icon: Activity },
   ]
   return (
-    <div className="mx-auto h-full max-w-5xl overflow-y-auto p-4 sm:p-6">
-      <h1 className="mb-4 text-xl font-bold text-navy">Administration</h1>
-      <div className="mb-5 flex gap-1 border-b border-slate-200">
+    <div className="mx-auto h-full max-w-6xl overflow-y-auto p-4 sm:p-6">
+      <h1 className="mb-4 flex items-center gap-2 text-xl font-bold text-navy"><Activity size={20} /> Administration</h1>
+      <div className="mb-5 flex flex-wrap gap-1 border-b border-slate-200">
         {tabs.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)}
+          <button key={t.id} onClick={() => { setTab(t.id); setSelected(null) }}
             className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-semibold ${tab === t.id ? 'border-teal text-teal-dark' : 'border-transparent text-slate-500 hover:text-slate-700'}`}>
             <t.icon size={15} /> {t.label}
           </button>
         ))}
       </div>
-      {tab === 'users' && <UsersTab />}
+      {tab === 'users' && (selected
+        ? <CommercialDetail user={selected} onBack={() => setSelected(null)} />
+        : <UsersTab onOpen={setSelected} />)}
+      {tab === 'orders' && <OrdersPanel admin />}
+      {tab === 'clients' && <ClientsPanel admin />}
+      {tab === 'invoices' && <InvoicesPanel />}
+      {tab === 'quotes' && <QuotesPanel admin />}
       {tab === 'content' && <ContentTab />}
-      {tab === 'quotes' && <QuotesTab />}
     </div>
   )
 }

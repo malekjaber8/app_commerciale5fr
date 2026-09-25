@@ -1,0 +1,38 @@
+import { Plus, Trash2 } from 'lucide-react'
+import type { DocLine } from '../types'
+import { dt } from '../lib/format'
+import { inputCls } from './ui'
+
+/** Tableau de lignes modifiable : designation, variante, prix unitaire, quantite. */
+export function LinesEditor({ lines, onChange }: { lines: DocLine[]; onChange: (l: DocLine[]) => void }) {
+  const patch = (i: number, p: Partial<DocLine>) => onChange(lines.map((l, k) => (k === i ? { ...l, ...p } : l)))
+  const num = (v: string) => { const n = parseFloat(v.replace(',', '.')); return Number.isNaN(n) ? 0 : n }
+
+  return (
+    <div>
+      <div className="overflow-x-auto rounded-xl border border-slate-200">
+        <table className="w-full min-w-[560px] text-sm">
+          <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
+            <tr><th className="p-2">Designation</th><th className="p-2">Variante</th><th className="w-28 p-2">P.U. TTC</th><th className="w-20 p-2">Qte</th><th className="w-28 p-2 text-right">Montant</th><th className="w-8" /></tr>
+          </thead>
+          <tbody>
+            {lines.map((l, i) => (
+              <tr key={i} className="border-t border-slate-100">
+                <td className="p-1.5"><input className={inputCls} value={l.name} onChange={e => patch(i, { name: e.target.value })} /></td>
+                <td className="p-1.5"><input className={inputCls} value={l.variant} onChange={e => patch(i, { variant: e.target.value })} /></td>
+                <td className="p-1.5"><input className={inputCls + ' text-right'} defaultValue={l.unitPrice} key={'p' + i + l.articleId} onBlur={e => patch(i, { unitPrice: num(e.target.value) })} /></td>
+                <td className="p-1.5"><input className={inputCls + ' text-center'} type="number" min={1} value={l.qty} onChange={e => patch(i, { qty: Math.max(1, parseInt(e.target.value) || 1) })} /></td>
+                <td className="p-1.5 text-right font-semibold">{dt(l.unitPrice * l.qty)}</td>
+                <td className="p-1.5"><button onClick={() => onChange(lines.filter((_, k) => k !== i))} className="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={14} /></button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <button onClick={() => onChange([...lines, { articleId: 'CUSTOM', name: 'Nouvelle ligne', variant: '', unitPrice: 0, qty: 1 }])}
+        className="mt-2 flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">
+        <Plus size={14} /> Ajouter une ligne
+      </button>
+    </div>
+  )
+}

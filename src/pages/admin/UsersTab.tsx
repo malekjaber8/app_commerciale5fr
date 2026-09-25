@@ -7,7 +7,7 @@ import { authErrorMessage, type Profile } from '../../store/auth'
 
 interface UserRow extends Profile { id: string }
 
-export function UsersTab() {
+export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; email: string }) => void }) {
   const [users, setUsers] = useState<UserRow[]>([])
   const [loading, setLoading] = useState(true)
   const [name, setName] = useState('')
@@ -103,6 +103,7 @@ export function UsersTab() {
                 </td>
                 <td className="p-3">
                   <div className="flex justify-end gap-1">
+                    <button onClick={() => onOpen({ id: u.id, name: u.name, email: u.email })} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white hover:opacity-90">Voir l'activite</button>
                     <button onClick={() => toggle(u)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:bg-slate-50">
                       {u.active ? 'Suspendre' : 'Reactiver'}
                     </button>

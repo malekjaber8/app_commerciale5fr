@@ -54,3 +54,74 @@ export interface QuoteLine {
   unitPrice: number
   qty: number
 }
+
+export type OrderStatus = 'nouvelle' | 'confirmee' | 'livree' | 'annulee'
+
+export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
+  nouvelle: 'Nouvelle',
+  confirmee: 'Confirmee',
+  livree: 'Livree',
+  annulee: 'Annulee',
+}
+
+export interface DocLine {
+  articleId: string
+  name: string
+  variant: string
+  unitPrice: number
+  qty: number
+}
+
+export interface Client {
+  id: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  taxId: string
+  note: string
+  ownerUid: string
+  ownerName: string
+  createdAt?: { seconds: number; toDate: () => Date } | null
+}
+
+export interface OrderDoc {
+  id: string
+  number: string
+  quoteId: string
+  clientId: string
+  clientName: string
+  phone: string
+  ownerUid: string
+  ownerName: string
+  ownerEmail: string
+  lines: DocLine[]
+  subtotal: number
+  discountPct: number
+  discount: number
+  total: number
+  status: OrderStatus
+  note: string
+  createdAt?: { seconds: number; toDate: () => Date } | null
+}
+
+export interface InvoiceDoc {
+  id: string
+  number: string
+  orderId: string
+  clientId: string
+  clientName: string
+  taxId: string
+  address: string
+  phone: string
+  ownerUid: string
+  ownerName: string
+  lines: DocLine[]
+  discount: number
+  timbre: number
+  totalHT: number
+  tva: number
+  totalTTC: number
+  note: string
+  createdAt?: { seconds: number; toDate: () => Date } | null
+}

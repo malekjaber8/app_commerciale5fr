@@ -40,5 +40,35 @@ service cloud.firestore {
             && request.resource.data.ownerUid == resource.data.ownerUid);
       allow delete: if isAdmin();
     }
+
+    // Clients : chaque commercial gere les siens ; l'admin gere tout
+    match /clients/{clientId} {
+      allow create: if (isCommercial() || isAdmin())
+        && (isAdmin() || request.resource.data.ownerUid == request.auth.uid);
+      allow read: if isAdmin()
+        || (isCommercial() && resource.data.ownerUid == request.auth.uid);
+      allow update: if isAdmin()
+        || (isCommercial()
+            && resource.data.ownerUid == request.auth.uid
+            && request.resource.data.ownerUid == resource.data.ownerUid);
+      allow delete: if isAdmin();
+    }
+
+    // Commandes : le commercial les cree (depuis un devis) et les lit ; l'admin les gere
+    match /orders/{orderId} {
+      allow create: if (isCommercial() || isAdmin())
+        && (isAdmin() || request.resource.data.ownerUid == request.auth.uid);
+      allow read: if isAdmin()
+        || (isCommercial() && resource.data.ownerUid == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    // Factures et compteurs : admin uniquement
+    match /invoices/{invoiceId} {
+      allow read, write: if isAdmin();
+    }
+    match /counters/{counterId} {
+      allow read, write: if isAdmin();
+    }
   }
 }

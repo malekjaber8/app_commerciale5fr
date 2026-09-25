@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, limit, orderBy, query, serverTimestamp, where, type Timestamp } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp, updateDoc, where, type Timestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { QuoteLine } from '../types'
 
@@ -8,6 +8,8 @@ export interface QuoteDoc {
   ownerUid: string
   ownerName: string
   ownerEmail: string
+  clientId: string
+  orderId?: string
   client: string
   phone: string
   note: string
@@ -43,3 +45,5 @@ export function fmtDate(ts: Timestamp | null): string {
   if (!ts) return '—'
   return ts.toDate().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })
 }
+
+export const linkQuoteToOrder = (quoteId: string, orderId: string) => updateDoc(doc(db, 'quotes', quoteId), { orderId })

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, type ReactNode } from 'react'
 import { ChevronDown, ChevronRight, Trash2 } from 'lucide-react'
 import { dt } from '../lib/format'
 import { fmtDate, type QuoteDoc } from '../lib/quotes'
@@ -7,9 +7,10 @@ interface Props {
   quotes: QuoteDoc[]
   showOwner?: boolean
   onDelete?: (q: QuoteDoc) => void
+  extra?: (q: QuoteDoc) => ReactNode
 }
 
-export function QuoteList({ quotes, showOwner, onDelete }: Props) {
+export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
   const [openId, setOpenId] = useState<string | null>(null)
 
   if (quotes.length === 0) {
@@ -27,7 +28,7 @@ export function QuoteList({ quotes, showOwner, onDelete }: Props) {
             {showOwner && <th className="p-3">Commercial</th>}
             <th className="p-3 text-right">Total</th>
             <th className="p-3">Date</th>
-            {onDelete && <th />}
+            {(onDelete || extra) && <th />}
           </tr>
         </thead>
         <tbody>
@@ -45,16 +46,19 @@ export function QuoteList({ quotes, showOwner, onDelete }: Props) {
                   {showOwner && <td className="p-3 text-slate-600">{q.ownerName || q.ownerEmail}</td>}
                   <td className="p-3 text-right font-bold">{dt(q.total)}</td>
                   <td className="p-3 text-slate-500">{fmtDate(q.createdAt)}</td>
-                  {onDelete && (
-                    <td className="p-3 text-right">
-                      <button onClick={e => { e.stopPropagation(); onDelete(q) }} className="rounded p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={15} /></button>
+                  {(onDelete || extra) && (
+                    <td className="p-3 text-right" onClick={e => e.stopPropagation()}>
+                      <div className="flex items-center justify-end gap-1">
+                        {extra?.(q)}
+                        {onDelete && <button onClick={() => onDelete(q)} className="rounded p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={15} /></button>}
+                      </div>
                     </td>
                   )}
                 </tr>
                 {open && (
                   <tr className="bg-slate-50">
                     <td />
-                    <td colSpan={showOwner ? 6 : 5} className="p-3">
+                    <td colSpan={showOwner ? 7 : 6} className="p-3">
                       <table className="w-full text-xs">
                         <tbody>
                           {q.lines.map((l, i) => (

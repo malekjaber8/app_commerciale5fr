@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Minus, Plus, Printer, Save, Trash2 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { useSettings } from '../store/settings'
 import { saveQuote } from '../lib/quotes'
+import { fetchClients } from '../lib/db'
+import type { Client } from '../types'
 import { dt } from '../lib/format'
 
 const TVA = 0.19
@@ -18,10 +20,22 @@ export function QuotePage() {
   const [phone, setPhone] = useState('')
   const [note, setNote] = useState('')
   const [discountPct, setDiscountPct] = useState(0)
+  const [clients, setClients] = useState<Client[]>([])
+  const [clientId, setClientId] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [number] = useState(() =>
     'DV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(1000 + Math.random() * 9000))
+
+  useEffect(() => {
+    if (uid) fetchClients(uid).then(setClients).catch(() => setClients([]))
+  }, [uid])
+
+  const pickClient = (id: string) => {
+    setClientId(id)
+    const c = clients.find(x => x.id === id)
+    if (c) { setClient(c.name); setPhone(c.phone) }
+  }
 
   // Le plafond de remise fixe par l'admin s'applique aux commerciaux (pas a l'admin)
   const maxPct = role === 'admin' ? 100 : settings.maxDiscountPct
@@ -36,7 +50,7 @@ export function QuotePage() {
     setSaving(true)
     try {
       await saveQuote({
-        number, ownerUid: uid, ownerName: profile?.name || '', ownerEmail: email || '',
+        number, ownerUid: uid, ownerName: profile?.name || '', ownerEmail: email || '', clientId,
         client: client.trim(), phone: phone.trim(), note: note.trim(), discountPct: pct,
         lines: lines.map(({ articleId, name, variant, unitPrice, qty }) => ({ articleId, name, variant, unitPrice, qty })),
         subtotal: total, discount, total: net,
@@ -77,7 +91,12 @@ export function QuotePage() {
       </div>
 
       <div className="no-print mb-4 grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:grid-cols-2">
-        <input value={client} onChange={e => setClient(e.target.value)} placeholder="Nom du client / société"
+        <select value={clientId} onChange={e => pickClient(e.target.value)}
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-teal sm:col-span-2">
+          <option value="">Client enregistre (optionnel)...</option>
+          {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+        </select>
+        <input value={client} onChange={e => { setClient(e.target.value); setClientId('') }} placeholder="Nom du client / société"
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal" />
         <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Téléphone"
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal" />
