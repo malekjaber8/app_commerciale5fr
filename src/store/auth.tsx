@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase'
-import { ADMIN_EMAIL } from '../config'
+import { ADMIN_EMAIL, loginToEmail } from '../config'
 
 export type Role = 'admin' | 'commercial'
 
@@ -73,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthCtx>(() => ({
     status, uid, email, profile,
     role: profile?.role ?? null,
-    login: async (e, p) => { await signInWithEmailAndPassword(auth, e.trim(), p) },
+    login: async (id, p) => { await signInWithEmailAndPassword(auth, loginToEmail(id), p) },
     logout: async () => { await signOut(auth) },
   }), [status, uid, email, profile])
 
@@ -90,11 +90,11 @@ export function useAuth() {
 export function authErrorMessage(err: unknown): string {
   const code = (err as { code?: string })?.code || ''
   if (code.includes('invalid-credential') || code.includes('wrong-password') || code.includes('user-not-found'))
-    return 'E-mail ou mot de passe incorrect.'
+    return 'Nom d\'utilisateur ou mot de passe incorrect.'
   if (code.includes('too-many-requests')) return 'Trop de tentatives. Reessayez dans quelques minutes.'
   if (code.includes('network')) return 'Probleme de connexion reseau.'
-  if (code.includes('email-already-in-use')) return 'Cette adresse e-mail a deja un compte.'
+  if (code.includes('email-already-in-use')) return "Ce nom d'utilisateur existe deja."
   if (code.includes('weak-password')) return 'Mot de passe trop faible (6 caracteres minimum).'
-  if (code.includes('invalid-email')) return 'Adresse e-mail invalide.'
+  if (code.includes('invalid-email')) return "Nom d'utilisateur invalide."
   return 'Une erreur est survenue. Reessayez.'
 }

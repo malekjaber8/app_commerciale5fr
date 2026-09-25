@@ -4,6 +4,7 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 import { KeyRound, Trash2, UserPlus } from 'lucide-react'
 import { auth, createAccount, db } from '../../firebase'
 import { authErrorMessage, type Profile } from '../../store/auth'
+import { USERNAME_DOMAIN, cleanUsername, emailToLogin, isValidUsername, usernameToEmail } from '../../config'
 
 interface UserRow extends Profile { id: string }
 
@@ -11,7 +12,7 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
   const [users, setUsers] = useState<UserRow[]>([])
   const [loading, setLoading] = useState(true)
   const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
@@ -30,12 +31,18 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
     setMsg(null)
     setBusy(true)
     try {
-      const uid = await createAccount(email.trim(), password)
+      if (!isValidUsername(username)) {
+        setMsg({ ok: false, text: "Nom d'utilisateur : 3 a 30 caracteres, lettres minuscules, chiffres, point, tiret ou underscore (sans espace)." })
+        return
+      }
+      const login = cleanUsername(username)
+      const mail = usernameToEmail(login)
+      const uid = await createAccount(mail, password)
       await setDoc(doc(db, 'users', uid), {
-        role: 'commercial', name: name.trim(), email: email.trim().toLowerCase(), active: true, createdAt: serverTimestamp(),
+        role: 'commercial', name: name.trim(), username: login, email: mail, active: true, createdAt: serverTimestamp(),
       })
-      setMsg({ ok: true, text: `Compte cree pour ${email.trim()}. Communiquez-lui son mot de passe.` })
-      setName(''); setEmail(''); setPassword('')
+      setMsg({ ok: true, text: `Compte cree. Nom d'utilisateur : ${login} — communiquez-lui son mot de passe.` })
+      setName(''); setUsername(''); setPassword('')
       await load()
     } catch (err) {
       setMsg({ ok: false, text: authErrorMessage(err) })
@@ -72,7 +79,7 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
         <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-navy"><UserPlus size={16} /> Nouveau commercial</h3>
         <div className="grid gap-3 sm:grid-cols-3">
           <input required value={name} onChange={e => setName(e.target.value)} placeholder="Nom complet" className={input} />
-          <input required type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Adresse e-mail" className={input} />
+          <input required value={username} onChange={e => setUsername(e.target.value)} placeholder="Nom d'utilisateur (ex: houssem)" autoCapitalize="none" className={input} />
           <input required minLength={6} type="text" value={password} onChange={e => setPassword(e.target.value)} placeholder="Mot de passe (6 car. min.)" className={input} />
         </div>
         <button disabled={busy} className="mt-3 rounded-xl bg-navy px-5 py-2.5 text-sm font-bold text-white disabled:opacity-60">
@@ -87,7 +94,7 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <table className="w-full text-sm">
           <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
-            <tr><th className="p-3">Nom</th><th className="p-3">E-mail</th><th className="p-3">Statut</th><th /></tr>
+            <tr><th className="p-3">Nom</th><th className="p-3">Nom d'utilisateur</th><th className="p-3">Statut</th><th /></tr>
           </thead>
           <tbody>
             {loading && <tr><td colSpan={4} className="p-6 text-center text-slate-400">Chargement...</td></tr>}
@@ -95,7 +102,7 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
             {users.map(u => (
               <tr key={u.id} className="border-t border-slate-100">
                 <td className="p-3 font-medium">{u.name}</td>
-                <td className="p-3 text-slate-600">{u.email}</td>
+                <td className="p-3 text-slate-600">{emailToLogin(u.email)}</td>
                 <td className="p-3">
                   <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${u.active ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
                     {u.active ? 'Actif' : 'Suspendu'}
@@ -107,7 +114,9 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
                     <button onClick={() => toggle(u)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:bg-slate-50">
                       {u.active ? 'Suspendre' : 'Reactiver'}
                     </button>
-                    <button onClick={() => reset(u)} title="Reinitialiser le mot de passe" className="rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:bg-slate-50"><KeyRound size={15} /></button>
+                    {!u.email.endsWith(USERNAME_DOMAIN) && (
+                      <button onClick={() => reset(u)} title="Reinitialiser le mot de passe" className="rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:bg-slate-50"><KeyRound size={15} /></button>
+                    )}
                     <button onClick={() => remove(u)} title="Supprimer l'acces" className="rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:bg-red-50 hover:text-red-600"><Trash2 size={15} /></button>
                   </div>
                 </td>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ArrowLeft, Activity, Clock, FileText, Package, Receipt, ShoppingCart, Users, UserSquare2 } from 'lucide-react'
+import { emailToLogin } from '../../config'
 import { UsersTab } from './UsersTab'
 import { ContentTab } from './ContentTab'
 import { ClientsPanel } from '../panels/ClientsPanel'
@@ -22,7 +23,7 @@ function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => vo
       <button onClick={onBack} className="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-navy"><ArrowLeft size={16} /> Retour aux commerciaux</button>
       <div className="rounded-2xl border border-slate-200 bg-white p-4">
         <div className="text-lg font-bold text-navy">{user.name}</div>
-        <div className="text-sm text-slate-500">{user.email}</div>
+        <div className="text-sm text-slate-500">{emailToLogin(user.email)}</div>
       </div>
       <div className="flex gap-1 border-b border-slate-200">
         {subs.map(s => (

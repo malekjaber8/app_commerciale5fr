@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { LogIn } from 'lucide-react'
 import { authErrorMessage, useAuth } from '../store/auth'
-import { IS_DESKTOP } from '../config'
+import { IS_DESKTOP, emailToLogin } from '../config'
 
 export function LoginPage() {
   const { login } = useAuth()
@@ -30,8 +30,8 @@ export function LoginPage() {
         <h1 className="text-center text-lg font-bold text-navy">{IS_DESKTOP ? 'Administration' : 'Espace Commercial'}</h1>
         <p className="mb-5 text-center text-xs text-slate-500">Acces reserve. Connectez-vous avec votre compte.</p>
 
-        <label className="mb-1 block text-xs font-semibold text-slate-600">Adresse e-mail</label>
-        <input type="email" required autoComplete="username" value={email} onChange={e => setEmail(e.target.value)}
+        <label className="mb-1 block text-xs font-semibold text-slate-600">Nom d&apos;utilisateur</label>
+        <input type="text" required autoCapitalize="none" autoCorrect="off" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)}
           className="mb-3 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-teal" />
 
         <label className="mb-1 block text-xs font-semibold text-slate-600">Mot de passe</label>
@@ -56,7 +56,7 @@ export function DeniedPage() {
         <div className="mb-2 text-3xl">🔒</div>
         <h1 className="text-lg font-bold text-navy">Acces non autorise</h1>
         <p className="mt-2 text-sm text-slate-500">
-          Le compte <b>{email}</b> n&apos;a pas (ou plus) acces a cet espace. Contactez l&apos;administrateur.
+          Le compte <b>{email ? emailToLogin(email) : ''}</b> n&apos;a pas (ou plus) acces a cet espace. Contactez l&apos;administrateur.
         </p>
         <button onClick={logout} className="mt-5 rounded-xl bg-navy px-5 py-2.5 text-sm font-bold text-white">Se deconnecter</button>
       </div>
