@@ -1,11 +1,12 @@
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
-import { ChevronDown, ChevronRight, FilePlus2, Pencil, Trash2 } from 'lucide-react'
+import { FilePlus2, Pencil, Printer, Trash2 } from 'lucide-react'
 import { db } from '../../firebase'
 import { deleteOrder, fetchOrders, setOrderStatus, computeInvoiceTotals } from '../../lib/db'
 import { dt, fmtTs } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { ORDER_STATUS_LABEL, type Client, type OrderDoc, type OrderStatus } from '../../types'
+import { SalesDocView } from '../../components/SalesDocView'
 import { OrderEditor } from '../../components/OrderEditor'
 import { InvoiceEditor, type InvoiceSeed } from '../../components/InvoiceEditor'
 import { Empty, inputCls } from '../../components/ui'
@@ -26,7 +27,7 @@ export function OrdersPanel({ ownerUid, admin }: Props) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [statusFilter, setStatusFilter] = useState('')
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [viewing, setViewing] = useState<OrderDoc | null>(null)
   const [editing, setEditing] = useState<OrderDoc | null>(null)
   const [invoiceSeed, setInvoiceSeed] = useState<InvoiceSeed | null>(null)
 
@@ -79,11 +80,9 @@ export function OrdersPanel({ ownerUid, admin }: Props) {
             </thead>
             <tbody>
               {shown.map(o => {
-                const open = openId === o.id
                 return (
-                  <Fragment key={o.id}>
-                    <tr onClick={() => setOpenId(open ? null : o.id)} className="cursor-pointer border-t border-slate-100 hover:bg-slate-50">
-                      <td className="pl-3 text-slate-400">{open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}</td>
+                    <tr key={o.id} onClick={() => setViewing(o)} title="Ouvrir le bon de commande" className="cursor-pointer border-t border-slate-100 hover:bg-slate-50">
+                      <td className="pl-3 text-slate-400"><Printer size={14} /></td>
                       <td className="p-3 font-semibold text-navy">{o.number}</td>
                       <td className="p-3"><div>{o.clientName || '-'}</div><div className="text-xs text-slate-400">{o.phone}</div></td>
                       {admin && !ownerUid && <td className="p-3 text-slate-500">{o.ownerName || o.ownerEmail}</td>}
@@ -108,27 +107,6 @@ export function OrdersPanel({ ownerUid, admin }: Props) {
                         </td>
                       )}
                     </tr>
-                    {open && (
-                      <tr className="bg-slate-50">
-                        <td />
-                        <td colSpan={7} className="p-3">
-                          <table className="w-full text-xs">
-                            <tbody>
-                              {o.lines.map((l, i) => (
-                                <tr key={i} className="border-b border-slate-200 last:border-0">
-                                  <td className="py-1.5"><b>{l.name}</b> <span className="text-slate-400">{l.variant}</span></td>
-                                  <td className="py-1.5 text-right">{l.qty} x {dt(l.unitPrice)}</td>
-                                  <td className="py-1.5 text-right font-semibold">{dt(l.qty * l.unitPrice)}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                          {o.discount > 0 && <div className="mt-2 text-right text-xs text-slate-500">Remise {o.discountPct}% : -{dt(o.discount)}</div>}
-                          {o.note && <div className="mt-1 text-xs text-slate-500">Note : {o.note}</div>}
-                        </td>
-                      </tr>
-                    )}
-                  </Fragment>
                 )
               })}
             </tbody>
@@ -136,6 +114,13 @@ export function OrdersPanel({ ownerUid, admin }: Props) {
         </div>
       )}
 
+      {viewing && (
+        <SalesDocView onClose={() => setViewing(null)} doc={{
+          kind: 'commande', number: viewing.number, date: viewing.createdAt ? viewing.createdAt.toDate() : null,
+          clientId: viewing.clientId, clientName: viewing.clientName, phone: viewing.phone, ownerName: viewing.ownerName,
+          lines: viewing.lines, discount: viewing.discount, discountPct: viewing.discountPct, note: viewing.note,
+        }} />
+      )}
       {editing && <OrderEditor order={editing} onClose={() => setEditing(null)} onSaved={load} />}
       {invoiceSeed && <InvoiceEditor seed={invoiceSeed} onClose={() => setInvoiceSeed(null)} onSaved={() => alert('Facture creee. Retrouvez-la dans l\'onglet Factures.')} />}
     </div>
