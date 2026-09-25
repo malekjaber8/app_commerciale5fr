@@ -1,8 +1,8 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
-import { CheckCircle2, Pencil } from 'lucide-react'
+import { Banknote, CheckCircle2, Pencil } from 'lucide-react'
 import { db } from '../../firebase'
-import { fetchAllQuotes, fetchMyQuotes, type QuoteDoc } from '../../lib/quotes'
+import { fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { QuoteList } from '../../components/QuoteList'
@@ -11,6 +11,8 @@ import { inputCls } from '../../components/ui'
 // Fenetres d'administration : presentes uniquement dans l'application bureau (absentes du build web)
 const QuoteEditor = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/QuoteEditor').then(m => ({ default: m.QuoteEditor }))) : null
 const ValidateQuoteModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/ValidateQuoteModal').then(m => ({ default: m.ValidateQuoteModal }))) : null
+
+const PaymentModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/PaymentModal').then(m => ({ default: m.PaymentModal }))) : null
 
 interface Props { ownerUid?: string; admin?: boolean }
 
@@ -23,6 +25,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [filter, setFilter] = useState<'' | 'attente' | 'valide'>('')
   const [editing, setEditing] = useState<QuoteDoc | null>(null)
   const [validating, setValidating] = useState<QuoteDoc | null>(null)
+  const [paying, setPaying] = useState<QuoteDoc | null>(null)
 
   const load = useCallback(async (silent = false) => {
     if (!silent) { setLoading(true); setError(false) }
@@ -43,6 +46,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
     if (!filter) return true
     return filter === 'valide' ? q.status === 'valide' : q.status !== 'valide'
   }), [quotes, filter])
+  const outstanding = shown.reduce((s, q) => s + (quotePayment(q).state === 'na' ? 0 : quotePayment(q).balance), 0)
   const pendingCount = quotes.filter(q => q.status !== 'valide').length
 
   const remove = async (q: QuoteDoc) => {
@@ -58,7 +62,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           <option value="attente">En attente ({pendingCount})</option>
           <option value="valide">Valides</option>
         </select>
-        <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}</span>
+        <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}{outstanding > 0 && <> — <b className="text-red-600">reste a encaisser : {dt(outstanding)}</b></>}</span>
         <button onClick={() => load()} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
       </div>
       {loading && <div className="p-8 text-center text-slate-400">Chargement...</div>}
@@ -71,6 +75,9 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           extra={admin ? q => (
             <>
               <button title="Modifier le devis" onClick={() => setEditing(q)} className="rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:bg-slate-50"><Pencil size={15} /></button>
+              {q.status === 'valide' && (
+                <button title="Reglement" onClick={() => setPaying(q)} className="rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:bg-green-50 hover:text-green-700"><Banknote size={15} /></button>
+              )}
               <button onClick={() => setValidating(q)}
                 className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold ${q.status === 'valide' ? 'border border-slate-200 text-slate-600 hover:bg-slate-50' : 'bg-navy text-white hover:opacity-90'}`}>
                 <CheckCircle2 size={14} /> {q.status === 'valide' ? 'Type' : 'Valider'}
@@ -81,6 +88,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
       )}
       <Suspense fallback={null}>
         {editing && QuoteEditor && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
+        {paying && PaymentModal && <PaymentModal quote={paying} onClose={() => setPaying(null)} onDone={() => load(true)} />}
         {validating && ValidateQuoteModal && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}
       </Suspense>
     </div>

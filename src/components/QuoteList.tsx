@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { Printer, Trash2 } from 'lucide-react'
 import { SalesDocView } from './SalesDocView'
 import { dt } from '../lib/format'
-import { fmtDate, quoteStateLabel, type QuoteDoc } from '../lib/quotes'
+import { fmtDate, quotePayment, quoteStateLabel, type QuoteDoc } from '../lib/quotes'
 
 interface Props {
   quotes: QuoteDoc[]
@@ -19,8 +19,8 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+      <table className="w-full min-w-[760px] text-sm">
         <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
           <tr>
             <th className="w-8" />
@@ -29,6 +29,7 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
             {showOwner && <th className="p-3">Commercial</th>}
             <th className="p-3 text-right">Total</th>
             <th className="p-3">Etat</th>
+            <th className="p-3">Reglement</th>
             <th className="p-3">Date</th>
             {(onDelete || extra) && <th />}
           </tr>
@@ -54,6 +55,20 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
                           {st.number && <div className="mt-1 text-[11px] text-slate-400">{st.number}</div>}
                         </div>
                       )
+                    })()}
+                  </td>
+                  <td className="p-3">
+                    {(() => {
+                      const pay = quotePayment(q)
+                      if (pay.state === 'na') return <span className="text-slate-300">—</span>
+                      if (pay.state === 'paye') return <span className="whitespace-nowrap rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-700">Payé</span>
+                      if (pay.state === 'partiel') return (
+                        <div>
+                          <span className="whitespace-nowrap rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-700">Partiel — reste {dt(pay.balance)}</span>
+                          <div className="mt-1 text-[11px] text-slate-400">Payé {dt(pay.paid)}</div>
+                        </div>
+                      )
+                      return <span className="whitespace-nowrap rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-700">Non payé</span>
                     })()}
                   </td>
                   <td className="p-3 text-slate-500">{fmtDate(q.createdAt)}</td>

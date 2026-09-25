@@ -1,11 +1,17 @@
 import { addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestamp, updateDoc, where, type Timestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { QuoteLine } from '../types'
+import { TIMBRE } from './db'
 
 /** Nature du document une fois le devis valide par l'admin. */
 export type DocType = 'devis' | 'bon_livraison' | 'facture'
 export const DOC_TYPE_LABEL: Record<DocType, string> = { devis: 'Devis', bon_livraison: 'Bon de livraison', facture: 'Facture' }
 export type QuoteStatus = 'attente' | 'valide'
+
+export type PaymentMethod = 'especes' | 'cheque' | 'virement' | 'traite'
+export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = { especes: 'Especes', cheque: 'Cheque', virement: 'Virement', traite: 'Traite / Effet' }
+/** Un encaissement enregistre par l'admin. */
+export interface Payment { id: string; amount: number; at: number; method: PaymentMethod; note: string }
 
 export interface QuoteDoc {
   id: string
@@ -16,6 +22,9 @@ export interface QuoteDoc {
   docNumber?: string
   invoiceId?: string
   validatedAt?: Timestamp | null
+  /** Reglements encaisses (admin) et leur somme. */
+  payments?: Payment[]
+  paid?: number
   number: string
   ownerUid: string
   ownerName: string
@@ -33,7 +42,7 @@ export interface QuoteDoc {
   createdAt: Timestamp | null
 }
 
-export type NewQuote = Omit<QuoteDoc, 'id' | 'createdAt' | 'status' | 'docType' | 'docNumber' | 'invoiceId' | 'validatedAt'>
+export type NewQuote = Omit<QuoteDoc, 'id' | 'createdAt' | 'status' | 'docType' | 'docNumber' | 'invoiceId' | 'validatedAt' | 'payments' | 'paid'>
 
 export async function saveQuote(q: NewQuote): Promise<void> {
   await addDoc(collection(db, 'quotes'), { ...q, status: 'attente', createdAt: serverTimestamp() })
@@ -67,4 +76,17 @@ export function quoteStateLabel(q: QuoteDoc): { pending: boolean; label: string;
   if (q.status !== 'valide') return { pending: true, label: 'En attente', number: '' }
   const type = q.docType ?? 'devis'
   return { pending: false, label: `Valide — ${DOC_TYPE_LABEL[type]}`, number: type === 'devis' ? q.number : q.docNumber || q.number }
+}
+
+const round3 = (n: number) => Math.round(n * 1000) / 1000
+
+export type PaymentState = 'na' | 'impaye' | 'partiel' | 'paye'
+
+/** Situation de reglement d'un devis valide : montant du, encaisse, reste. */
+export function quotePayment(q: QuoteDoc): { state: PaymentState; due: number; paid: number; balance: number } {
+  const due = round3(q.total + (q.status === 'valide' && q.docType === 'facture' ? TIMBRE : 0))
+  const paid = round3((q.payments ?? []).reduce((s, p) => s + p.amount, 0))
+  if (q.status !== 'valide') return { state: 'na', due, paid, balance: due }
+  const balance = round3(Math.max(0, due - paid))
+  return { state: balance <= 0 ? 'paye' : paid > 0 ? 'partiel' : 'impaye', due, paid, balance }
 }
