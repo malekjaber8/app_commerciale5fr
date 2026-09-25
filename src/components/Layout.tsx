@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { FileText, History, LayoutGrid, LogOut, Shield, ShoppingCart, Users } from 'lucide-react'
+import { FileText, History, LayoutGrid, LogOut, Shield, Users } from 'lucide-react'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { IS_DESKTOP } from '../config'
@@ -33,7 +33,6 @@ export function Layout() {
                 {count > 0 && <span className="rounded-full bg-teal px-1.5 text-[11px] font-bold text-navy">{count}</span>}
               </NavLink>
               <NavLink to="/mes-devis" className={link}><History size={16} /> {label('Mes devis')}</NavLink>
-              <NavLink to="/commandes" className={link}><ShoppingCart size={16} /> {label('Commandes')}</NavLink>
               <NavLink to="/clients" className={link}><Users size={16} /> {label('Clients')}</NavLink>
             </>
           )}

@@ -28,17 +28,14 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Devis : chaque commercial voit et modifie uniquement les siens ; l'admin voit tout
+    // Devis : le commercial cree les siens (toujours « en attente ») et les lit ; l'admin les modifie et les valide
     match /quotes/{quoteId} {
       allow create: if (isCommercial() || isAdmin())
-        && request.resource.data.ownerUid == request.auth.uid;
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.get('status', 'attente') == 'attente';
       allow read: if isAdmin()
         || (isCommercial() && resource.data.ownerUid == request.auth.uid);
-      allow update: if isAdmin()
-        || (isCommercial()
-            && resource.data.ownerUid == request.auth.uid
-            && request.resource.data.ownerUid == resource.data.ownerUid);
-      allow delete: if isAdmin();
+      allow update, delete: if isAdmin();
     }
 
     // Clients : chaque commercial gere les siens ; l'admin gere tout

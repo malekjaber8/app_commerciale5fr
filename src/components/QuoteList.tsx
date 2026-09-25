@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { Printer, Trash2 } from 'lucide-react'
 import { SalesDocView } from './SalesDocView'
 import { dt } from '../lib/format'
-import { fmtDate, type QuoteDoc } from '../lib/quotes'
+import { fmtDate, quoteStateLabel, type QuoteDoc } from '../lib/quotes'
 
 interface Props {
   quotes: QuoteDoc[]
@@ -28,6 +28,7 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
             <th className="p-3">Client</th>
             {showOwner && <th className="p-3">Commercial</th>}
             <th className="p-3 text-right">Total</th>
+            <th className="p-3">Etat</th>
             <th className="p-3">Date</th>
             {(onDelete || extra) && <th />}
           </tr>
@@ -44,6 +45,17 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
                   </td>
                   {showOwner && <td className="p-3 text-slate-600">{q.ownerName || q.ownerEmail}</td>}
                   <td className="p-3 text-right font-bold">{dt(q.total)}</td>
+                  <td className="p-3">
+                    {(() => {
+                      const st = quoteStateLabel(q)
+                      return (
+                        <div>
+                          <span className={`whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold ${st.pending ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>{st.label}</span>
+                          {st.number && <div className="mt-1 text-[11px] text-slate-400">{st.number}</div>}
+                        </div>
+                      )
+                    })()}
+                  </td>
                   <td className="p-3 text-slate-500">{fmtDate(q.createdAt)}</td>
                   {(onDelete || extra) && (
                     <td className="p-3 text-right" onClick={e => e.stopPropagation()}>
@@ -60,7 +72,8 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
       </table>
       {viewing && (
         <SalesDocView onClose={() => setViewing(null)} doc={{
-          kind: 'devis', number: viewing.number, date: viewing.createdAt ? viewing.createdAt.toDate() : null,
+          kind: viewing.status === 'valide' ? (viewing.docType ?? 'devis') : 'devis',
+          number: viewing.status === 'valide' && viewing.docType && viewing.docType !== 'devis' && viewing.docNumber ? viewing.docNumber : viewing.number, date: viewing.createdAt ? viewing.createdAt.toDate() : null,
           clientId: viewing.clientId, clientName: viewing.client, phone: viewing.phone, ownerName: viewing.ownerName,
           lines: viewing.lines, discount: viewing.discount, discountPct: viewing.discountPct, note: viewing.note,
         }} />

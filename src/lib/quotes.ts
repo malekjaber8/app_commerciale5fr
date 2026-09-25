@@ -2,8 +2,20 @@ import { addDoc, collection, doc, getDocs, limit, orderBy, query, serverTimestam
 import { db } from '../firebase'
 import type { QuoteLine } from '../types'
 
+/** Nature du document une fois le devis valide par l'admin. */
+export type DocType = 'devis' | 'bon_livraison' | 'facture'
+export const DOC_TYPE_LABEL: Record<DocType, string> = { devis: 'Devis', bon_livraison: 'Bon de livraison', facture: 'Facture' }
+export type QuoteStatus = 'attente' | 'valide'
+
 export interface QuoteDoc {
   id: string
+  /** Absent sur les anciens devis : ils comptent comme « en attente ». */
+  status?: QuoteStatus
+  docType?: DocType
+  /** Numero du bon de livraison ou de la facture (le devis garde `number`). */
+  docNumber?: string
+  invoiceId?: string
+  validatedAt?: Timestamp | null
   number: string
   ownerUid: string
   ownerName: string
@@ -21,10 +33,10 @@ export interface QuoteDoc {
   createdAt: Timestamp | null
 }
 
-export type NewQuote = Omit<QuoteDoc, 'id' | 'createdAt'>
+export type NewQuote = Omit<QuoteDoc, 'id' | 'createdAt' | 'status' | 'docType' | 'docNumber' | 'invoiceId' | 'validatedAt'>
 
 export async function saveQuote(q: NewQuote): Promise<void> {
-  await addDoc(collection(db, 'quotes'), { ...q, createdAt: serverTimestamp() })
+  await addDoc(collection(db, 'quotes'), { ...q, status: 'attente', createdAt: serverTimestamp() })
 }
 
 const toDoc = (d: { id: string; data: () => unknown }) => ({ id: d.id, ...(d.data() as Omit<QuoteDoc, 'id'>) })
@@ -47,3 +59,12 @@ export function fmtDate(ts: Timestamp | null): string {
 }
 
 export const linkQuoteToOrder = (quoteId: string, orderId: string) => updateDoc(doc(db, 'quotes', quoteId), { orderId })
+
+export const updateQuote = (id: string, data: Record<string, unknown>) => updateDoc(doc(db, 'quotes', id), data)
+
+/** Etat affiche : « En attente » ou « Valide » + nature du document. */
+export function quoteStateLabel(q: QuoteDoc): { pending: boolean; label: string; number: string } {
+  if (q.status !== 'valide') return { pending: true, label: 'En attente', number: '' }
+  const type = q.docType ?? 'devis'
+  return { pending: false, label: `Valide — ${DOC_TYPE_LABEL[type]}`, number: type === 'devis' ? q.number : q.docNumber || q.number }
+}

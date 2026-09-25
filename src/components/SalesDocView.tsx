@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { doc as fsDoc, getDoc } from 'firebase/firestore'
 import { Printer, X } from 'lucide-react'
 import { db } from '../firebase'
-import { TVA_RATE } from '../lib/db'
+import { TIMBRE, TVA_RATE } from '../lib/db'
 import { findArticle } from '../lib/catalogue'
 import type { Client, DocLine } from '../types'
 
 export interface SalesDoc {
-  kind: 'devis' | 'commande'
+  kind: 'devis' | 'commande' | 'bon_livraison' | 'facture'
   number: string
   date: Date | null
   clientId?: string
@@ -22,7 +22,7 @@ export interface SalesDoc {
 }
 
 const BLUE = '#14607f'
-const TITLE = { devis: 'DEVIS', commande: 'BON DE COMMANDE' }
+const TITLE = { devis: 'DEVIS', commande: 'BON DE COMMANDE', bon_livraison: 'BON DE LIVRAISON', facture: 'FACTURE' }
 
 const num = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 })
 
@@ -54,6 +54,7 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
   const discountHT = doc.discount / (1 + TVA_RATE)
   const netHT = netTTC / (1 + TVA_RATE)
   const tva = netTTC - netHT
+  const timbre = doc.kind === 'facture' ? TIMBRE : 0
 
   const th = 'border border-slate-800 px-2 py-2 text-[13px] font-bold'
   const thS = 'border border-slate-800 px-1.5 py-1 text-[11px] font-bold'
@@ -152,7 +153,8 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
             {doc.discount > 0 && <div className="flex justify-between py-1"><span>REMISE {doc.discountPct ? `${doc.discountPct}%` : ''}</span><span>-{num(discountHT)}</span></div>}
             <div className="flex justify-between py-1"><span>TOTAL HT (NET)</span><b>{num(netHT)}</b></div>
             <div className="flex justify-between py-1"><span>T.V.A.</span><b>{num(tva)}</b></div>
-            <div className="mt-1 flex justify-between border-t-2 border-slate-800 py-1.5 text-sm font-black" style={{ color: BLUE }}><span>TOTAL T.T.C.</span><span>{num(netTTC)}</span></div>
+            {timbre > 0 && <div className="flex justify-between py-1"><span>TIMBRE FISCAL</span><b>{num(timbre)}</b></div>}
+            <div className="mt-1 flex justify-between border-t-2 border-slate-800 py-1.5 text-sm font-black" style={{ color: BLUE }}><span>TOTAL T.T.C.</span><span>{num(netTTC + timbre)}</span></div>
           </div>
         </div>
 

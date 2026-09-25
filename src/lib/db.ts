@@ -84,3 +84,16 @@ export async function createInvoice(data: InvoiceInput): Promise<string> {
 }
 export const updateInvoice = (id: string, data: Partial<InvoiceInput>) => updateDoc(doc(db, 'invoices', id), data)
 export const deleteInvoice = (id: string) => deleteDoc(doc(db, 'invoices', id))
+
+/** Numero sequentiel BL-AAAA-NNNN pour les bons de livraison (compteur transactionnel). */
+export async function nextDeliveryNumber(): Promise<string> {
+  const year = new Date().getFullYear()
+  const counterRef = doc(db, 'counters', `bl-${year}`)
+  let next = 0
+  await runTransaction(db, async (tx) => {
+    const snap = await tx.get(counterRef)
+    next = (snap.exists() ? (snap.data().value as number) : 0) + 1
+    tx.set(counterRef, { value: next })
+  })
+  return `BL-${year}-${String(next).padStart(4, '0')}`
+}

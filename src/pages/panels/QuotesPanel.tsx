@@ -1,12 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
-import { ArrowRightCircle } from 'lucide-react'
+import { CheckCircle2, Pencil } from 'lucide-react'
 import { db } from '../../firebase'
-import { createOrder } from '../../lib/db'
-import { fetchAllQuotes, fetchMyQuotes, linkQuoteToOrder, type QuoteDoc } from '../../lib/quotes'
+import { fetchAllQuotes, fetchMyQuotes, type QuoteDoc } from '../../lib/quotes'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { QuoteList } from '../../components/QuoteList'
+import { QuoteEditor } from '../../components/QuoteEditor'
+import { ValidateQuoteModal } from '../../components/ValidateQuoteModal'
+import { inputCls } from '../../components/ui'
 
 interface Props { ownerUid?: string; admin?: boolean }
 
@@ -16,23 +18,30 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [quotes, setQuotes] = useState<QuoteDoc[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [filter, setFilter] = useState<'' | 'attente' | 'valide'>('')
+  const [editing, setEditing] = useState<QuoteDoc | null>(null)
+  const [validating, setValidating] = useState<QuoteDoc | null>(null)
 
-  const load = useCallback(async () => {
-    setLoading(true); setError(false)
-    try { setQuotes(scope ? await fetchMyQuotes(scope) : await fetchAllQuotes()) } catch { setError(true) } finally { setLoading(false) }
+  const load = useCallback(async (silent = false) => {
+    if (!silent) { setLoading(true); setError(false) }
+    try { setQuotes(scope ? await fetchMyQuotes(scope) : await fetchAllQuotes()) } catch { if (!silent) setError(true) } finally { if (!silent) setLoading(false) }
   }, [scope])
   useEffect(() => { load() }, [load])
 
-  const convert = async (q: QuoteDoc) => {
-    if (!confirm(`Transformer le devis ${q.number} en commande ?`)) return
-    const orderId = await createOrder({
-      number: q.number.replace(/^DV/, 'CMD'), quoteId: q.id, clientId: q.clientId || '', clientName: q.client, phone: q.phone,
-      ownerUid: q.ownerUid, ownerName: q.ownerName, ownerEmail: q.ownerEmail, lines: q.lines,
-      subtotal: q.subtotal, discountPct: q.discountPct, discount: q.discount, total: q.total, status: 'nouvelle', note: q.note,
-    })
-    await linkQuoteToOrder(q.id, orderId)
-    await load()
-  }
+  // Le commercial voit la validation sans rien faire : rafraichissement automatique toutes les 45 s et au retour sur l'application
+  useEffect(() => {
+    if (admin) return
+    const tick = () => { if (document.visibilityState === 'visible') load(true) }
+    const timer = setInterval(tick, 45000)
+    document.addEventListener('visibilitychange', tick)
+    return () => { clearInterval(timer); document.removeEventListener('visibilitychange', tick) }
+  }, [admin, load])
+
+  const shown = useMemo(() => quotes.filter(q => {
+    if (!filter) return true
+    return filter === 'valide' ? q.status === 'valide' : q.status !== 'valide'
+  }), [quotes, filter])
+  const pendingCount = quotes.filter(q => q.status !== 'valide').length
 
   const remove = async (q: QuoteDoc) => {
     if (!confirm(`Supprimer le devis ${q.number} ?`)) return
@@ -41,22 +50,35 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3 text-sm text-slate-500">
-        {quotes.length} devis — {dt(quotes.reduce((s, q) => s + q.total, 0))}
-        <button onClick={load} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
+      <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+        <select value={filter} onChange={e => setFilter(e.target.value as typeof filter)} className={inputCls + ' max-w-[200px]'}>
+          <option value="">Tous les devis</option>
+          <option value="attente">En attente ({pendingCount})</option>
+          <option value="valide">Valides</option>
+        </select>
+        <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}</span>
+        <button onClick={() => load()} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
       </div>
       {loading && <div className="p-8 text-center text-slate-400">Chargement...</div>}
       {error && <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">Impossible de charger les devis.</div>}
       {!loading && !error && (
         <QuoteList
-          quotes={quotes}
+          quotes={shown}
           showOwner={admin && !ownerUid}
           onDelete={admin ? remove : undefined}
-          extra={q => q.orderId
-            ? <span className="rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-700">Commande creee</span>
-            : <button onClick={() => convert(q)} className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-navy hover:bg-teal/10"><ArrowRightCircle size={14} /> Commande</button>}
+          extra={admin ? q => (
+            <>
+              <button title="Modifier le devis" onClick={() => setEditing(q)} className="rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:bg-slate-50"><Pencil size={15} /></button>
+              <button onClick={() => setValidating(q)}
+                className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold ${q.status === 'valide' ? 'border border-slate-200 text-slate-600 hover:bg-slate-50' : 'bg-navy text-white hover:opacity-90'}`}>
+                <CheckCircle2 size={14} /> {q.status === 'valide' ? 'Type' : 'Valider'}
+              </button>
+            </>
+          ) : undefined}
         />
       )}
+      {editing && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
+      {validating && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}
     </div>
   )
 }

@@ -36,7 +36,7 @@ export function InvoicesPanel({ ownerUid }: { ownerUid?: string }) {
       <div className="flex flex-wrap items-center gap-3">
         <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher (numero, client)..." className={inputCls + ' max-w-sm'} />
         <div className="text-sm text-slate-500">{shown.length} facture{shown.length > 1 ? 's' : ''} — {dt(shown.reduce((s, i) => s + i.totalTTC, 0))} TTC</div>
-        <div className="ml-auto text-xs text-slate-400">Pour creer une facture : onglet Commandes, icone facture.</div>
+        <div className="ml-auto text-xs text-slate-400">Pour creer une facture : onglet Devis, bouton Valider, puis Facture.</div>
       </div>
 
       {loading && <div className="p-8 text-center text-slate-400">Chargement...</div>}
