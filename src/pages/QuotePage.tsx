@@ -5,7 +5,8 @@ import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { useSettings } from '../store/settings'
 import { saveQuote } from '../lib/quotes'
-import { fetchClients } from '../lib/db'
+import { createClient, fetchClients } from '../lib/db'
+import { ClientModal } from '../components/ClientModal'
 import type { Client } from '../types'
 import { dt } from '../lib/format'
 
@@ -23,6 +24,7 @@ export function QuotePage() {
   const [clients, setClients] = useState<Client[]>([])
   const [clientId, setClientId] = useState('')
   const [saving, setSaving] = useState(false)
+  const [newClient, setNewClient] = useState(false)
   const [error, setError] = useState('')
   const [number] = useState(() =>
     'DV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(1000 + Math.random() * 9000))
@@ -75,9 +77,9 @@ export function QuotePage() {
 
   return (
     <div className="mx-auto h-full max-w-4xl overflow-y-auto p-4 sm:p-6">
-      <div className="no-print mb-4 flex items-center justify-between">
+      <div className="no-print mb-4 flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-xl font-bold text-navy">Nouveau devis</h1>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button onClick={clear} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50">
             <Trash2 size={15} /> Vider
           </button>
@@ -91,11 +93,16 @@ export function QuotePage() {
       </div>
 
       <div className="no-print mb-4 grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:grid-cols-2">
-        <select value={clientId} onChange={e => pickClient(e.target.value)}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-teal sm:col-span-2">
-          <option value="">Client enregistre (optionnel)...</option>
-          {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-        </select>
+        <div className="flex gap-2 sm:col-span-2">
+          <select value={clientId} onChange={e => pickClient(e.target.value)}
+            className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-teal">
+            <option value="">Affecter a un client enregistre...</option>
+            {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+          </select>
+          <button type="button" onClick={() => setNewClient(true)} className="flex shrink-0 items-center gap-1.5 rounded-lg bg-teal px-3 py-2 text-sm font-bold text-navy">
+            <Plus size={15} /> Nouveau client
+          </button>
+        </div>
         <input value={client} onChange={e => { setClient(e.target.value); setClientId('') }} placeholder="Nom du client / société"
           className="rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal" />
         <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Téléphone"
@@ -180,6 +187,16 @@ export function QuotePage() {
         {note && <p className="mt-5 text-xs text-slate-500">{note}</p>}
         <p className="mt-6 text-[11px] text-slate-400">Prix en dinars tunisiens, TTC. Frais de livraison non inclus. Devis valable 15 jours.</p>
       </div>
+      {newClient && uid && (
+        <ClientModal ownerUid={uid} ownerName={profile?.name || ''} onClose={() => setNewClient(false)}
+          onSave={async data => {
+            const id = await createClient(data)
+            const list = await fetchClients(uid)
+            setClients(list)
+            setClientId(id); setClient(data.name); setPhone(data.phone)
+            setNewClient(false)
+          }} />
+      )}
     </div>
   )
 }

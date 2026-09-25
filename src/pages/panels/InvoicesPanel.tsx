@@ -7,7 +7,7 @@ import { InvoiceEditor } from '../../components/InvoiceEditor'
 import { InvoiceView } from '../../components/InvoiceView'
 import { Empty, inputCls } from '../../components/ui'
 
-export function InvoicesPanel() {
+export function InvoicesPanel({ ownerUid }: { ownerUid?: string }) {
   const [invoices, setInvoices] = useState<InvoiceDoc[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -17,8 +17,8 @@ export function InvoicesPanel() {
 
   const load = useCallback(async () => {
     setLoading(true); setError(false)
-    try { setInvoices(await fetchInvoices()) } catch { setError(true) } finally { setLoading(false) }
-  }, [])
+    try { const all = await fetchInvoices(); setInvoices(ownerUid ? all.filter(i => i.ownerUid === ownerUid) : all) } catch { setError(true) } finally { setLoading(false) }
+  }, [ownerUid])
   useEffect(() => { load() }, [load])
 
   const shown = useMemo(() => {

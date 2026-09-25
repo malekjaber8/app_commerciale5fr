@@ -8,13 +8,13 @@ import { QuotesPanel } from '../panels/QuotesPanel'
 import { InvoicesPanel } from '../panels/InvoicesPanel'
 
 type Tab = 'users' | 'orders' | 'clients' | 'invoices' | 'quotes' | 'content'
-type SubTab = 'orders' | 'quotes' | 'clients'
+type SubTab = 'orders' | 'quotes' | 'clients' | 'invoices'
 interface Commercial { id: string; name: string; email: string }
 
 function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => void }) {
   const [sub, setSub] = useState<SubTab>('orders')
   const subs: { id: SubTab; label: string }[] = [
-    { id: 'orders', label: 'Commandes' }, { id: 'quotes', label: 'Devis' }, { id: 'clients', label: 'Clients' },
+    { id: 'orders', label: 'Commandes' }, { id: 'quotes', label: 'Devis' }, { id: 'clients', label: 'Clients' }, { id: 'invoices', label: 'Factures' },
   ]
   return (
     <div className="space-y-4">
@@ -32,6 +32,7 @@ function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => vo
       {sub === 'orders' && <OrdersPanel ownerUid={user.id} admin />}
       {sub === 'quotes' && <QuotesPanel ownerUid={user.id} admin />}
       {sub === 'clients' && <ClientsPanel ownerUid={user.id} ownerName={user.name} admin />}
+      {sub === 'invoices' && <InvoicesPanel ownerUid={user.id} />}
     </div>
   )
 }
