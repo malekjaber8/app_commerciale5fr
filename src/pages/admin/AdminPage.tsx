@@ -1,20 +1,21 @@
 import { useState } from 'react'
-import { ArrowLeft, Activity, FileText, Package, Receipt, ShoppingCart, Users, UserSquare2 } from 'lucide-react'
+import { ArrowLeft, Activity, Clock, FileText, Package, Receipt, ShoppingCart, Users, UserSquare2 } from 'lucide-react'
 import { UsersTab } from './UsersTab'
 import { ContentTab } from './ContentTab'
 import { ClientsPanel } from '../panels/ClientsPanel'
 import { OrdersPanel } from '../panels/OrdersPanel'
 import { QuotesPanel } from '../panels/QuotesPanel'
 import { InvoicesPanel } from '../panels/InvoicesPanel'
+import { ActivityPanel } from '../panels/ActivityPanel'
 
-type Tab = 'users' | 'orders' | 'clients' | 'invoices' | 'quotes' | 'content'
-type SubTab = 'orders' | 'quotes' | 'clients' | 'invoices'
+type Tab = 'activity' | 'users' | 'orders' | 'clients' | 'invoices' | 'quotes' | 'content'
+type SubTab = 'activity' | 'orders' | 'quotes' | 'clients' | 'invoices'
 interface Commercial { id: string; name: string; email: string }
 
 function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => void }) {
-  const [sub, setSub] = useState<SubTab>('orders')
+  const [sub, setSub] = useState<SubTab>('activity')
   const subs: { id: SubTab; label: string }[] = [
-    { id: 'orders', label: 'Commandes' }, { id: 'quotes', label: 'Devis' }, { id: 'clients', label: 'Clients' }, { id: 'invoices', label: 'Factures' },
+    { id: 'activity', label: 'Activite' }, { id: 'orders', label: 'Commandes' }, { id: 'quotes', label: 'Devis' }, { id: 'clients', label: 'Clients' }, { id: 'invoices', label: 'Factures' },
   ]
   return (
     <div className="space-y-4">
@@ -29,6 +30,7 @@ function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => vo
             className={`-mb-px border-b-2 px-4 py-2 text-sm font-semibold ${sub === s.id ? 'border-teal text-teal-dark' : 'border-transparent text-slate-500 hover:text-slate-700'}`}>{s.label}</button>
         ))}
       </div>
+      {sub === 'activity' && <ActivityPanel ownerUid={user.id} />}
       {sub === 'orders' && <OrdersPanel ownerUid={user.id} admin />}
       {sub === 'quotes' && <QuotesPanel ownerUid={user.id} admin />}
       {sub === 'clients' && <ClientsPanel ownerUid={user.id} ownerName={user.name} admin />}
@@ -38,9 +40,10 @@ function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => vo
 }
 
 export function AdminPage() {
-  const [tab, setTab] = useState<Tab>('users')
+  const [tab, setTab] = useState<Tab>('activity')
   const [selected, setSelected] = useState<Commercial | null>(null)
   const tabs: { id: Tab; label: string; icon: typeof Users }[] = [
+    { id: 'activity', label: 'Activite du jour', icon: Clock },
     { id: 'users', label: 'Commerciaux', icon: Users },
     { id: 'orders', label: 'Commandes', icon: ShoppingCart },
     { id: 'clients', label: 'Clients', icon: UserSquare2 },
@@ -59,6 +62,7 @@ export function AdminPage() {
           </button>
         ))}
       </div>
+      {tab === 'activity' && <ActivityPanel />}
       {tab === 'users' && (selected
         ? <CommercialDetail user={selected} onBack={() => setSelected(null)} />
         : <UsersTab onOpen={setSelected} />)}
