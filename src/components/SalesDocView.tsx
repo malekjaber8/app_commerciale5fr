@@ -30,6 +30,14 @@ const num = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 3,
 export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => void }) {
   const [client, setClient] = useState<Client | null>(null)
 
+  // Feuille A4 sans marges navigateur, uniquement pendant l'affichage de ce document
+  useEffect(() => {
+    const st = document.createElement('style')
+    st.textContent = '@page { size: A4; margin: 0; }'
+    document.head.appendChild(st)
+    return () => { st.remove() }
+  }, [])
+
   useEffect(() => {
     if (!doc.clientId) return
     getDoc(fsDoc(db, 'clients', doc.clientId)).then(s => { if (s.exists()) setClient(s.data() as Client) }).catch(() => { /* sans fiche client */ })
@@ -57,7 +65,7 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
         <button onClick={onClose} className="flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700"><X size={15} /> Fermer</button>
       </div>
 
-      <div className="print-area mx-auto max-w-4xl bg-white p-8 text-[12px] text-slate-900 shadow-xl">
+      <div className="print-area mx-auto flex max-w-4xl flex-col bg-white p-8 text-[12px] text-slate-900 shadow-xl" style={{ minHeight: '296mm', boxSizing: 'border-box' }}>
         <div className="flex items-start justify-between">
           <img src={import.meta.env.BASE_URL + 'logo.png'} alt="" className="h-24" />
           <div className="text-right leading-snug" style={{ color: BLUE }}>
@@ -120,6 +128,9 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
             <tr><td className="border-t border-slate-800" colSpan={7} /></tr>
           </tbody>
         </table>
+
+        {/* espace libre : le pied de page (taxes, cachet, totaux) reste en bas de la feuille A4 */}
+        <div className="min-h-8 flex-1" />
 
         <div className="mt-3 flex gap-2">
           <div className="w-[44%] shrink-0">
