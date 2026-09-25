@@ -55,8 +55,9 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
   const netHT = netTTC / (1 + TVA_RATE)
   const tva = netTTC - netHT
 
-  const th = 'border border-slate-800 px-1.5 py-1 text-[11px] font-bold'
-  const td = 'border-x border-slate-800 px-1.5 py-1'
+  const th = 'border border-slate-800 px-2 py-2 text-[13px] font-bold'
+  const thS = 'border border-slate-800 px-1.5 py-1 text-[11px] font-bold'
+  const td = 'border-x border-slate-800 px-2 py-2'
 
   return (
     <div className="fixed inset-0 z-[60] overflow-y-auto bg-slate-600/90 p-4">
@@ -67,9 +68,9 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
 
       <div className="print-area mx-auto flex max-w-4xl flex-col bg-white p-8 text-[12px] text-slate-900 shadow-xl" style={{ minHeight: '296mm', boxSizing: 'border-box' }}>
         <div className="flex items-start justify-between">
-          <img src={import.meta.env.BASE_URL + 'logo.png'} alt="" className="h-24" />
-          <div className="text-right leading-snug" style={{ color: BLUE }}>
-            <div className="text-lg font-black uppercase">Societe Magasin Les Cinq Freres</div>
+          <img src={import.meta.env.BASE_URL + 'logo.png'} alt="" className="h-32" />
+          <div className="text-right text-[15px] leading-snug" style={{ color: BLUE }}>
+            <div className="text-2xl font-black uppercase">Societe Magasin Les Cinq Freres</div>
             <div>Vente produits divers</div>
             <div>Avenue Fatouma Bourguiba, La Soukra - 2073 Ariana</div>
             <div><b>TVA :</b> 1544770 SAM 002 &nbsp; <b>Tel :</b> 29 94 01 86 / 72 58 87 17</div>
@@ -77,31 +78,31 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
           </div>
         </div>
 
-        <div className="mt-2 flex items-center justify-between border border-slate-800 px-2 py-1 text-[11px]">
+        <div className="mt-3 flex items-center justify-between border border-slate-800 px-3 py-2 text-[13px]">
           <span><b>COMMERCIAL :</b> {doc.ownerName || '-'}</span>
           <span><b>POINT DE VENTE :</b> ARIANA</span>
           <span>Page 1 / 1</span>
         </div>
 
-        <div className="mt-2 flex gap-2">
+        <div className="mt-3 flex gap-2 text-[14px]">
           <div className="w-[44%] shrink-0 border border-slate-800">
-            <div className="p-2 text-center text-xl" style={{ color: BLUE }}>{TITLE[doc.kind]}</div>
-            <div className="flex justify-between px-2 pb-2">
+            <div className="p-3 text-center text-3xl" style={{ color: BLUE }}>{TITLE[doc.kind]}</div>
+            <div className="flex justify-between px-3 pb-3">
               <div><div>Num&eacute;ro</div><div className="font-bold" style={{ color: BLUE }}>{doc.number}</div></div>
               <div className="text-right"><div>Date</div><div className="font-bold" style={{ color: BLUE }}>{doc.date ? doc.date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }) : '-'}</div></div>
             </div>
           </div>
-          <div className="min-h-[88px] flex-1 border border-slate-800 p-2">
-            <div className="text-sm font-black uppercase">{doc.clientName || '-'}</div>
+          <div className="min-h-[130px] flex-1 border border-slate-800 p-3">
+            <div className="text-lg font-black uppercase">{doc.clientName || '-'}</div>
             {client?.address && <div className="mt-1">{client.address}</div>}
-            <div className="mt-2 flex justify-between text-[11px]">
+            <div className="mt-3 flex justify-between text-[13px]">
               <span>{client?.taxId && <><b>I.F.</b> {client.taxId}</>}</span>
               <span>{(client?.phone || doc.phone) && <><b>TEL</b> {client?.phone || doc.phone}</>}</span>
             </div>
           </div>
         </div>
 
-        <table className="mt-3 w-full border-collapse border border-slate-800 text-[11px]">
+        <table className="mt-4 w-full border-collapse border border-slate-800 text-[13px]">
           <thead>
             <tr>
               <th className={th + ' text-left'}>R&eacute;f&eacute;rence</th>
@@ -136,7 +137,7 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
           <div className="w-[44%] shrink-0">
             <table className="w-full border-collapse border border-slate-800 text-[11px]">
               <thead>
-                <tr><th className={th + ' text-left'}>Taxe</th><th className={th + ' text-right'}>Base</th><th className={th + ' text-right'}>Montant</th></tr>
+                <tr><th className={thS + ' text-left'}>Taxe</th><th className={thS + ' text-right'}>Base</th><th className={thS + ' text-right'}>Montant</th></tr>
               </thead>
               <tbody>
                 <tr><td className="px-1.5 py-1 font-bold">19.00</td><td className="px-1.5 py-1 text-right">{num(netHT)}</td><td className="px-1.5 py-1 text-right">{num(tva)}</td></tr>
