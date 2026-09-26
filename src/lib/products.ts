@@ -11,11 +11,21 @@ export interface ProductDoc {
   variants: Variant[]
   /** Photos redimensionnees, stockees sous forme de data URL. */
   images: string[]
+  /** Renseigne quand la fiche remplace celle d'un article du site (modification par l'admin) : id de l'article du site. */
+  overrideOf?: string
 }
 export type ProductRow = ProductDoc & { id: string }
 
 export const CUSTOM_PREFIX = 'custom-'
 export const isCustomId = (id: string) => id.startsWith(CUSTOM_PREFIX)
+/** Identifiant du document qui remplace la fiche d'un article du site. */
+export const overrideDocId = (articleId: string) => `ov_${articleId}`
+
+/** Fiche modifiable a partir d'un article du site (pre-remplie avec ce que voient les commerciaux). */
+export function articleToOverrideRow(a: Article): ProductRow {
+  return { id: overrideDocId(a.id), overrideOf: a.id, name: a.name, desc: a.desc, categoryId: a.categoryId, unit: a.unit ?? '',
+    variants: a.variants.map(v => ({ label: v.label, price: v.price, ...(v.code ? { code: v.code } : {}) })), images: a.gallery.length ? a.gallery : a.img ? [a.img] : [] }
+}
 
 export function productToArticle(p: ProductRow): Article {
   const prices = p.variants.map(v => v.price).filter((x): x is number => x != null)

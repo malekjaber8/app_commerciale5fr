@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { ImagePlus, Layers, PackagePlus, Plus, Trash2, X } from 'lucide-react'
 import { categories, childrenOf, topCategories } from '../lib/catalogue'
 import { isCustomId, newProductId, resizeImage, saveProduct, type ProductRow } from '../lib/products'
-import { dt } from '../lib/format'
+import { asset, dt } from '../lib/format'
 import { useSettings } from '../store/settings'
 import type { Variant } from '../types'
 import { Field, Modal, inputCls } from './ui'
@@ -96,7 +96,14 @@ export function ArticleFormModal({ initial, defaultCategoryId, onClose }: { init
     if (images.join('').length > MAX_CHARS) return setError('Photos trop lourdes : retirez-en une ou deux.')
     setBusy(true)
     try {
-      await saveProduct(initial?.id ?? newProductId(), { name: name.trim(), desc: desc.trim(), categoryId, unit: unit.trim(), variants, images })
+      await saveProduct(initial?.id ?? newProductId(), { name: name.trim(), desc: desc.trim(), categoryId, unit: unit.trim(), variants, images, ...(initial?.overrideOf ? { overrideOf: initial.overrideOf } : {}) })
+      if (initial?.overrideOf) {
+        // prix ajustes et dimensions ajoutees sont desormais integres a la fiche : on les retire pour eviter un double effet
+        const id = initial.overrideOf
+        const po = { ...settings.priceOverrides }; delete po[id]
+        const ev = { ...settings.extraVariants }; delete ev[id]
+        if (settings.priceOverrides[id] || settings.extraVariants?.[id]) await save({ ...settings, priceOverrides: po, extraVariants: ev })
+      }
       onClose()
     } catch {
       setError('Enregistrement impossible. Verifiez la connexion et les regles Firestore (collection products).')
@@ -186,7 +193,7 @@ export function ArticleFormModal({ initial, defaultCategoryId, onClose }: { init
               <div className="flex flex-wrap gap-2">
                 {images.map((src, i) => (
                   <div key={i} className="relative h-20 w-20 overflow-hidden rounded-lg border border-slate-200">
-                    <img src={src} alt="" className="h-full w-full object-cover" />
+                    <img src={asset(src)} alt="" className="h-full w-full object-cover" />
                     <button onClick={() => setImages(imgs => imgs.filter((_, k) => k !== i))} className="absolute right-0.5 top-0.5 rounded-full bg-black/60 p-0.5 text-white"><X size={12} /></button>
                   </div>
                 ))}
@@ -201,7 +208,7 @@ export function ArticleFormModal({ initial, defaultCategoryId, onClose }: { init
           </>
         )}
 
-        <p className="rounded-lg bg-teal/10 px-3 py-2 text-xs text-slate-600">Visible immediatement dans votre application et chez les commerciaux, <b>pas sur le site officiel</b>.</p>
+        <p className="rounded-lg bg-teal/10 px-3 py-2 text-xs text-slate-600">Visible immediatement dans votre application et chez les commerciaux, <b>pas sur le site officiel</b>.{initial?.overrideOf && ' Cette fiche remplace celle du site dans l’application.'}</p>
         {error && <div className="rounded-lg bg-red-50 px-3 py-2 text-xs font-medium text-red-700">{error}</div>}
         <div className="flex justify-end gap-2">
           <button onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600">Annuler</button>

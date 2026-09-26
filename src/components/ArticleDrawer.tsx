@@ -1,24 +1,25 @@
 import { useState } from 'react'
-import { Minus, Play, Plus, ShoppingBag, Trash2, X, ZoomIn } from 'lucide-react'
+import { Minus, Pencil, Play, Plus, RotateCcw, ShoppingBag, Trash2, X, ZoomIn } from 'lucide-react'
 import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
 import { findCategory } from '../lib/catalogue'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { AdminPriceEditor } from './AdminPriceEditor'
-import { ArticleInfoEditor } from './ArticleInfoEditor'
 import { ImageLightbox } from './ImageLightbox'
 import { QtyInput, stepQty } from './QtyInput'
 import { ArticleFormModal } from './ArticleFormModal'
-import { isCustomId } from '../lib/products'
+import { articleToOverrideRow, deleteProduct, isCustomId, overrideDocId } from '../lib/products'
 import { useRemoveArticle } from '../lib/useRemoveArticle'
+import { useDialogs } from './Dialogs'
 import { useSettings } from '../store/settings'
 
 export function ArticleDrawer({ article, onClose }: { article: Article; onClose: () => void }) {
   const { add } = useQuote()
   const removeArticle = useRemoveArticle()
+  const { ask } = useDialogs()
   const { role } = useAuth()
-  const { products } = useSettings()
+  const { products, overrides } = useSettings()
   const [editing, setEditing] = useState(false)
   const [variantIdx, setVariantIdx] = useState(0)
   const [qty, setQty] = useState(1)
@@ -123,16 +124,17 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
 
           {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && (
             <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-navy/30 bg-navy/5 p-3">
-              <div className="flex-1 text-xs text-slate-600">{isCustomId(article.id) ? 'Article ajoute par vous (absent du site officiel).' : 'Article du catalogue du site.'}</div>
-              {isCustomId(article.id) && <button onClick={() => setEditing(true)} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white">Modifier la fiche</button>}
+              <div className="flex-1 text-xs text-slate-600">{isCustomId(article.id) ? 'Article ajoute par vous (absent du site officiel).' : article.edited ? 'Article du site — fiche modifiee par vous.' : 'Article du catalogue du site.'}</div>
+              <button onClick={() => setEditing(true)} className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white"><Pencil size={13} /> Modifier la fiche</button>
+              {article.edited && <button onClick={async () => { if (await ask('Rétablir la fiche du site (nom, photos, variantes et prix d’origine) ?', { confirmLabel: 'Rétablir', danger: false })) { await deleteProduct(overrideDocId(article.id)); onClose() } }}
+                className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600"><RotateCcw size={13} /> Fiche du site</button>}
               <button onClick={async () => { if (await removeArticle(article)) onClose() }}
                 className="flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50"><Trash2 size={13} /> Supprimer l&apos;article</button>
             </div>
           )}
-          {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && !isCustomId(article.id) && <ArticleInfoEditor article={article} />}
           {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && <AdminPriceEditor article={article} />}
           {import.meta.env.VITE_DESKTOP === '1' && editing && (
-            <ArticleFormModal initial={products.find(p => p.id === article.id.slice(7))} onClose={() => { setEditing(false); onClose() }} />
+            <ArticleFormModal initial={isCustomId(article.id) ? products.find(p => p.id === article.id.slice(7)) : overrides.get(article.id) ?? articleToOverrideRow(article)} onClose={() => { setEditing(false); onClose() }} />
           )}
         </div>
 

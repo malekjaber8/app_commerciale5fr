@@ -61,6 +61,19 @@ export function AdminPriceEditor({ article }: { article: Article }) {
     hiddenIds: isHidden ? settings.hiddenIds.filter(x => x !== article.id) : [...settings.hiddenIds, article.id],
   }, isHidden ? 'Article de nouveau visible pour les commerciaux.' : 'Article masque pour les commerciaux.')
 
+  // Fiche modifiee : les prix se changent dans « Modifier la fiche » ; ici il ne reste que la visibilite
+  if (article.edited) {
+    return (
+      <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-teal/50 bg-teal/5 p-3">
+        <div className="flex-1 text-xs text-slate-600">Les prix de cette fiche se modifient avec « Modifier la fiche ».</div>
+        <button onClick={toggleHidden} disabled={busy}
+          className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-semibold ${isHidden ? 'border-amber-300 bg-amber-50 text-amber-700' : 'border-slate-200 bg-white text-slate-600'}`}>
+          {isHidden ? <><EyeOff size={13} /> Masque</> : <><Eye size={13} /> Visible</>}
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div className="rounded-xl border-2 border-dashed border-teal/50 bg-teal/5 p-3">
       <div className="mb-2 flex items-center gap-2">
