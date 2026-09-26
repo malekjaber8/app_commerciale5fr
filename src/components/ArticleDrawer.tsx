@@ -24,7 +24,6 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
   const [imgIdx, setImgIdx] = useState(0)
   const [showVideo, setShowVideo] = useState(false)
   const [zoom, setZoom] = useState(false)
-  const [added, setAdded] = useState(false)
 
   const images = article.gallery.length ? article.gallery : article.img ? [article.img] : []
   const variant = article.variants[variantIdx]
@@ -33,8 +32,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
   const addToQuote = () => {
     if (variant.price == null) return
     add({ articleId: article.id, name: article.name, variant: variant.label, unitPrice: variant.price, qty })
-    setAdded(true)
-    setTimeout(() => setAdded(false), 1400)
+    onClose()
   }
 
   return (
@@ -153,7 +151,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
               className="flex min-h-14 flex-1 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-teal to-navy-soft px-4 text-lg font-extrabold text-white shadow-lg active:scale-[0.99] disabled:opacity-40">
               <ShoppingBag size={24} />
               <span className="text-left leading-tight">
-                {added ? 'Ajouté au panier ✓' : variant.price == null ? 'Sur devis' : (<>Ajouter au panier<span className="block text-sm font-semibold opacity-90">{dt(variant.price * qty)}</span></>)}
+                {variant.price == null ? 'Sur devis' : (<>Ajouter au panier<span className="block text-sm font-semibold opacity-90">{dt(variant.price * qty)}</span></>)}
               </span>
             </button>
           </div>
