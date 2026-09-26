@@ -1,11 +1,18 @@
-import { Plus, Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import { Plus, Search, Trash2 } from 'lucide-react'
 import type { DocLine } from '../types'
 import { dt } from '../lib/format'
 import { inputCls } from './ui'
 import { QtyInput } from './QtyInput'
+import { ArticlePickerModal } from './ArticlePickerModal'
 
 /** Tableau de lignes modifiable : designation, variante, prix unitaire, quantite. */
 export function LinesEditor({ lines, onChange }: { lines: DocLine[]; onChange: (l: DocLine[]) => void }) {
+  const [picking, setPicking] = useState(false)
+  const addFromCatalogue = (line: DocLine) => {
+    const i = lines.findIndex(l => l.articleId === line.articleId && l.variant === line.variant)
+    onChange(i >= 0 ? lines.map((l, k) => (k === i ? { ...l, qty: Math.round((l.qty + 1) * 1000) / 1000 } : l)) : [...lines, line])
+  }
   const patch = (i: number, p: Partial<DocLine>) => onChange(lines.map((l, k) => (k === i ? { ...l, ...p } : l)))
   const num = (v: string) => { const n = parseFloat(v.replace(',', '.')); return Number.isNaN(n) ? 0 : n }
 
@@ -30,10 +37,17 @@ export function LinesEditor({ lines, onChange }: { lines: DocLine[]; onChange: (
           </tbody>
         </table>
       </div>
-      <button onClick={() => onChange([...lines, { articleId: 'CUSTOM', name: 'Nouvelle ligne', variant: '', unitPrice: 0, qty: 1 }])}
-        className="mt-2 flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">
-        <Plus size={14} /> Ajouter une ligne
-      </button>
+      <div className="mt-2 flex flex-wrap gap-2">
+        <button onClick={() => setPicking(true)}
+          className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-2 text-xs font-bold text-white hover:opacity-90">
+          <Search size={14} /> Ajouter un article du catalogue
+        </button>
+        <button onClick={() => onChange([...lines, { articleId: 'CUSTOM', name: 'Nouvelle ligne', variant: '', unitPrice: 0, qty: 1 }])}
+          className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">
+          <Plus size={14} /> Ajouter une ligne libre
+        </button>
+      </div>
+      {picking && <ArticlePickerModal onClose={() => setPicking(false)} onPick={addFromCatalogue} />}
     </div>
   )
 }

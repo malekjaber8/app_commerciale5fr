@@ -4,11 +4,12 @@ import { useSettings } from '../store/settings'
 import { useQuote } from '../store/quote'
 import { dt } from '../lib/format'
 import { Modal, inputCls } from './ui'
+import type { DocLine } from '../types'
 
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
-/** Ajout d'un article au devis en cours de verification, sans quitter la page. */
-export function ArticlePickerModal({ onClose }: { onClose: () => void }) {
+/** Ajout d'un article (recherche + variante) : au panier par defaut, ou a un document via onPick (edition admin). */
+export function ArticlePickerModal({ onClose, onPick }: { onClose: () => void; onPick?: (line: DocLine) => void }) {
   const { articles } = useSettings()
   const { add } = useQuote()
   const [query, setQuery] = useState('')
@@ -39,7 +40,7 @@ export function ArticlePickerModal({ onClose }: { onClose: () => void }) {
                   const k = `${a.id}|${v.label}`
                   return (
                     <button key={k} disabled={v.price == null}
-                      onClick={() => { add({ articleId: a.id, name: a.name, variant: v.label, unitPrice: v.price as number, qty: 1 }); setJustAdded(k); setTimeout(() => setJustAdded(''), 1200) }}
+                      onClick={() => { (onPick ?? add)({ articleId: a.id, name: a.name, variant: v.label, unitPrice: v.price as number, qty: 1 }); setJustAdded(k); setTimeout(() => setJustAdded(''), 1200) }}
                       className="flex w-full items-center justify-between gap-3 rounded-lg px-2 py-2 text-left text-sm hover:bg-teal/10 disabled:opacity-40">
                       <span className="min-w-0 truncate text-slate-700">{v.label}</span>
                       <span className="flex shrink-0 items-center gap-2 font-bold text-navy">
