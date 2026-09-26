@@ -47,14 +47,21 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Devis : le commercial cree les siens (toujours « en attente ») et les lit ; l'admin les modifie et les valide
+    // Devis : le commercial cree les siens (toujours « en attente ») et les lit ; l'admin les modifie et les valide ; le commercial modifie les siens tant qu'ils sont en attente
     match /quotes/{quoteId} {
       allow create: if (isCommercial() || isAdmin())
         && request.resource.data.ownerUid == request.auth.uid
         && request.resource.data.get('status', 'attente') == 'attente';
       allow read: if isAdmin()
         || (isCommercial() && resource.data.ownerUid == request.auth.uid);
-      allow update, delete: if isAdmin();
+      // Le commercial peut modifier son devis tant qu'il n'est pas valide (son contenu seulement, jamais l'etat)
+      allow update: if isAdmin()
+        || (isCommercial()
+            && resource.data.ownerUid == request.auth.uid
+            && resource.data.get('status', 'attente') != 'valide'
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['client', 'clientId', 'phone', 'note', 'discountPct', 'lines', 'subtotal', 'discount', 'total']));
+      allow delete: if isAdmin();
     }
 
     // Clients : chaque commercial gere les siens ; l'admin gere tout

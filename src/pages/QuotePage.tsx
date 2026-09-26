@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { useSettings } from '../store/settings'
-import { saveQuote } from '../lib/quotes'
+import { saveQuote, updateQuote } from '../lib/quotes'
 import { dt } from '../lib/format'
 import { ClientPickerModal, type PickedClient } from '../components/ClientPickerModal'
 import { ArticlePickerModal } from '../components/ArticlePickerModal'
@@ -14,20 +14,20 @@ const TVA = 0.19
 
 /** Parcours : 1) panier  2) affecter a un client  3) verification du devis (quantites, articles, note)  4) enregistrement. */
 export function QuotePage() {
-  const { lines, setQty, remove, clear, total } = useQuote()
+  const { lines, setQty, remove, clear, total, editing } = useQuote()
   const { ask } = useDialogs()
   const { uid, email, profile, role } = useAuth()
   const { settings } = useSettings()
   const navigate = useNavigate()
-  const [step, setStep] = useState<'cart' | 'review'>('cart')
+  const [step, setStep] = useState<'cart' | 'review'>(editing ? 'review' : 'cart')
   const [picking, setPicking] = useState(false)
   const [adding, setAdding] = useState(false)
-  const [client, setClient] = useState<PickedClient | null>(null)
-  const [note, setNote] = useState('')
-  const [discountPct, setDiscountPct] = useState(0)
+  const [client, setClient] = useState<PickedClient | null>(editing ? { id: editing.clientId, name: editing.client, phone: editing.phone } : null)
+  const [note, setNote] = useState(editing?.note ?? '')
+  const [discountPct, setDiscountPct] = useState(editing?.discountPct ?? 0)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
-  const [number] = useState(() =>
+  const [number] = useState(() => editing ? editing.number :
     'DV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(1000 + Math.random() * 9000))
 
   // Le plafond de remise fixe par l'admin s'applique aux commerciaux (pas a l'admin)
@@ -42,6 +42,17 @@ export function QuotePage() {
     setError('')
     setSaving(true)
     try {
+      const fields = {
+        client: client.name, phone: client.phone, clientId: client.id, note: note.trim(), discountPct: pct,
+        lines: lines.map(({ articleId, name, variant, unitPrice, qty }) => ({ articleId, name, variant, unitPrice, qty })),
+        subtotal: total, discount, total: net,
+      }
+      if (editing) {
+        await updateQuote(editing.id, fields)
+        clear()
+        navigate('/mes-devis')
+        return
+      }
       await saveQuote({
         number, ownerUid: uid, ownerName: profile?.name || '', ownerEmail: email || '', clientId: client.id,
         client: client.name, phone: client.phone, note: note.trim(), discountPct: pct,
@@ -51,7 +62,9 @@ export function QuotePage() {
       clear()
       navigate('/mes-devis')
     } catch {
-      setError("Impossible d'enregistrer le devis. Verifiez votre connexion.")
+      setError(editing
+        ? "Modification impossible : le devis a peut-etre ete valide par l'administrateur entre-temps, ou la connexion est coupee."
+        : "Impossible d'enregistrer le devis. Verifiez votre connexion.")
     } finally {
       setSaving(false)
     }
@@ -125,17 +138,26 @@ export function QuotePage() {
   return (
     <div className="mx-auto h-full max-w-4xl overflow-y-auto p-4 sm:p-6">
       <div className="no-print mb-4 flex flex-wrap items-center justify-between gap-2">
-        <button onClick={() => setStep('cart')} className="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-navy"><ArrowLeft size={16} /> Retour au panier</button>
+        {editing ? (
+          <button onClick={() => { clear(); navigate('/mes-devis') }} className="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-navy"><ArrowLeft size={16} /> Annuler la modification</button>
+        ) : (
+          <button onClick={() => setStep('cart')} className="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-navy"><ArrowLeft size={16} /> Retour au panier</button>
+        )}
         <div className="flex flex-wrap gap-2">
           <button onClick={() => window.print()} className="flex items-center gap-2 rounded-xl border border-navy bg-white px-4 py-2 text-sm font-bold text-navy">
             <Printer size={15} /> Imprimer / PDF
           </button>
           <button onClick={save} disabled={saving || lines.length === 0} className="flex items-center gap-2 rounded-xl bg-navy px-5 py-2 text-sm font-bold text-white disabled:opacity-60">
-            <Save size={15} /> {saving ? 'Enregistrement...' : 'Enregistrer le devis'}
+            <Save size={15} /> {saving ? 'Enregistrement...' : editing ? 'Enregistrer les modifications' : 'Enregistrer le devis'}
           </button>
         </div>
       </div>
 
+      {editing && (
+        <div className="no-print mb-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+          Modification du devis <b>{number}</b> — possible tant que l&apos;administrateur ne l&apos;a pas valide. Ajoutez des articles depuis le catalogue ou avec le bouton ci-dessous.
+        </div>
+      )}
       <div className="no-print mb-4 space-y-3 rounded-2xl border border-slate-200 bg-white p-4">
         <div className="flex items-center gap-3">
           <UserCheck size={18} className="shrink-0 text-teal-dark" />
@@ -226,7 +248,7 @@ export function QuotePage() {
 
       <div className="no-print mt-4 flex justify-end">
         <button onClick={save} disabled={saving || lines.length === 0} className="flex items-center gap-2 rounded-xl bg-navy px-6 py-3 text-sm font-bold text-white disabled:opacity-60">
-          <Save size={16} /> {saving ? 'Enregistrement...' : 'Enregistrer le devis'}
+          <Save size={16} /> {saving ? 'Enregistrement...' : editing ? 'Enregistrer les modifications' : 'Enregistrer le devis'}
         </button>
       </div>
 

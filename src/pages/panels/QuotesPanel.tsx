@@ -1,11 +1,13 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
-import { Banknote, CheckCircle2, Pencil } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Banknote, CheckCircle2, Lock, Pencil } from 'lucide-react'
 import { db } from '../../firebase'
 import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
 import { deleteInvoice } from '../../lib/db'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
+import { useQuote } from '../../store/quote'
 import { QuoteList } from '../../components/QuoteList'
 import { inputCls } from '../../components/ui'
 import { useDialogs } from '../../components/Dialogs'
@@ -21,6 +23,8 @@ interface Props { ownerUid?: string; admin?: boolean }
 export function QuotesPanel({ ownerUid, admin }: Props) {
   const { uid } = useAuth()
   const { ask } = useDialogs()
+  const { startEdit, editing: editInfo, lines } = useQuote()
+  const navigate = useNavigate()
   const scope = ownerUid ?? (admin ? undefined : uid ?? undefined)
   const [quotes, setQuotes] = useState<QuoteDoc[]>([])
   const [loading, setLoading] = useState(true)
@@ -111,7 +115,15 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
                 <CheckCircle2 size={14} /> {q.status === 'valide' ? 'Type' : 'Valider'}
               </button>
             </>
-          ) : undefined}
+          ) : q => q.status === 'valide'
+            ? <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-400"><Lock size={12} /> Verrouillé</span>
+            : (
+              <button onClick={async () => {
+                if (editInfo && editInfo.id !== q.id && !(await ask('Une modification est deja en cours sur un autre devis. Elle sera abandonnee.', { confirmLabel: 'Continuer', danger: false }))) return
+                if (!editInfo && lines.length > 0 && !(await ask('Votre panier actuel sera remplace par ce devis. Continuer ?', { confirmLabel: 'Continuer', danger: false }))) return
+                startEdit(q); navigate('/devis')
+              }} className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-2 text-xs font-bold text-white"><Pencil size={13} /> Modifier</button>
+            )}
         />
       )}
       <Suspense fallback={null}>
