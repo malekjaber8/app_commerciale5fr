@@ -13,10 +13,18 @@ interface Props {
 
 const head = 'text-[11px] font-bold uppercase tracking-wide text-slate-500'
 
-function StateCell({ q }: { q: QuoteDoc }) {
+function StateCell({ q, inline }: { q: QuoteDoc; inline?: boolean }) {
   if (q.status !== 'valide') return <span className="inline-block whitespace-nowrap rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">En attente</span>
   const type = q.docType ?? 'devis'
   const number = type === 'devis' ? q.number : q.docNumber || q.number
+  if (inline) {
+    return (
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+        <span className="inline-block whitespace-nowrap rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">Validé</span>
+        <span className="text-sm font-semibold text-slate-600">{DOC_TYPE_LABEL[type]} <span className="whitespace-nowrap font-normal text-slate-400">{number}</span></span>
+      </div>
+    )
+  }
   return (
     <div>
       <span className="inline-block whitespace-nowrap rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">Validé</span>
@@ -26,10 +34,19 @@ function StateCell({ q }: { q: QuoteDoc }) {
   )
 }
 
-function PaymentCell({ q }: { q: QuoteDoc }) {
+function PaymentCell({ q, inline }: { q: QuoteDoc; inline?: boolean }) {
   const pay = quotePayment(q)
   if (pay.state === 'na') return <span className="text-slate-300">—</span>
   if (pay.state === 'paye') return <span className="inline-block whitespace-nowrap rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">Payé</span>
+  if (inline) {
+    const partial = pay.state === 'partiel'
+    return (
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+        <span className={`inline-block whitespace-nowrap rounded-full px-3 py-1 text-xs font-bold ${partial ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>{partial ? 'Partiel' : 'Non payé'}</span>
+        <span className="whitespace-nowrap text-sm font-bold text-red-600">Reste {dt(pay.balance)}</span>
+      </div>
+    )
+  }
   if (pay.state === 'partiel') {
     return (
       <div>
@@ -47,7 +64,7 @@ function PaymentCell({ q }: { q: QuoteDoc }) {
   )
 }
 
-/** Liste des devis : une ligne par devis, colonnes alignees (grille) sur tablette/PC, empilee sur petit ecran. */
+/** Liste des devis : grille a colonnes alignees sur grand ecran (PC), fiches aerees sur tablette et telephone. */
 export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
   const [viewing, setViewing] = useState<QuoteDoc | null>(null)
   const hasActions = !!(onDelete || extra)
@@ -66,11 +83,11 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
     hasActions ? (extra ? '170px' : '40px') : null, // actions (largeur fixe : colonnes alignees avec l'en-tete)
   ].filter(Boolean).join(' ')
   const style = { '--cols': cols } as CSSProperties
-  const grid = 'grid items-center gap-x-5 gap-y-2 px-5 md:[grid-template-columns:var(--cols)]'
+  const grid = 'grid items-center gap-x-5 gap-y-2 px-5 lg:[grid-template-columns:var(--cols)]'
 
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white" style={style}>
-      <div className={`${grid} hidden border-b border-slate-200 bg-slate-50 py-3 md:grid`}>
+      <div className={`${grid} hidden border-b border-slate-200 bg-slate-50 py-3 lg:grid`}>
         <div className={head}>Client</div>
         {showOwner && <div className={head}>Commercial</div>}
         <div className={head}>Devis</div>
@@ -81,8 +98,33 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
       </div>
 
       {quotes.map(q => (
-        <div key={q.id} onClick={() => setViewing(q)} title="Ouvrir le document"
-          className={`${grid} cursor-pointer border-b border-slate-100 py-4 last:border-0 hover:bg-teal/5`}>
+        <div key={q.id} onClick={() => setViewing(q)} title="Ouvrir le document" className="cursor-pointer border-b border-slate-100 last:border-0 hover:bg-teal/5">
+        <div className="px-5 py-4 lg:hidden">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <div className="text-lg font-extrabold leading-tight text-navy">{q.client || '—'}</div>
+              {q.phone && <div className="text-sm text-slate-500">{q.phone}</div>}
+            </div>
+            <div className="shrink-0 whitespace-nowrap text-lg font-extrabold text-navy">{dt(q.total)}</div>
+          </div>
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 text-sm text-slate-500">
+            <Printer size={14} className="shrink-0 text-slate-400" />
+            <span className="whitespace-nowrap font-semibold text-slate-700">{q.number}</span>
+            <span>·</span><span className="whitespace-nowrap">{fmtDate(q.createdAt)}</span>
+            {showOwner && <><span>·</span><span>{q.ownerName || q.ownerEmail}</span></>}
+          </div>
+          <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2.5">
+            <StateCell q={q} inline />
+            <PaymentCell q={q} inline />
+            {hasActions && (
+              <div className="ml-auto flex items-center gap-1.5" onClick={e => e.stopPropagation()}>
+                {extra?.(q)}
+                {onDelete && <button onClick={() => onDelete(q)} className="rounded p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={17} /></button>}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={`${grid} hidden py-4 lg:grid`}>
           <div className="min-w-0">
             <div className="truncate text-base font-extrabold text-navy">{q.client || '—'}</div>
             {q.phone && <div className="text-xs text-slate-500">{q.phone}</div>}
@@ -101,6 +143,7 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
               {onDelete && <button onClick={() => onDelete(q)} className="rounded p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={15} /></button>}
             </div>
           )}
+        </div>
         </div>
       ))}
 
