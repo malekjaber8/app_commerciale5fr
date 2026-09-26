@@ -1,7 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
-import { Banknote, CheckCircle2, Lock, Pencil } from 'lucide-react'
+import { Banknote, CheckCircle2, Lock, Pencil, Search, X } from 'lucide-react'
 import { db } from '../../firebase'
 import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
 import { deleteInvoice } from '../../lib/db'
@@ -31,6 +31,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [error, setError] = useState(false)
   const [filter, setFilter] = useState<'' | 'attente' | 'valide'>('')
   const [payFilter, setPayFilter] = useState<'' | 'paye' | 'impaye' | 'partiel' | 'nonsolde'>('')
+  const [search, setSearch] = useState('')
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [editing, setEditing] = useState<QuoteDoc | null>(null)
@@ -63,6 +64,9 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
     return st !== 'paye' // non solde : non paye + partiel
   }
   // Filtre par date de creation du devis (calendrier du/au, jours inclus)
+  const norm = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+  const needle = norm(search.trim())
+  const matchesSearch = (q: QuoteDoc) => !needle || norm(`${q.client} ${q.phone} ${q.number} ${q.docNumber ?? ''}`).includes(needle)
   const inDates = (q: QuoteDoc) => {
     if (!from && !to) return true
     const d = q.createdAt?.toDate()
@@ -72,9 +76,9 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
     return true
   }
   const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
-  const byEtat = useMemo(() => quotes.filter(q => inDates(q) && (!filter ? true : filter === 'valide' ? q.status === 'valide' : q.status !== 'valide')),
+  const byEtat = useMemo(() => quotes.filter(q => matchesSearch(q) && inDates(q) && (!filter ? true : filter === 'valide' ? q.status === 'valide' : q.status !== 'valide')),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [quotes, filter, from, to])
+    [quotes, filter, from, to, needle])
   const shown = useMemo(() => byEtat.filter(q => matchesPay(q, payFilter)), [byEtat, payFilter])
   const payCount = (f: typeof payFilter) => byEtat.filter(q => matchesPay(q, f)).length
   const outstanding = shown.reduce((s, q) => s + (quotePayment(q).state === 'na' ? 0 : quotePayment(q).balance), 0)
@@ -93,6 +97,12 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+        <div className="relative w-full sm:max-w-sm">
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher un client (nom, telephone, n° de devis)..." aria-label="Rechercher un client"
+            className={inputCls + ' pl-9 pr-9'} />
+          {search && <button onClick={() => setSearch('')} aria-label="Effacer la recherche" className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-slate-400 hover:bg-slate-100"><X size={14} /></button>}
+        </div>
         <select value={filter} onChange={e => setFilter(e.target.value as typeof filter)} className={inputCls + ' max-w-[210px]'} aria-label="Filtrer par etat">
           <option value="">Tous les etats</option>
           <option value="attente">En attente ({pendingCount})</option>
@@ -112,8 +122,8 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           <input type="date" value={to} min={from || undefined} onChange={e => setTo(e.target.value)} className={inputCls + ' w-auto!'} aria-label="Date de fin" />
           <button onClick={() => { const t = todayStr(); setFrom(t); setTo(t) }} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-teal-dark hover:bg-slate-50">Aujourd&apos;hui</button>
         </div>
-        {(filter || payFilter || from || to) && (
-          <button onClick={() => { setFilter(''); setPayFilter(''); setFrom(''); setTo('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
+        {(filter || payFilter || from || to || search) && (
+          <button onClick={() => { setFilter(''); setPayFilter(''); setFrom(''); setTo(''); setSearch('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
         )}
         <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}{outstanding > 0 && <> — <b className="text-red-600">reste a encaisser : {dt(outstanding)}</b></>}</span>
         <button onClick={() => load()} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
