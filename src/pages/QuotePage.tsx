@@ -9,6 +9,7 @@ import { dt } from '../lib/format'
 import { ClientPickerModal, type PickedClient } from '../components/ClientPickerModal'
 import { ArticlePickerModal } from '../components/ArticlePickerModal'
 import { useDialogs } from '../components/Dialogs'
+import { QtyInput, stepQty } from '../components/QtyInput'
 
 const TVA = 0.19
 
@@ -72,9 +73,9 @@ export function QuotePage() {
 
   const qtyControl = (key: string, qty: number) => (
     <div className="flex items-center justify-center gap-1">
-      <button onClick={() => setQty(key, qty - 1)} className="rounded-lg border border-slate-200 p-2 hover:bg-slate-100"><Minus size={14} /></button>
-      <span className="w-9 text-center font-semibold">{qty}</span>
-      <button onClick={() => setQty(key, qty + 1)} className="rounded-lg border border-slate-200 p-2 hover:bg-slate-100"><Plus size={14} /></button>
+      <button onClick={() => setQty(key, stepQty(qty, -1))} className="rounded-lg border border-slate-200 p-2 hover:bg-slate-100"><Minus size={14} /></button>
+      <QtyInput value={qty} onChange={n => setQty(key, n)} className="w-14 rounded-lg border border-slate-200 py-1.5 text-center font-semibold outline-none focus:border-teal" />
+      <button onClick={() => setQty(key, stepQty(qty, 1))} className="rounded-lg border border-slate-200 p-2 hover:bg-slate-100"><Plus size={14} /></button>
     </div>
   )
 

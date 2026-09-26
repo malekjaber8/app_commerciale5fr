@@ -7,6 +7,7 @@ import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { AdminPriceEditor } from './AdminPriceEditor'
 import { ImageLightbox } from './ImageLightbox'
+import { QtyInput, stepQty } from './QtyInput'
 import { ArticleFormModal } from './ArticleFormModal'
 import { deleteProduct, isCustomId } from '../lib/products'
 import { useSettings } from '../store/settings'
@@ -144,10 +145,9 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
           </div>
           <div className="flex items-stretch gap-3">
             <div className="flex items-center rounded-2xl border-2 border-slate-200">
-              <button onClick={() => setQty(q => Math.max(1, q - 1))} className="flex h-14 w-14 items-center justify-center rounded-l-2xl hover:bg-slate-50 active:bg-slate-100"><Minus size={22} /></button>
-              <input value={qty} inputMode="numeric" onChange={e => setQty(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-14 text-center text-xl font-bold outline-none" />
-              <button onClick={() => setQty(q => q + 1)} className="flex h-14 w-14 items-center justify-center rounded-r-2xl hover:bg-slate-50 active:bg-slate-100"><Plus size={22} /></button>
+              <button onClick={() => setQty(q => stepQty(q, -1))} className="flex h-14 w-14 items-center justify-center rounded-l-2xl hover:bg-slate-50 active:bg-slate-100"><Minus size={22} /></button>
+              <QtyInput value={qty} onChange={setQty} className="w-20 text-center text-xl font-bold outline-none" />
+              <button onClick={() => setQty(q => stepQty(q, 1))} className="flex h-14 w-14 items-center justify-center rounded-r-2xl hover:bg-slate-50 active:bg-slate-100"><Plus size={22} /></button>
             </div>
             <button onClick={addToQuote} disabled={variant.price == null}
               className="flex min-h-14 flex-1 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-teal to-navy-soft px-4 text-lg font-extrabold text-white shadow-lg active:scale-[0.99] disabled:opacity-40">

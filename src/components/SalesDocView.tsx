@@ -122,7 +122,7 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
               <tr key={i}>
                 <td className={td}>{r.code}</td>
                 <td className={td}>{r.name}{r.variant && r.variant !== 'Standard' && <span> — {r.variant}</span>}</td>
-                <td className={td + ' text-center font-bold'}>{r.qty}</td>
+                <td className={td + ' text-center font-bold'}>{String(r.qty).replace('.', ',')}</td>
                 <td className={td + ' text-right'}>{num(r.puht)}</td>
                 <td className={td + ' text-right'}>{num(r.mntHT)}</td>
                 <td className={td + ' text-center'}>19.00</td>

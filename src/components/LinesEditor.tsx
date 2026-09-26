@@ -2,6 +2,7 @@ import { Plus, Trash2 } from 'lucide-react'
 import type { DocLine } from '../types'
 import { dt } from '../lib/format'
 import { inputCls } from './ui'
+import { QtyInput } from './QtyInput'
 
 /** Tableau de lignes modifiable : designation, variante, prix unitaire, quantite. */
 export function LinesEditor({ lines, onChange }: { lines: DocLine[]; onChange: (l: DocLine[]) => void }) {
@@ -21,7 +22,7 @@ export function LinesEditor({ lines, onChange }: { lines: DocLine[]; onChange: (
                 <td className="p-1.5"><input className={inputCls} value={l.name} onChange={e => patch(i, { name: e.target.value })} /></td>
                 <td className="p-1.5"><input className={inputCls} value={l.variant} onChange={e => patch(i, { variant: e.target.value })} /></td>
                 <td className="p-1.5"><input className={inputCls + ' text-right'} defaultValue={l.unitPrice} key={'p' + i + l.articleId} onBlur={e => patch(i, { unitPrice: num(e.target.value) })} /></td>
-                <td className="p-1.5"><input className={inputCls + ' text-center'} type="number" min={1} value={l.qty} onChange={e => patch(i, { qty: Math.max(1, parseInt(e.target.value) || 1) })} /></td>
+                <td className="p-1.5"><QtyInput className={inputCls + ' text-center'} value={l.qty} onChange={n => patch(i, { qty: n })} /></td>
                 <td className="p-1.5 text-right font-semibold">{dt(l.unitPrice * l.qty)}</td>
                 <td className="p-1.5"><button onClick={() => onChange(lines.filter((_, k) => k !== i))} className="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={14} /></button></td>
               </tr>

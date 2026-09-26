@@ -61,7 +61,7 @@ export function InvoiceView({ invoice, onClose }: { invoice: InvoiceDoc; onClose
             {rows.map((r, i) => (
               <tr key={i}>
                 <td className="border border-slate-300 p-1.5">{r.name}{r.variant && <em className="text-slate-500"> — {r.variant}</em>}</td>
-                <td className="border border-slate-300 p-1.5 text-center font-semibold">{r.qty}</td>
+                <td className="border border-slate-300 p-1.5 text-center font-semibold">{String(r.qty).replace('.', ',')}</td>
                 <td className="border border-slate-300 p-1.5 text-right">{dt(r.puht)}</td>
                 <td className="border border-slate-300 p-1.5 text-right font-semibold">{dt(r.mntHT)}</td>
                 <td className="border border-slate-300 p-1.5 text-center">19.00</td>

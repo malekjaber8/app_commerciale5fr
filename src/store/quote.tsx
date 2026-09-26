@@ -43,10 +43,10 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
     add: (line) => setLines(prev => {
       const key = `${line.articleId}|${line.variant}`
       const existing = prev.find(l => l.key === key)
-      if (existing) return prev.map(l => l.key === key ? { ...l, qty: l.qty + line.qty } : l)
+      if (existing) return prev.map(l => l.key === key ? { ...l, qty: Math.round((l.qty + line.qty) * 1000) / 1000 } : l)
       return [...prev, { ...line, key }]
     }),
-    setQty: (key, qty) => setLines(prev => prev.map(l => l.key === key ? { ...l, qty: Math.max(1, qty) } : l)),
+    setQty: (key, qty) => setLines(prev => prev.map(l => l.key === key ? { ...l, qty: qty > 0 ? qty : l.qty } : l)),
     remove: (key) => setLines(prev => prev.filter(l => l.key !== key)),
     clear: () => { setLines([]); setEditing(null) },
     editing,
@@ -55,7 +55,7 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
       setEditing({ id: q.id, number: q.number, clientId: q.clientId || '', client: q.client, phone: q.phone, note: q.note, discountPct: q.discountPct })
     },
     total: lines.reduce((s, l) => s + l.unitPrice * l.qty, 0),
-    count: lines.reduce((s, l) => s + l.qty, 0),
+    count: Math.round(lines.reduce((s, l) => s + l.qty, 0) * 1000) / 1000,
   }), [lines, editing])
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
