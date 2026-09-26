@@ -8,12 +8,14 @@ import { saveQuote } from '../lib/quotes'
 import { dt } from '../lib/format'
 import { ClientPickerModal, type PickedClient } from '../components/ClientPickerModal'
 import { ArticlePickerModal } from '../components/ArticlePickerModal'
+import { useDialogs } from '../components/Dialogs'
 
 const TVA = 0.19
 
 /** Parcours : 1) panier  2) affecter a un client  3) verification du devis (quantites, articles, note)  4) enregistrement. */
 export function QuotePage() {
   const { lines, setQty, remove, clear, total } = useQuote()
+  const { ask } = useDialogs()
   const { uid, email, profile, role } = useAuth()
   const { settings } = useSettings()
   const navigate = useNavigate()
@@ -83,7 +85,7 @@ export function QuotePage() {
           <h1 className="text-xl font-bold text-navy">Mon panier</h1>
           <div className="flex gap-2">
             <Link to="/" className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"><Plus size={15} /> Ajouter des articles</Link>
-            <button onClick={() => confirm('Vider le panier ?') && clear()} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"><Trash2 size={15} /> Vider</button>
+            <button onClick={async () => { if (await ask('Vider le panier ?', { confirmLabel: 'Vider' })) clear() }} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"><Trash2 size={15} /> Vider</button>
           </div>
         </div>
 

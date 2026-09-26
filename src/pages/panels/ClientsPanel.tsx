@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Pencil, Plus, Trash2 } from 'lucide-react'
+import { useDialogs } from '../../components/Dialogs'
 import { createClient, deleteClient, fetchClients, updateClient } from '../../lib/db'
 import { useAuth } from '../../store/auth'
 import type { Client } from '../../types'
@@ -15,6 +16,7 @@ interface Props {
 
 export function ClientsPanel({ ownerUid, ownerName, admin }: Props) {
   const { uid, profile } = useAuth()
+  const { ask } = useDialogs()
   const scope = ownerUid ?? (admin ? undefined : uid ?? undefined)
   const [clients, setClients] = useState<Client[]>([])
   const [loading, setLoading] = useState(true)
@@ -34,7 +36,7 @@ export function ClientsPanel({ ownerUid, ownerName, admin }: Props) {
   }, [clients, query])
 
   const remove = async (c: Client) => {
-    if (!confirm(`Supprimer le client ${c.name} ?`)) return
+    if (!(await ask(`Supprimer le client ${c.name} ?`, { confirmLabel: 'Supprimer' }))) return
     await deleteClient(c.id)
     await load()
   }

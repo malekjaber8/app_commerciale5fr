@@ -10,9 +10,11 @@ import { ImageLightbox } from './ImageLightbox'
 import { ArticleFormModal } from './ArticleFormModal'
 import { deleteProduct, isCustomId } from '../lib/products'
 import { useSettings } from '../store/settings'
+import { useDialogs } from './Dialogs'
 
 export function ArticleDrawer({ article, onClose }: { article: Article; onClose: () => void }) {
   const { add } = useQuote()
+  const { ask } = useDialogs()
   const { role } = useAuth()
   const { products } = useSettings()
   const [editing, setEditing] = useState(false)
@@ -124,7 +126,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
               <div className="flex-1 text-xs text-slate-600">Article ajoute par vous (absent du site officiel).</div>
               <button onClick={() => setEditing(true)} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white">Modifier la fiche</button>
               <button onClick={async () => {
-                if (!confirm(`Supprimer definitivement « ${article.name} » ?`)) return
+                if (!(await ask(`Supprimer definitivement « ${article.name} » ?`, { confirmLabel: 'Supprimer' }))) return
                 await deleteProduct(article.id.slice(7)); onClose()
               }} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50">Supprimer</button>
             </div>

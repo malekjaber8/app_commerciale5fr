@@ -8,6 +8,7 @@ import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { QuoteList } from '../../components/QuoteList'
 import { inputCls } from '../../components/ui'
+import { useDialogs } from '../../components/Dialogs'
 
 // Fenetres d'administration : presentes uniquement dans l'application bureau (absentes du build web)
 const QuoteEditor = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/QuoteEditor').then(m => ({ default: m.QuoteEditor }))) : null
@@ -19,6 +20,7 @@ interface Props { ownerUid?: string; admin?: boolean }
 
 export function QuotesPanel({ ownerUid, admin }: Props) {
   const { uid } = useAuth()
+  const { ask } = useDialogs()
   const scope = ownerUid ?? (admin ? undefined : uid ?? undefined)
   const [quotes, setQuotes] = useState<QuoteDoc[]>([])
   const [loading, setLoading] = useState(true)
@@ -55,7 +57,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
     const label = DOC_TYPE_LABEL[type].toLowerCase()
     const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
     const extra = q.invoiceId ? "\n\nLa facture correspondante sera aussi supprimee de l'onglet Factures." : ''
-    if (!confirm(`Supprimer definitivement le ${label} ${number} (${q.client || 'sans client'}) ?${extra}`)) return
+    if (!(await ask(`Supprimer definitivement le ${label} ${number} (${q.client || 'sans client'}) ?${extra}`, { confirmLabel: 'Supprimer' }))) return
     if (q.invoiceId) { try { await deleteInvoice(q.invoiceId) } catch { /* facture deja supprimee */ } }
     await deleteDoc(doc(db, 'quotes', q.id)); await load()
   }

@@ -4,6 +4,7 @@ import { QuoteProvider } from './store/quote'
 import { AuthProvider, useAuth } from './store/auth'
 import { SettingsProvider } from './store/settings'
 import { Layout } from './components/Layout'
+import { DialogsProvider } from './components/Dialogs'
 import { CataloguePage } from './pages/CataloguePage'
 import { QuotePage } from './pages/QuotePage'
 import { MyClientsPage, MyOrdersPage, MyQuotesPage } from './pages/CommercialPages'
@@ -45,9 +46,11 @@ export default function App() {
     <AuthProvider>
       <SettingsProvider>
         <QuoteProvider>
-          <HashRouter>
-            <Gate />
-          </HashRouter>
+          <DialogsProvider>
+            <HashRouter>
+              <Gate />
+            </HashRouter>
+          </DialogsProvider>
         </QuoteProvider>
       </SettingsProvider>
     </AuthProvider>

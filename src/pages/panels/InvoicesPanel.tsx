@@ -4,6 +4,7 @@ import { collection, getDocs, query as fsQuery, where } from 'firebase/firestore
 import { db } from '../../firebase'
 import { deleteInvoice, fetchInvoices } from '../../lib/db'
 import { updateQuote } from '../../lib/quotes'
+import { useDialogs } from '../../components/Dialogs'
 import { dt, fmtTs } from '../../lib/format'
 import type { InvoiceDoc } from '../../types'
 import { InvoiceEditor } from '../../components/InvoiceEditor'
@@ -11,6 +12,7 @@ import { InvoiceView } from '../../components/InvoiceView'
 import { Empty, inputCls } from '../../components/ui'
 
 export function InvoicesPanel({ ownerUid }: { ownerUid?: string }) {
+  const { ask } = useDialogs()
   const [invoices, setInvoices] = useState<InvoiceDoc[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -30,9 +32,9 @@ export function InvoicesPanel({ ownerUid }: { ownerUid?: string }) {
   }, [invoices, query])
 
   const remove = async (i: InvoiceDoc) => {
-    if (!confirm(`Supprimer definitivement la facture ${i.number} (${i.clientName}) ?
+    if (!(await ask(`Supprimer definitivement la facture ${i.number} (${i.clientName}) ?
 
-Le devis d'origine repassera « En attente » chez le commercial.`)) return
+Le devis d'origine repassera « En attente » chez le commercial.`, { confirmLabel: 'Supprimer' }))) return
     await deleteInvoice(i.id)
     // Le devis lie a cette facture redevient « en attente » (il ne pointe plus vers une facture supprimee)
     try {

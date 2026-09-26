@@ -3,11 +3,13 @@ import { Eye, EyeOff, RotateCcw, Save, Trash2 } from 'lucide-react'
 import { articles as baseArticles } from '../lib/catalogue'
 import { dt } from '../lib/format'
 import { useSettings } from '../store/settings'
+import { useDialogs } from './Dialogs'
 import type { Article } from '../types'
 
 /** Edition directe des prix (et de la visibilite) d'un article, reservee a l'application bureau admin. */
 export function AdminPriceEditor({ article }: { article: Article }) {
   const { settings, save } = useSettings()
+  const { ask } = useDialogs()
   const base = baseArticles.find(a => a.id === article.id)
   const ov = settings.priceOverrides[article.id] || {}
   const [vals, setVals] = useState<Record<string, string>>(() =>
@@ -87,7 +89,7 @@ export function AdminPriceEditor({ article }: { article: Article }) {
               <input defaultValue={v.price ?? ''} placeholder="Prix DT" onBlur={e => editExtraPrice(v.label, e.target.value)}
                 className="w-24 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-right text-sm font-semibold outline-none focus:border-teal" />
               <button title="Supprimer cette variante" disabled={busy}
-                onClick={() => { if (confirm(`Supprimer la variante « ${v.label} » ?`)) writeExtras(extras.filter(x => x.label !== v.label), 'Variante supprimee.') }}
+                onClick={async () => { if (await ask(`Supprimer la variante « ${v.label} » ?`, { confirmLabel: 'Supprimer' })) writeExtras(extras.filter(x => x.label !== v.label), 'Variante supprimee.') }}
                 className="rounded p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={14} /></button>
             </div>
           ))}

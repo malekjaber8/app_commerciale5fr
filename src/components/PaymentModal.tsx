@@ -3,11 +3,13 @@ import { Banknote, Trash2 } from 'lucide-react'
 import { PAYMENT_METHOD_LABEL, quotePayment, updateQuote, type Payment, type PaymentMethod, type QuoteDoc } from '../lib/quotes'
 import { dt } from '../lib/format'
 import { Field, Modal, inputCls } from './ui'
+import { useDialogs } from './Dialogs'
 
 const today = () => new Date().toISOString().slice(0, 10)
 
 /** Reglements d'un devis valide : l'admin enregistre les encaissements, le commercial voit « Paye » ou le reste a payer. */
 export function PaymentModal({ quote, onClose, onDone }: { quote: QuoteDoc; onClose: () => void; onDone: () => void }) {
+  const { ask } = useDialogs()
   const [payments, setPayments] = useState<Payment[]>(quote.payments ?? [])
   const [amount, setAmount] = useState('')
   const [method, setMethod] = useState<PaymentMethod>('especes')
@@ -39,7 +41,7 @@ export function PaymentModal({ quote, onClose, onDone }: { quote: QuoteDoc; onCl
   }
 
   const remove = async (p: Payment) => {
-    if (!confirm(`Supprimer ce reglement de ${dt(p.amount)} ?`)) return
+    if (!(await ask(`Supprimer ce reglement de ${dt(p.amount)} ?`, { confirmLabel: 'Supprimer' }))) return
     await persist(payments.filter(x => x.id !== p.id))
   }
 

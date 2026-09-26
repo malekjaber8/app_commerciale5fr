@@ -7,6 +7,7 @@ import { dt, fmtTs } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { ORDER_STATUS_LABEL, type Client, type OrderDoc, type OrderStatus } from '../../types'
 import { SalesDocView } from '../../components/SalesDocView'
+import { useDialogs } from '../../components/Dialogs'
 import { OrderEditor } from '../../components/OrderEditor'
 import { InvoiceEditor, type InvoiceSeed } from '../../components/InvoiceEditor'
 import { Empty, inputCls } from '../../components/ui'
@@ -22,6 +23,7 @@ interface Props { ownerUid?: string; admin?: boolean }
 
 export function OrdersPanel({ ownerUid, admin }: Props) {
   const { uid } = useAuth()
+  const { ask, notify } = useDialogs()
   const scope = ownerUid ?? (admin ? undefined : uid ?? undefined)
   const [orders, setOrders] = useState<OrderDoc[]>([])
   const [loading, setLoading] = useState(true)
@@ -42,7 +44,7 @@ export function OrdersPanel({ ownerUid, admin }: Props) {
 
   const changeStatus = async (o: OrderDoc, s: OrderStatus) => { await setOrderStatus(o.id, s); await load() }
   const remove = async (o: OrderDoc) => {
-    if (!confirm(`Supprimer la commande ${o.number} ?`)) return
+    if (!(await ask(`Supprimer la commande ${o.number} ?`, { confirmLabel: 'Supprimer' }))) return
     await deleteOrder(o.id); await load()
   }
 
@@ -122,7 +124,7 @@ export function OrdersPanel({ ownerUid, admin }: Props) {
         }} />
       )}
       {editing && <OrderEditor order={editing} onClose={() => setEditing(null)} onSaved={load} />}
-      {invoiceSeed && <InvoiceEditor seed={invoiceSeed} onClose={() => setInvoiceSeed(null)} onSaved={() => alert('Facture creee. Retrouvez-la dans l\'onglet Factures.')} />}
+      {invoiceSeed && <InvoiceEditor seed={invoiceSeed} onClose={() => setInvoiceSeed(null)} onSaved={() => { notify("Facture creee. Retrouvez-la dans l'onglet Factures.") }} />}
     </div>
   )
 }

@@ -4,12 +4,14 @@ import { sendPasswordResetEmail } from 'firebase/auth'
 import { KeyRound, Trash2, UserPlus } from 'lucide-react'
 import { auth, createAccount, db } from '../../firebase'
 import { authErrorMessage, useAuth, type Profile, type Role } from '../../store/auth'
+import { useDialogs } from '../../components/Dialogs'
 import { USERNAME_DOMAIN, cleanUsername, emailToLogin, isValidUsername, usernameToEmail } from '../../config'
 
 interface UserRow extends Profile { id: string }
 
 export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; email: string }) => void }) {
   const { isOwner } = useAuth()
+  const { ask } = useDialogs()
   const [role, setRole] = useState<Role>('commercial')
   const [users, setUsers] = useState<UserRow[]>([])
   const [loading, setLoading] = useState(true)
@@ -59,7 +61,7 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
   }
 
   const remove = async (u: UserRow) => {
-    if (!confirm(`Supprimer l'acces de ${u.name || u.email} ? (le compte de connexion reste visible dans la console Firebase)`)) return
+    if (!(await ask(`Supprimer l'acces de ${u.name || u.email} ? (le compte de connexion reste visible dans la console Firebase)`, { confirmLabel: 'Supprimer' }))) return
     await deleteDoc(doc(db, 'users', u.id))
     await load()
   }

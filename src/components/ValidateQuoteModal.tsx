@@ -7,6 +7,7 @@ import { DOC_TYPE_LABEL, updateQuote, type DocType, type QuoteDoc } from '../lib
 import { dt } from '../lib/format'
 import type { Client } from '../types'
 import { Modal } from './ui'
+import { useDialogs } from './Dialogs'
 
 const CHOICES: { type: DocType; icon: typeof FileText; hint: string }[] = [
   { type: 'devis', icon: FileText, hint: 'Le devis est confirme tel quel.' },
@@ -16,6 +17,7 @@ const CHOICES: { type: DocType; icon: typeof FileText; hint: string }[] = [
 
 /** Validation d'un devis par l'admin : choix de la nature du document, puis le commercial voit « Valide ». */
 export function ValidateQuoteModal({ quote, onClose, onDone }: { quote: QuoteDoc; onClose: () => void; onDone: () => void }) {
+  const { ask } = useDialogs()
   const [type, setType] = useState<DocType>(quote.docType ?? 'devis')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -54,7 +56,7 @@ export function ValidateQuoteModal({ quote, onClose, onDone }: { quote: QuoteDoc
   }
 
   const backToPending = async () => {
-    if (!window.confirm('Remettre ce devis en attente ? Le commercial ne verra plus « Valide ».')) return
+    if (!(await ask('Remettre ce devis en attente ? Le commercial ne verra plus « Valide ».', { confirmLabel: 'Remettre en attente', danger: false }))) return
     setBusy(true); setError('')
     try {
       await updateQuote(quote.id, { status: 'attente', docType: 'devis', docNumber: '', validatedAt: null })
