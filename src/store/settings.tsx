@@ -63,6 +63,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         const prices = variants.map(v => v.price).filter((x): x is number => x != null)
         art = { ...a, variants, priceFrom: prices.length ? Math.min(...prices) : a.priceFrom, adjusted: !!ov }
       }
+      const ed = settings.edits?.[a.id]
+      if (ed) art = { ...art, name: ed.name ?? art.name, desc: ed.desc ?? art.desc }
       out.push(isHidden ? { ...art, hidden: true } : art)
     }
     return out

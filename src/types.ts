@@ -31,6 +31,8 @@ export interface Settings {
   priceOverrides: Record<string, Record<string, number>>
   /** Variantes (dimensions) ajoutees par l'admin a un article du catalogue : articleId -> variantes */
   extraVariants?: Record<string, Variant[]>
+  /** Nom / description modifies par l'admin pour un article du catalogue : articleId -> champs */
+  edits?: Record<string, { name?: string; desc?: string }>
   maxDiscountPct: number
 }
 

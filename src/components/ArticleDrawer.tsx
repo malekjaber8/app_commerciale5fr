@@ -6,6 +6,7 @@ import { findCategory } from '../lib/catalogue'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { AdminPriceEditor } from './AdminPriceEditor'
+import { ArticleInfoEditor } from './ArticleInfoEditor'
 import { ImageLightbox } from './ImageLightbox'
 import { QtyInput, stepQty } from './QtyInput'
 import { ArticleFormModal } from './ArticleFormModal'
@@ -128,6 +129,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
                 className="flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50"><Trash2 size={13} /> Supprimer l&apos;article</button>
             </div>
           )}
+          {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && !isCustomId(article.id) && <ArticleInfoEditor article={article} />}
           {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && <AdminPriceEditor article={article} />}
           {import.meta.env.VITE_DESKTOP === '1' && editing && (
             <ArticleFormModal initial={products.find(p => p.id === article.id.slice(7))} onClose={() => { setEditing(false); onClose() }} />
