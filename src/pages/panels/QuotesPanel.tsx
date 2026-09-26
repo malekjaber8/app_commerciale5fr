@@ -31,6 +31,8 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [error, setError] = useState(false)
   const [filter, setFilter] = useState<'' | 'attente' | 'valide'>('')
   const [payFilter, setPayFilter] = useState<'' | 'paye' | 'impaye' | 'partiel' | 'nonsolde'>('')
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
   const [editing, setEditing] = useState<QuoteDoc | null>(null)
   const [validating, setValidating] = useState<QuoteDoc | null>(null)
   const [paying, setPaying] = useState<QuoteDoc | null>(null)
@@ -60,7 +62,19 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
     if (f === 'impaye') return st === 'impaye' || st === 'na'
     return st !== 'paye' // non solde : non paye + partiel
   }
-  const byEtat = useMemo(() => quotes.filter(q => (!filter ? true : filter === 'valide' ? q.status === 'valide' : q.status !== 'valide')), [quotes, filter])
+  // Filtre par date de creation du devis (calendrier du/au, jours inclus)
+  const inDates = (q: QuoteDoc) => {
+    if (!from && !to) return true
+    const d = q.createdAt?.toDate()
+    if (!d) return false
+    if (from && d < new Date(from + 'T00:00:00')) return false
+    if (to && d > new Date(to + 'T23:59:59.999')) return false
+    return true
+  }
+  const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
+  const byEtat = useMemo(() => quotes.filter(q => inDates(q) && (!filter ? true : filter === 'valide' ? q.status === 'valide' : q.status !== 'valide')),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [quotes, filter, from, to])
   const shown = useMemo(() => byEtat.filter(q => matchesPay(q, payFilter)), [byEtat, payFilter])
   const payCount = (f: typeof payFilter) => byEtat.filter(q => matchesPay(q, f)).length
   const outstanding = shown.reduce((s, q) => s + (quotePayment(q).state === 'na' ? 0 : quotePayment(q).balance), 0)
@@ -91,8 +105,15 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           <option value="impaye">Non payes ({payCount('impaye')})</option>
           <option value="nonsolde">Reste a payer : non payes + partiels ({payCount('nonsolde')})</option>
         </select>
-        {(filter || payFilter) && (
-          <button onClick={() => { setFilter(''); setPayFilter('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Du</span>
+          <input type="date" value={from} max={to || undefined} onChange={e => setFrom(e.target.value)} className={inputCls + ' w-auto!'} aria-label="Date de debut" />
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">au</span>
+          <input type="date" value={to} min={from || undefined} onChange={e => setTo(e.target.value)} className={inputCls + ' w-auto!'} aria-label="Date de fin" />
+          <button onClick={() => { const t = todayStr(); setFrom(t); setTo(t) }} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-teal-dark hover:bg-slate-50">Aujourd&apos;hui</button>
+        </div>
+        {(filter || payFilter || from || to) && (
+          <button onClick={() => { setFilter(''); setPayFilter(''); setFrom(''); setTo('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
         )}
         <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}{outstanding > 0 && <> — <b className="text-red-600">reste a encaisser : {dt(outstanding)}</b></>}</span>
         <button onClick={() => load()} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
