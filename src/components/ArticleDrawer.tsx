@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Minus, Play, Plus, ShoppingBag, X, ZoomIn } from 'lucide-react'
+import { Minus, Play, Plus, ShoppingBag, Trash2, X, ZoomIn } from 'lucide-react'
 import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
 import { findCategory } from '../lib/catalogue'
@@ -9,13 +9,13 @@ import { AdminPriceEditor } from './AdminPriceEditor'
 import { ImageLightbox } from './ImageLightbox'
 import { QtyInput, stepQty } from './QtyInput'
 import { ArticleFormModal } from './ArticleFormModal'
-import { deleteProduct, isCustomId } from '../lib/products'
+import { isCustomId } from '../lib/products'
+import { useRemoveArticle } from '../lib/useRemoveArticle'
 import { useSettings } from '../store/settings'
-import { useDialogs } from './Dialogs'
 
 export function ArticleDrawer({ article, onClose }: { article: Article; onClose: () => void }) {
   const { add } = useQuote()
-  const { ask } = useDialogs()
+  const removeArticle = useRemoveArticle()
   const { role } = useAuth()
   const { products } = useSettings()
   const [editing, setEditing] = useState(false)
@@ -120,14 +120,12 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
             </div>
           </div>
 
-          {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && isCustomId(article.id) && (
-            <div className="flex gap-2 rounded-xl border-2 border-dashed border-navy/30 bg-navy/5 p-3">
-              <div className="flex-1 text-xs text-slate-600">Article ajoute par vous (absent du site officiel).</div>
-              <button onClick={() => setEditing(true)} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white">Modifier la fiche</button>
-              <button onClick={async () => {
-                if (!(await ask(`Supprimer definitivement « ${article.name} » ?`, { confirmLabel: 'Supprimer' }))) return
-                await deleteProduct(article.id.slice(7)); onClose()
-              }} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50">Supprimer</button>
+          {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && (
+            <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-navy/30 bg-navy/5 p-3">
+              <div className="flex-1 text-xs text-slate-600">{isCustomId(article.id) ? 'Article ajoute par vous (absent du site officiel).' : 'Article du catalogue du site.'}</div>
+              {isCustomId(article.id) && <button onClick={() => setEditing(true)} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white">Modifier la fiche</button>}
+              <button onClick={async () => { if (await removeArticle(article)) onClose() }}
+                className="flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50"><Trash2 size={13} /> Supprimer l&apos;article</button>
             </div>
           )}
           {import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && <AdminPriceEditor article={article} />}

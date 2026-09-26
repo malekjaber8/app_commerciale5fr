@@ -1,15 +1,16 @@
-import { Flame, ImageOff, Ruler } from 'lucide-react'
+import { Flame, ImageOff, Ruler, Trash2 } from 'lucide-react'
 import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
 
 /** Categories dont les articles sont des « types » (densites) : le prix depend de la dimension, on ne l'affiche qu'a l'ouverture de la fiche. */
 const DIMENSION_CATEGORIES = new Set(['mousse-matelas', 'mousse-tabka'])
 
-export function ArticleCard({ article, onOpen }: { article: Article; onOpen: () => void }) {
+export function ArticleCard({ article, onOpen, onDelete }: { article: Article; onOpen: () => void; onDelete?: () => void }) {
   return (
+    <div className="relative flex">
     <button
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal hover:shadow-md"
+      className="group flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-teal hover:shadow-md"
     >
       <div className="relative flex h-40 items-center justify-center bg-slate-50">
         {article.img ? (
@@ -49,5 +50,10 @@ export function ArticleCard({ article, onOpen }: { article: Article; onOpen: () 
         <div className="text-[11px] text-slate-400">{article.id}</div>
       </div>
     </button>
+    {onDelete && (
+      <button onClick={onDelete} title="Supprimer l'article" aria-label="Supprimer l'article"
+        className="absolute bottom-2 right-2 rounded-lg border border-red-200 bg-white p-2 text-red-500 shadow-sm hover:bg-red-50"><Trash2 size={16} /></button>
+    )}
+    </div>
   )
 }

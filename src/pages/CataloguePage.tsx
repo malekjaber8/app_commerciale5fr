@@ -5,6 +5,7 @@ import { useSettings } from '../store/settings'
 import { useAuth } from '../store/auth'
 import type { Article } from '../types'
 import { ArticleCard } from '../components/ArticleCard'
+import { useRemoveArticle } from '../lib/useRemoveArticle'
 import { ArticleDrawer } from '../components/ArticleDrawer'
 import { ArticleFormModal } from '../components/ArticleFormModal'
 
@@ -13,6 +14,7 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
 export function CataloguePage() {
   const { articles } = useSettings()
   const { role } = useAuth()
+  const removeArticle = useRemoveArticle()
   const [adding, setAdding] = useState(false)
   const [catId, setCatId] = useState<string | null>(null)
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
@@ -141,7 +143,8 @@ export function CataloguePage() {
             <div className="mt-20 text-center text-slate-400">Aucun article trouvé.</div>
           ) : (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-              {list.map(a => <ArticleCard key={a.id} article={a} onOpen={() => setOpen(a)} />)}
+              {list.map(a => <ArticleCard key={a.id} article={a} onOpen={() => setOpen(a)}
+                onDelete={import.meta.env.VITE_DESKTOP === '1' && role === 'admin' && !a.hidden ? () => { removeArticle(a) } : undefined} />)}
             </div>
           )}
         </div>
