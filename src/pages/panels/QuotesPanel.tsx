@@ -26,6 +26,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [filter, setFilter] = useState<'' | 'attente' | 'valide'>('')
+  const [payFilter, setPayFilter] = useState<'' | 'paye' | 'impaye' | 'partiel' | 'nonsolde'>('')
   const [editing, setEditing] = useState<QuoteDoc | null>(null)
   const [validating, setValidating] = useState<QuoteDoc | null>(null)
   const [paying, setPaying] = useState<QuoteDoc | null>(null)
@@ -45,10 +46,19 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
     return () => { clearInterval(timer); document.removeEventListener('visibilitychange', tick) }
   }, [admin, load])
 
-  const shown = useMemo(() => quotes.filter(q => {
-    if (!filter) return true
-    return filter === 'valide' ? q.status === 'valide' : q.status !== 'valide'
-  }), [quotes, filter])
+  // Les deux filtres se combinent : etat (en attente / valide) ET reglement (paye / partiel / non paye...).
+  // Un devis encore « en attente » n'a rien encaisse : il compte comme « non paye ».
+  const matchesPay = (q: QuoteDoc, f: typeof payFilter) => {
+    const st = quotePayment(q).state
+    if (!f) return true
+    if (f === 'paye') return st === 'paye'
+    if (f === 'partiel') return st === 'partiel'
+    if (f === 'impaye') return st === 'impaye' || st === 'na'
+    return st !== 'paye' // non solde : non paye + partiel
+  }
+  const byEtat = useMemo(() => quotes.filter(q => (!filter ? true : filter === 'valide' ? q.status === 'valide' : q.status !== 'valide')), [quotes, filter])
+  const shown = useMemo(() => byEtat.filter(q => matchesPay(q, payFilter)), [byEtat, payFilter])
+  const payCount = (f: typeof payFilter) => byEtat.filter(q => matchesPay(q, f)).length
   const outstanding = shown.reduce((s, q) => s + (quotePayment(q).state === 'na' ? 0 : quotePayment(q).balance), 0)
   const pendingCount = quotes.filter(q => q.status !== 'valide').length
 
@@ -65,11 +75,21 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
-        <select value={filter} onChange={e => setFilter(e.target.value as typeof filter)} className={inputCls + ' max-w-[200px]'}>
-          <option value="">Tous les devis</option>
+        <select value={filter} onChange={e => setFilter(e.target.value as typeof filter)} className={inputCls + ' max-w-[210px]'} aria-label="Filtrer par etat">
+          <option value="">Tous les etats</option>
           <option value="attente">En attente ({pendingCount})</option>
           <option value="valide">Valides</option>
         </select>
+        <select value={payFilter} onChange={e => setPayFilter(e.target.value as typeof payFilter)} className={inputCls + ' max-w-[250px]'} aria-label="Filtrer par reglement">
+          <option value="">Tous les reglements</option>
+          <option value="paye">Payes ({payCount('paye')})</option>
+          <option value="partiel">Partiellement payes ({payCount('partiel')})</option>
+          <option value="impaye">Non payes ({payCount('impaye')})</option>
+          <option value="nonsolde">Reste a payer : non payes + partiels ({payCount('nonsolde')})</option>
+        </select>
+        {(filter || payFilter) && (
+          <button onClick={() => { setFilter(''); setPayFilter('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
+        )}
         <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}{outstanding > 0 && <> — <b className="text-red-600">reste a encaisser : {dt(outstanding)}</b></>}</span>
         <button onClick={() => load()} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
       </div>
