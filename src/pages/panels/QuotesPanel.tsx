@@ -1,7 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
-import { Banknote, CheckCircle2, Lock, Pencil, Search, X } from 'lucide-react'
+import { Banknote, CheckCircle2, ClipboardList, Lock, Pencil, Search, X } from 'lucide-react'
 import { db } from '../../firebase'
 import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
 import { deleteInvoice } from '../../lib/db'
@@ -17,6 +17,7 @@ const QuoteEditor = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('..
 const ValidateQuoteModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/ValidateQuoteModal').then(m => ({ default: m.ValidateQuoteModal }))) : null
 
 const PaymentModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/PaymentModal').then(m => ({ default: m.PaymentModal }))) : null
+const DailyReportModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/DailyReportModal').then(m => ({ default: m.DailyReportModal }))) : null
 
 interface Props { ownerUid?: string; admin?: boolean }
 
@@ -37,6 +38,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [editing, setEditing] = useState<QuoteDoc | null>(null)
   const [validating, setValidating] = useState<QuoteDoc | null>(null)
   const [paying, setPaying] = useState<QuoteDoc | null>(null)
+  const [report, setReport] = useState(false)
 
   const load = useCallback(async (silent = false) => {
     if (!silent) { setLoading(true); setError(false) }
@@ -126,7 +128,10 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           <button onClick={() => { setFilter(''); setPayFilter(''); setFrom(''); setTo(''); setSearch('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
         )}
         <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}{outstanding > 0 && <> — <b className="text-red-600">reste a encaisser : {dt(outstanding)}</b></>}</span>
-        <button onClick={() => load()} className="ml-auto rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
+        {admin && DailyReportModal && (
+          <button onClick={() => setReport(true)} className="ml-auto flex items-center gap-1.5 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white hover:opacity-90"><ClipboardList size={15} /> Rapport du jour</button>
+        )}
+        <button onClick={() => load()} className={`rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50 ${admin ? '' : 'ml-auto'}`}>Actualiser</button>
       </div>
       {loading && <div className="p-8 text-center text-slate-400">Chargement...</div>}
       {error && <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">Impossible de charger les devis.</div>}
@@ -158,6 +163,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
         />
       )}
       <Suspense fallback={null}>
+        {report && DailyReportModal && <DailyReportModal quotes={quotes} onClose={() => setReport(false)} />}
         {editing && QuoteEditor && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
         {paying && PaymentModal && <PaymentModal quote={paying} onClose={() => setPaying(null)} onDone={() => load(true)} />}
         {validating && ValidateQuoteModal && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}
