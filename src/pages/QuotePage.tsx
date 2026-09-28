@@ -1,7 +1,9 @@
-import { useState } from 'react'
-import { ArrowLeft, Minus, Plus, Printer, Save, Trash2, UserCheck, UserRound } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { ArrowLeft, Crown, Minus, Plus, Printer, Save, Trash2, UserCheck, UserRound } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQuote } from '../store/quote'
+import { db } from '../firebase'
 import { useAuth } from '../store/auth'
 import { useSettings } from '../store/settings'
 import { saveQuote, updateQuote } from '../lib/quotes'
@@ -21,6 +23,17 @@ export function QuotePage() {
   const { settings } = useSettings()
   const navigate = useNavigate()
   const [step, setStep] = useState<'cart' | 'review'>(editing ? 'review' : 'cart')
+  // Un admin peut creer un devis pour un commercial : il choisit qui, le devis est enregistre affecte a lui, colore dans les listes
+  const isAdminCreating = role === 'admin' && !editing
+  const [commercials, setCommercials] = useState<{ id: string; name: string; email: string }[]>([])
+  const [assignTo, setAssignTo] = useState('')
+  useEffect(() => {
+    if (!isAdminCreating) return
+    getDocs(query(collection(db, 'users'), where('role', '==', 'commercial'), where('active', '==', true)))
+      .then(snap => setCommercials(snap.docs.map(d => ({ id: d.id, name: (d.data().name as string) || '', email: (d.data().email as string) || '' })).sort((a, b) => a.name.localeCompare(b.name))))
+      .catch(() => setCommercials([]))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const [picking, setPicking] = useState(false)
   const [adding, setAdding] = useState(false)
   const [client, setClient] = useState<PickedClient | null>(editing ? { id: editing.clientId, name: editing.client, phone: editing.phone } : null)
@@ -40,6 +53,7 @@ export function QuotePage() {
 
   const save = async () => {
     if (!uid || !client) return
+    if (isAdminCreating && !assignTo) return setError('Choisissez le commercial auquel affecter ce devis.')
     setError('')
     setSaving(true)
     try {
@@ -54,11 +68,15 @@ export function QuotePage() {
         navigate('/mes-devis')
         return
       }
+      const assigned = isAdminCreating ? commercials.find(c => c.id === assignTo) : null
       await saveQuote({
-        number, ownerUid: uid, ownerName: profile?.name || '', ownerEmail: email || '', clientId: client.id,
+        number,
+        ownerUid: assigned?.id ?? uid, ownerName: assigned?.name ?? (profile?.name || ''), ownerEmail: assigned?.email ?? (email || ''),
+        clientId: client.id,
         client: client.name, phone: client.phone, note: note.trim(), discountPct: pct,
         lines: lines.map(({ articleId, name, variant, unitPrice, qty }) => ({ articleId, name, variant, unitPrice, qty })),
         subtotal: total, discount, total: net,
+        ...(isAdminCreating ? { createdByAdmin: true } : {}),
       })
       clear()
       navigate('/mes-devis')
@@ -148,7 +166,7 @@ export function QuotePage() {
           <button onClick={() => window.print()} className="flex items-center gap-2 rounded-xl border border-navy bg-white px-4 py-2 text-sm font-bold text-navy">
             <Printer size={15} /> Imprimer / PDF
           </button>
-          <button onClick={save} disabled={saving || lines.length === 0} className="flex items-center gap-2 rounded-xl bg-navy px-5 py-2 text-sm font-bold text-white disabled:opacity-60">
+          <button onClick={save} disabled={saving || lines.length === 0 || (isAdminCreating && !assignTo)} className="flex items-center gap-2 rounded-xl bg-navy px-5 py-2 text-sm font-bold text-white disabled:opacity-60">
             <Save size={15} /> {saving ? 'Enregistrement...' : editing ? 'Enregistrer les modifications' : 'Enregistrer le devis'}
           </button>
         </div>
@@ -168,6 +186,17 @@ export function QuotePage() {
           </div>
           <button onClick={() => setPicking(true)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:bg-slate-50">Changer de client</button>
         </div>
+        {isAdminCreating && (
+          <label className="block">
+            <span className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-violet-700"><Crown size={14} /> Affecter a un commercial *</span>
+            <select value={assignTo} onChange={e => setAssignTo(e.target.value)}
+              className="w-full rounded-lg border border-violet-200 bg-violet-50 px-3 py-2 text-sm outline-none focus:border-violet-400">
+              <option value="">{commercials.length ? 'Choisir un commercial...' : 'Aucun commercial actif'}</option>
+              {commercials.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+            </select>
+            <span className="mt-1 block text-[11px] text-slate-400">Ce devis apparaitra dans « Mes devis » du commercial choisi, marque comme cree par vous.</span>
+          </label>
+        )}
         <textarea value={note} onChange={e => setNote(e.target.value)} rows={2} placeholder="Note / conditions (optionnel)"
           className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-teal" />
         <label className="flex items-center gap-2 text-sm text-slate-600">

@@ -43,6 +43,8 @@ export interface QuoteDoc {
   paid?: number
   /** Encaissements declares par le commercial, a verifier par l'admin. */
   declared?: DeclaredCollection[]
+  /** Devis cree par l'administrateur et affecte a un commercial (au lieu d'etre cree par le commercial lui-meme). */
+  createdByAdmin?: boolean
   number: string
   ownerUid: string
   ownerName: string

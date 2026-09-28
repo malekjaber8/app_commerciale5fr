@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type ReactNode } from 'react'
-import { Printer, Trash2 } from 'lucide-react'
+import { Crown, Printer, Trash2 } from 'lucide-react'
 import { SalesDocView } from './SalesDocView'
 import { dt } from '../lib/format'
 import { DOC_TYPE_LABEL, fmtDate, quotePayment, type QuoteDoc } from '../lib/quotes'
@@ -98,10 +98,14 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
       </div>
 
       {quotes.map(q => (
-        <div key={q.id} onClick={() => setViewing(q)} title="Ouvrir le document" className="cursor-pointer border-b border-slate-100 last:border-0 hover:bg-teal/5">
+        <div key={q.id} onClick={() => setViewing(q)} title="Ouvrir le document"
+          className={`cursor-pointer border-b border-slate-100 last:border-0 hover:bg-teal/5 ${q.createdByAdmin ? 'border-l-4 border-l-violet-400 bg-violet-50/40' : ''}`}>
         <div className="px-5 py-4 lg:hidden">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
+              {q.createdByAdmin && (
+                <span className="mb-1 inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-violet-700"><Crown size={11} /> Commande admin</span>
+              )}
               <div className="text-lg font-extrabold leading-tight text-navy">{q.client || '—'}</div>
               {q.phone && <div className="text-sm text-slate-500">{q.phone}</div>}
             </div>
@@ -126,6 +130,9 @@ export function QuoteList({ quotes, showOwner, onDelete, extra }: Props) {
         </div>
         <div className={`${grid} hidden py-4 lg:grid`}>
           <div className="min-w-0">
+            {q.createdByAdmin && (
+              <span className="mb-0.5 inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-violet-700"><Crown size={11} /> Admin</span>
+            )}
             <div className="truncate text-base font-extrabold text-navy">{q.client || '—'}</div>
             {q.phone && <div className="text-xs text-slate-500">{q.phone}</div>}
           </div>

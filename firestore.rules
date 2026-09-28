@@ -49,9 +49,9 @@ service cloud.firestore {
 
     // Devis : le commercial cree les siens (toujours « en attente ») et les lit ; l'admin les modifie et les valide ; le commercial modifie les siens tant qu'ils sont en attente
     match /quotes/{quoteId} {
-      allow create: if (isCommercial() || isAdmin())
-        && request.resource.data.ownerUid == request.auth.uid
-        && request.resource.data.get('status', 'attente') == 'attente';
+      // L'admin peut affecter le devis a n'importe quel commercial (ownerUid libre) ; le commercial ne peut se l'affecter qu'a lui-meme
+      allow create: if request.resource.data.get('status', 'attente') == 'attente'
+        && (isAdmin() || (isCommercial() && request.resource.data.ownerUid == request.auth.uid));
       allow read: if isAdmin()
         || (isCommercial() && resource.data.ownerUid == request.auth.uid);
       // Le commercial peut modifier son devis tant qu'il n'est pas valide (son contenu seulement, jamais l'etat)

@@ -26,12 +26,12 @@ export function Layout() {
             <NavLink to="/admin" className={link}><Shield size={26} /><span>Admin</span></NavLink>
           )}
           <NavLink to="/" end className={link}><LayoutGrid size={26} /><span>Catalogue</span></NavLink>
+          <NavLink to="/devis" className={link}>
+            <FileText size={26} /><span>Panier</span>
+            {count > 0 && <span className="absolute right-1 top-0.5 min-w-[22px] rounded-full bg-teal px-1.5 py-0.5 text-center text-xs font-extrabold text-navy shadow">{count}</span>}
+          </NavLink>
           {!IS_DESKTOP && (
             <>
-              <NavLink to="/devis" className={link}>
-                <FileText size={26} /><span>Panier</span>
-                {count > 0 && <span className="absolute right-1 top-0.5 min-w-[22px] rounded-full bg-teal px-1.5 py-0.5 text-center text-xs font-extrabold text-navy shadow">{count}</span>}
-              </NavLink>
               <NavLink to="/mes-devis" className={link}><History size={26} /><span>Mes devis</span></NavLink>
               <NavLink to="/clients" className={link}><Users size={26} /><span>Clients</span></NavLink>
             </>
