@@ -146,7 +146,7 @@ export function QuotePage() {
         </div>
 
         {picking && uid && (
-          <ClientPickerModal uid={uid} ownerName={profile?.name || ''} onClose={() => setPicking(false)}
+          <ClientPickerModal uid={uid} ownerName={profile?.name || ''} searchAll={role === 'admin'} onClose={() => setPicking(false)}
             onPick={c => { setClient(c); setPicking(false); setStep('review') }} />
         )}
       </div>
@@ -284,7 +284,7 @@ export function QuotePage() {
 
       {adding && <ArticlePickerModal onClose={() => setAdding(false)} />}
       {picking && uid && (
-        <ClientPickerModal uid={uid} ownerName={profile?.name || ''} onClose={() => setPicking(false)}
+        <ClientPickerModal uid={uid} ownerName={profile?.name || ''} searchAll={role === 'admin'} onClose={() => setPicking(false)}
           onPick={c => { setClient(c); setPicking(false) }} />
       )}
     </div>

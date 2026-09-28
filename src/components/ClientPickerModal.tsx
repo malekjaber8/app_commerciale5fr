@@ -8,9 +8,12 @@ export interface PickedClient { id: string; name: string; phone: string }
 
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
-/** Choix du client d'un devis : liste avec recherche, ou creation d'un nouveau client. */
-export function ClientPickerModal({ uid, ownerName, onPick, onClose }: {
-  uid: string; ownerName: string; onPick: (c: PickedClient) => void; onClose: () => void
+/**
+ * Choix du client d'un devis : liste avec recherche, ou creation d'un nouveau client.
+ * `searchAll` (admin) : cherche parmi tous les clients, pas seulement ceux crees par `uid`.
+ */
+export function ClientPickerModal({ uid, ownerName, searchAll, onPick, onClose }: {
+  uid: string; ownerName: string; searchAll?: boolean; onPick: (c: PickedClient) => void; onClose: () => void
 }) {
   const [clients, setClients] = useState<Awaited<ReturnType<typeof fetchClients>>>([])
   const [loading, setLoading] = useState(true)
@@ -19,8 +22,8 @@ export function ClientPickerModal({ uid, ownerName, onPick, onClose }: {
   const [creating, setCreating] = useState(false)
 
   useEffect(() => {
-    fetchClients(uid).then(setClients).catch(() => setError(true)).finally(() => setLoading(false))
-  }, [uid])
+    fetchClients(searchAll ? undefined : uid).then(setClients).catch(() => setError(true)).finally(() => setLoading(false))
+  }, [uid, searchAll])
 
   const shown = useMemo(() => {
     const q = norm(query.trim())
@@ -43,7 +46,7 @@ export function ClientPickerModal({ uid, ownerName, onPick, onClose }: {
       {error && <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">Impossible de charger vos clients.</div>}
       {!loading && !error && clients.length === 0 && (
         <div className="rounded-xl border border-dashed border-slate-300 p-6 text-center text-sm text-slate-500">
-          Vous n'avez pas encore de client.
+          {searchAll ? 'Aucun client enregistre pour le moment.' : "Vous n'avez pas encore de client."}
           <button onClick={() => setCreating(true)} className="mt-3 block w-full rounded-xl bg-navy px-4 py-3 text-sm font-bold text-white">Ajouter mon premier client</button>
         </div>
       )}
