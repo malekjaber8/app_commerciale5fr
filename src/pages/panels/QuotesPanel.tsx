@@ -2,6 +2,8 @@ import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react
 import { deleteDoc, doc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { Banknote, CheckCircle2, ClipboardList, Lock, Pencil, Search, X } from 'lucide-react'
+import { CollectModal } from '../../components/CollectModal'
+import { MyDailyReportModal } from '../../components/MyDailyReportModal'
 import { db } from '../../firebase'
 import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
 import { deleteInvoice } from '../../lib/db'
@@ -39,6 +41,8 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [validating, setValidating] = useState<QuoteDoc | null>(null)
   const [paying, setPaying] = useState<QuoteDoc | null>(null)
   const [report, setReport] = useState(false)
+  const [collecting, setCollecting] = useState<QuoteDoc | null>(null)
+  const [myReport, setMyReport] = useState(false)
 
   const load = useCallback(async (silent = false) => {
     if (!silent) { setLoading(true); setError(false) }
@@ -131,7 +135,10 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
         {admin && DailyReportModal && (
           <button onClick={() => setReport(true)} className="ml-auto flex items-center gap-1.5 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white hover:opacity-90"><ClipboardList size={15} /> Rapport du jour</button>
         )}
-        <button onClick={() => load()} className={`rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50 ${admin ? '' : 'ml-auto'}`}>Actualiser</button>
+        {!admin && (
+          <button onClick={() => setMyReport(true)} className="ml-auto flex items-center gap-1.5 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white hover:opacity-90"><ClipboardList size={15} /> Mon rapport du jour</button>
+        )}
+        <button onClick={() => load()} className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50">Actualiser</button>
       </div>
       {loading && <div className="p-8 text-center text-slate-400">Chargement...</div>}
       {error && <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">Impossible de charger les devis.</div>}
@@ -151,19 +158,33 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
                 <CheckCircle2 size={14} /> {q.status === 'valide' ? 'Type' : 'Valider'}
               </button>
             </>
-          ) : q => q.status === 'valide'
-            ? <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-400"><Lock size={12} /> Verrouillé</span>
-            : (
-              <button onClick={async () => {
-                if (editInfo && editInfo.id !== q.id && !(await ask('Une modification est deja en cours sur un autre devis. Elle sera abandonnee.', { confirmLabel: 'Continuer', danger: false }))) return
-                if (!editInfo && lines.length > 0 && !(await ask('Votre panier actuel sera remplace par ce devis. Continuer ?', { confirmLabel: 'Continuer', danger: false }))) return
-                startEdit(q); navigate('/devis')
-              }} className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-2 text-xs font-bold text-white"><Pencil size={13} /> Modifier</button>
-            )}
+          ) : q => {
+            if (q.status !== 'valide') {
+              return (
+                <button onClick={async () => {
+                  if (editInfo && editInfo.id !== q.id && !(await ask('Une modification est deja en cours sur un autre devis. Elle sera abandonnee.', { confirmLabel: 'Continuer', danger: false }))) return
+                  if (!editInfo && lines.length > 0 && !(await ask('Votre panier actuel sera remplace par ce devis. Continuer ?', { confirmLabel: 'Continuer', danger: false }))) return
+                  startEdit(q); navigate('/devis')
+                }} className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-2 text-xs font-bold text-white"><Pencil size={13} /> Modifier</button>
+              )
+            }
+            const pay = quotePayment(q)
+            return (
+              <div className="flex flex-col items-end gap-1.5">
+                <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-400"><Lock size={12} /> Verrouillé</span>
+                {pay.state !== 'paye' && (
+                  <button onClick={() => setCollecting(q)} title="Declarer l'argent recu a la livraison"
+                    className="flex items-center gap-1.5 rounded-lg bg-teal px-2.5 py-1.5 text-[11px] font-bold text-white hover:opacity-90"><Banknote size={12} /> Argent recu</button>
+                )}
+              </div>
+            )
+          }}
         />
       )}
+      {collecting && <CollectModal quote={collecting} onClose={() => setCollecting(null)} onDone={() => { setCollecting(null); load(true) }} />}
+      {myReport && <MyDailyReportModal quotes={quotes} onClose={() => setMyReport(false)} />}
       <Suspense fallback={null}>
-        {report && DailyReportModal && <DailyReportModal quotes={quotes} onClose={() => setReport(false)} />}
+        {report && DailyReportModal && <DailyReportModal quotes={quotes} onClose={() => setReport(false)} onVerified={() => load(true)} />}
         {editing && QuoteEditor && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
         {paying && PaymentModal && <PaymentModal quote={paying} onClose={() => setPaying(null)} onDone={() => load(true)} />}
         {validating && ValidateQuoteModal && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}

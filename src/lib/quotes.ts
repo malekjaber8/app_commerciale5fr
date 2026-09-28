@@ -13,6 +13,22 @@ export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = { especes: 'E
 /** Un encaissement enregistre par l'admin. */
 export interface Payment { id: string; amount: number; at: number; method: PaymentMethod; note: string }
 
+/**
+ * Encaissement declare par le commercial lui-meme (ex : argent pris a la livraison d'un bon de livraison).
+ * Reste « en attente » jusqu'a ce que l'admin le verifie avec l'argent rapporte par le commercial ;
+ * la verification cree alors le Payment officiel correspondant.
+ */
+export interface DeclaredCollection {
+  id: string
+  amount: number
+  at: number
+  note: string
+  verified: boolean
+  verifiedAt?: number
+  /** Id du Payment officiel cree lors de la verification. */
+  paymentId?: string
+}
+
 export interface QuoteDoc {
   id: string
   /** Absent sur les anciens devis : ils comptent comme « en attente ». */
@@ -25,6 +41,8 @@ export interface QuoteDoc {
   /** Reglements encaisses (admin) et leur somme. */
   payments?: Payment[]
   paid?: number
+  /** Encaissements declares par le commercial, a verifier par l'admin. */
+  declared?: DeclaredCollection[]
   number: string
   ownerUid: string
   ownerName: string

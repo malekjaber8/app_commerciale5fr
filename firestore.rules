@@ -60,7 +60,11 @@ service cloud.firestore {
             && resource.data.ownerUid == request.auth.uid
             && resource.data.get('status', 'attente') != 'valide'
             && request.resource.data.diff(resource.data).affectedKeys()
-                 .hasOnly(['client', 'clientId', 'phone', 'note', 'discountPct', 'lines', 'subtotal', 'discount', 'total']));
+                 .hasOnly(['client', 'clientId', 'phone', 'note', 'discountPct', 'lines', 'subtotal', 'discount', 'total']))
+        // Le commercial declare l'argent recu a la livraison (champ "declared" uniquement) ; l'admin verifie ensuite et enregistre le vrai reglement
+        || (isCommercial()
+            && resource.data.ownerUid == request.auth.uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['declared']));
       allow delete: if isAdmin();
     }
 
