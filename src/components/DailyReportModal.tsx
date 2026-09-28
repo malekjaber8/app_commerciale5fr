@@ -64,6 +64,7 @@ export function DailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; onCl
                 <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
                   <tr>
                     <th className="p-3">Client</th>
+                    <th className="p-3">Commercial</th>
                     <th className="p-3">Document</th>
                     <th className="p-3">Mode</th>
                     <th className="p-3">Note</th>
@@ -77,6 +78,7 @@ export function DailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; onCl
                     return (
                       <tr key={i} className="border-t border-slate-100">
                         <td className="p-3 font-bold text-navy">{r.quote.client || '—'}</td>
+                        <td className="p-3 text-slate-600">{r.quote.ownerName || r.quote.ownerEmail}</td>
                         <td className="p-3 text-slate-600">{DOC_TYPE_LABEL[type]} <span className="text-slate-400">{number}</span></td>
                         <td className="p-3 text-slate-600">{r.method}</td>
                         <td className="p-3 text-slate-400">{r.note || '—'}</td>
@@ -87,7 +89,7 @@ export function DailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; onCl
                 </tbody>
                 <tfoot>
                   <tr className="border-t-2 border-slate-200 bg-slate-50">
-                    <td className="p-3 font-bold text-navy" colSpan={4}>{rows.length} reglement{rows.length > 1 ? 's' : ''} — {clientCount} client{clientCount > 1 ? 's' : ''}</td>
+                    <td className="p-3 font-bold text-navy" colSpan={5}>{rows.length} reglement{rows.length > 1 ? 's' : ''} — {clientCount} client{clientCount > 1 ? 's' : ''}</td>
                     <td className="p-3 text-right text-base font-extrabold text-teal-dark">{dt(total)}</td>
                   </tr>
                 </tfoot>
