@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Minus, Pencil, Play, Plus, RotateCcw, ShoppingBag, Trash2, X, ZoomIn } from 'lucide-react'
 import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
@@ -26,14 +26,20 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
   const [imgIdx, setImgIdx] = useState(0)
   const [showVideo, setShowVideo] = useState(false)
   const [zoom, setZoom] = useState(false)
+  // « Sur devis » (prix null) : l'admin peut saisir un prix pour cette vente precise, sans changer la fiche de l'article
+  const [manualPrice, setManualPrice] = useState('')
 
   const images = article.gallery.length ? article.gallery : article.img ? [article.img] : []
   const variant = article.variants[variantIdx]
   const cat = findCategory(article.categoryId)
+  const manualValue = parseFloat(manualPrice.replace(',', '.'))
+  const effectivePrice = variant.price ?? (role === 'admin' && manualValue > 0 ? manualValue : null)
+
+  useEffect(() => { setManualPrice('') }, [variantIdx])
 
   const addToQuote = () => {
-    if (variant.price == null) return
-    add({ articleId: article.id, name: article.name, variant: variant.label, unitPrice: variant.price, qty })
+    if (effectivePrice == null) return
+    add({ articleId: article.id, name: article.name, variant: variant.label, unitPrice: effectivePrice, qty })
     onClose()
   }
 
@@ -141,7 +147,17 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
         <footer className="sticky bottom-0 mt-auto border-t border-slate-200 bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 shadow-[0_-6px_16px_rgba(0,0,0,0.06)]">
           <div className="mb-3 flex items-baseline justify-between gap-3 text-sm">
             <span className="min-w-0 truncate text-slate-500">Choix : <b className="text-navy">{variant.label}</b></span>
-            <span className="shrink-0 text-slate-500">{variant.price != null ? `${dt(variant.price)}${article.unit ? ` / ${article.unit}` : ''}` : 'Sur devis'}</span>
+            {variant.price != null ? (
+              <span className="shrink-0 text-slate-500">{dt(variant.price)}{article.unit ? ` / ${article.unit}` : ''}</span>
+            ) : role === 'admin' ? (
+              <label className="flex shrink-0 items-center gap-1.5 text-xs font-semibold text-amber-700">
+                Sur devis — prix
+                <input value={manualPrice} onChange={e => setManualPrice(e.target.value)} inputMode="decimal" placeholder="DT" autoFocus
+                  className="w-20 rounded-lg border border-amber-300 bg-amber-50 px-2 py-1 text-right text-sm font-bold text-navy outline-none focus:border-amber-500" />
+              </label>
+            ) : (
+              <span className="shrink-0 text-slate-500">Sur devis</span>
+            )}
           </div>
           <div className="flex items-stretch gap-3">
             <div className="flex items-center rounded-2xl border-2 border-slate-200">
@@ -149,11 +165,11 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
               <QtyInput value={qty} onChange={setQty} className="w-20 text-center text-xl font-bold outline-none" />
               <button onClick={() => setQty(q => stepQty(q, 1))} className="flex h-14 w-14 items-center justify-center rounded-r-2xl hover:bg-slate-50 active:bg-slate-100"><Plus size={22} /></button>
             </div>
-            <button onClick={addToQuote} disabled={variant.price == null}
+            <button onClick={addToQuote} disabled={effectivePrice == null}
               className="flex min-h-14 flex-1 items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-teal to-navy-soft px-4 text-lg font-extrabold text-white shadow-lg active:scale-[0.99] disabled:opacity-40">
               <ShoppingBag size={24} />
               <span className="text-left leading-tight">
-                {variant.price == null ? 'Sur devis' : (<>Ajouter au panier<span className="block text-sm font-semibold opacity-90">{dt(variant.price * qty)}</span></>)}
+                {effectivePrice == null ? (role === 'admin' ? 'Indiquez un prix' : 'Sur devis') : (<>Ajouter au panier<span className="block text-sm font-semibold opacity-90">{dt(effectivePrice * qty)}</span></>)}
               </span>
             </button>
           </div>
