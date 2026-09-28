@@ -105,6 +105,12 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
           </div>
         </div>
 
+        {doc.note && (
+          <div className="mt-3 whitespace-pre-line rounded border-2 border-red-600 bg-red-50 px-3 py-2 text-[15px] font-extrabold uppercase text-red-700">
+            {doc.note}
+          </div>
+        )}
+
         <table className="mt-4 w-full border-collapse border border-slate-800 text-[13px]">
           <thead>
             <tr>
@@ -160,7 +166,6 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
           </div>
         </div>
 
-        {doc.note && <p className="mt-3 whitespace-pre-line text-[11px] text-slate-700"><b>Note :</b> {doc.note}</p>}
         <p className="mt-3 text-[10px] text-slate-500">
           Prix en dinars tunisiens. Frais de livraison non inclus.{doc.kind === 'devis' && ' Devis valable 15 jours.'}
         </p>
