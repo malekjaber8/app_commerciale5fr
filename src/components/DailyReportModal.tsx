@@ -32,7 +32,7 @@ export function DailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; onCl
   const label = new Date(date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
-    <Modal title="Rapport du jour" onClose={onClose} wide>
+    <Modal title="Rapport du jour" onClose={onClose} wide printable>
       <div className="space-y-4">
         <div className="no-print flex flex-wrap items-center gap-3">
           <label className="flex items-center gap-2 text-sm font-semibold text-slate-600">

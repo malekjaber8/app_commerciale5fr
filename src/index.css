@@ -21,4 +21,7 @@ body { @apply bg-slate-50 text-slate-800 antialiased; }
   body * { visibility: hidden; }
   .print-area, .print-area * { visibility: visible; }
   .print-area { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none !important; border: 0 !important; }
+  /* Modale imprimable (fond fixe + defilement) : passe en flux normal pour ne pas couper le contenu a une page */
+  .print-modal { position: static !important; overflow: visible !important; background: none !important; padding: 0 !important; display: block !important; }
+  .print-modal > div { margin: 0 !important; max-width: none !important; box-shadow: none !important; border-radius: 0 !important; }
 }
