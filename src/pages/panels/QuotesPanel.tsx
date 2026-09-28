@@ -1,7 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
-import { Banknote, CheckCircle2, ClipboardList, Lock, Pencil, Search, X } from 'lucide-react'
+import { Banknote, CheckCircle2, ClipboardList, CreditCard, Lock, Pencil, Search, X } from 'lucide-react'
 import { CollectModal } from '../../components/CollectModal'
 import { MyDailyReportModal } from '../../components/MyDailyReportModal'
 import { db } from '../../firebase'
@@ -21,6 +21,8 @@ const ValidateQuoteModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => imp
 const PaymentModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/PaymentModal').then(m => ({ default: m.PaymentModal }))) : null
 const DailyReportModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/DailyReportModal').then(m => ({ default: m.DailyReportModal }))) : null
 
+const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
+
 interface Props { ownerUid?: string; admin?: boolean }
 
 export function QuotesPanel({ ownerUid, admin }: Props) {
@@ -35,8 +37,9 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [filter, setFilter] = useState<'' | 'attente' | 'valide'>('')
   const [payFilter, setPayFilter] = useState<'' | 'paye' | 'impaye' | 'partiel' | 'nonsolde'>('')
   const [search, setSearch] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+  // Par defaut, la liste ne montre que les commandes du jour (pas tout l'historique) ; le bouton Credit ci-dessous ignore les dates
+  const [from, setFrom] = useState(todayStr)
+  const [to, setTo] = useState(todayStr)
   const [editing, setEditing] = useState<QuoteDoc | null>(null)
   const [validating, setValidating] = useState<QuoteDoc | null>(null)
   const [paying, setPaying] = useState<QuoteDoc | null>(null)
@@ -74,6 +77,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const needle = norm(search.trim())
   const matchesSearch = (q: QuoteDoc) => !needle || norm(`${q.client} ${q.phone} ${q.number} ${q.docNumber ?? ''}`).includes(needle)
   const inDates = (q: QuoteDoc) => {
+    if (q.status !== 'valide') return true // un devis en attente reste visible quel que soit le jour affiche : il faut le traiter
     if (!from && !to) return true
     const d = q.createdAt?.toDate()
     if (!d) return false
@@ -81,7 +85,6 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
     if (to && d > new Date(to + 'T23:59:59.999')) return false
     return true
   }
-  const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
   const byEtat = useMemo(() => quotes.filter(q => matchesSearch(q) && inDates(q) && (!filter ? true : filter === 'valide' ? q.status === 'valide' : q.status !== 'valide')),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [quotes, filter, from, to, needle])
@@ -89,6 +92,9 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const payCount = (f: typeof payFilter) => byEtat.filter(q => matchesPay(q, f)).length
   const outstanding = shown.reduce((s, q) => s + (quotePayment(q).state === 'na' ? 0 : quotePayment(q).balance), 0)
   const pendingCount = quotes.filter(q => q.status !== 'valide').length
+  // Credit : toutes les commandes non soldees, tous les temps confondus (pas seulement le jour affiche) ; reste dans cette liste jusqu'a reglement complet
+  const creditCount = useMemo(() => quotes.filter(q => q.status === 'valide' && quotePayment(q).state !== 'paye').length, [quotes])
+  const isDefaultView = !filter && !payFilter && !search && from === todayStr() && to === todayStr()
 
   const remove = async (q: QuoteDoc) => {
     const type = q.status === 'valide' ? (q.docType ?? 'devis') : 'devis'
@@ -128,8 +134,12 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           <input type="date" value={to} min={from || undefined} onChange={e => setTo(e.target.value)} className={inputCls + ' w-auto!'} aria-label="Date de fin" />
           <button onClick={() => { const t = todayStr(); setFrom(t); setTo(t) }} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-teal-dark hover:bg-slate-50">Aujourd&apos;hui</button>
         </div>
-        {(filter || payFilter || from || to || search) && (
-          <button onClick={() => { setFilter(''); setPayFilter(''); setFrom(''); setTo(''); setSearch('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
+        <button onClick={() => { setFilter('valide'); setPayFilter('nonsolde'); setFrom(''); setTo('') }} title="Toutes les commandes non soldees, tous les jours confondus"
+          className="flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-100">
+          <CreditCard size={14} /> Credit ({creditCount})
+        </button>
+        {!isDefaultView && (
+          <button onClick={() => { setFilter(''); setPayFilter(''); setFrom(todayStr()); setTo(todayStr()); setSearch('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
         )}
         <span>{shown.length} devis — {dt(shown.reduce((s, q) => s + q.total, 0))}{outstanding > 0 && <> — <b className="text-red-600">reste a encaisser : {dt(outstanding)}</b></>}</span>
         {admin && DailyReportModal && (
