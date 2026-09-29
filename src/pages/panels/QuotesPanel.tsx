@@ -1,11 +1,11 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
-import { Banknote, CheckCircle2, ClipboardList, CreditCard, Lock, Pencil, Search, X } from 'lucide-react'
+import { Banknote, CheckCircle2, ClipboardList, CreditCard, Hourglass, Lock, Pencil, Search, X } from 'lucide-react'
 import { CollectModal } from '../../components/CollectModal'
 import { MyDailyReportModal } from '../../components/MyDailyReportModal'
 import { db } from '../../firebase'
-import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type QuoteDoc } from '../../lib/quotes'
+import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type DeclaredCollection, type QuoteDoc } from '../../lib/quotes'
 import { deleteInvoice } from '../../lib/db'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
@@ -44,7 +44,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
   const [validating, setValidating] = useState<QuoteDoc | null>(null)
   const [paying, setPaying] = useState<QuoteDoc | null>(null)
   const [report, setReport] = useState(false)
-  const [collecting, setCollecting] = useState<QuoteDoc | null>(null)
+  const [collecting, setCollecting] = useState<{ quote: QuoteDoc; existing?: DeclaredCollection } | null>(null)
   const [myReport, setMyReport] = useState(false)
 
   const load = useCallback(async (silent = false) => {
@@ -179,11 +179,20 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
               )
             }
             const pay = quotePayment(q)
+            const pendingDeclared = (q.declared ?? []).filter(d => !d.verified)
+            const pendingTotal = pendingDeclared.reduce((s, d) => s + d.amount, 0)
             return (
               <div className="flex flex-col items-end gap-1.5">
                 <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-400"><Lock size={12} /> Verrouillé</span>
-                {pay.state !== 'paye' && (
-                  <button onClick={() => setCollecting(q)} title="Declarer l'argent recu a la livraison"
+                {pay.state === 'paye' ? (
+                  <span className="text-[11px] font-bold text-green-600">✓ Réglé</span>
+                ) : pendingDeclared.length > 0 ? (
+                  <button onClick={() => setCollecting({ quote: q, existing: pendingDeclared[0] })} title="Deja declare : modifier ou retirer"
+                    className="flex items-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold text-amber-700 hover:bg-amber-100">
+                    <Hourglass size={12} /> Declare {dt(pendingTotal)}
+                  </button>
+                ) : (
+                  <button onClick={() => setCollecting({ quote: q })} title="Declarer l'argent recu a la livraison"
                     className="flex items-center gap-1.5 rounded-lg bg-teal px-2.5 py-1.5 text-[11px] font-bold text-white hover:opacity-90"><Banknote size={12} /> Argent recu</button>
                 )}
               </div>
@@ -191,7 +200,7 @@ export function QuotesPanel({ ownerUid, admin }: Props) {
           }}
         />
       )}
-      {collecting && <CollectModal quote={collecting} onClose={() => setCollecting(null)} onDone={() => { setCollecting(null); load(true) }} />}
+      {collecting && <CollectModal quote={collecting.quote} existing={collecting.existing} onClose={() => setCollecting(null)} onDone={() => { setCollecting(null); load(true) }} />}
       {myReport && <MyDailyReportModal quotes={quotes} onClose={() => setMyReport(false)} />}
       <Suspense fallback={null}>
         {report && DailyReportModal && <DailyReportModal quotes={quotes} onClose={() => setReport(false)} onVerified={() => load(true)} />}
