@@ -31,7 +31,7 @@ function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => vo
         ))}
       </div>
       {sub === 'activity' && <ActivityPanel ownerUid={user.id} />}
-      {sub === 'quotes' && <QuotesPanel ownerUid={user.id} admin />}
+      {sub === 'quotes' && <QuotesPanel ownerUid={user.id} ownerName={user.name} admin />}
       {sub === 'clients' && <ClientsPanel ownerUid={user.id} ownerName={user.name} admin />}
       {sub === 'invoices' && <InvoicesPanel ownerUid={user.id} />}
     </div>

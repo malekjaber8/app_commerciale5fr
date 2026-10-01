@@ -90,6 +90,13 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
+    // Credits ajoutes a la main par l'admin (montant du par un client, independant d'un devis de l'app) : lecture par le commercial concerne, ecriture admin uniquement
+    match /credits/{creditId} {
+      allow read: if isAdmin()
+        || (isCommercial() && resource.data.ownerUid == request.auth.uid);
+      allow create, update, delete: if isAdmin();
+    }
+
     // Factures et compteurs : admin uniquement
     match /invoices/{invoiceId} {
       allow read, write: if isAdmin();
