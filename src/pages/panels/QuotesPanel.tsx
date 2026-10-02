@@ -38,7 +38,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
   const [quotes, setQuotes] = useState<QuoteDoc[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [filter, setFilter] = useState<'' | 'attente' | 'valide'>('')
+  const [filter, setFilter] = useState<'' | 'attente' | 'valide' | 'devis' | 'bon_livraison' | 'facture'>('')
   const [payFilter, setPayFilter] = useState<'' | 'paye' | 'impaye' | 'partiel' | 'nonsolde'>('')
   const [search, setSearch] = useState('')
   // Par defaut, la liste ne montre que les commandes du jour (pas tout l'historique) ; le bouton Credit ci-dessous ignore les dates
@@ -99,11 +99,19 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
     if (to && d > new Date(to + 'T23:59:59.999')) return false
     return true
   }
-  const byEtat = useMemo(() => quotes.filter(q => matchesSearch(q) && inDates(q) && (!filter ? true : filter === 'valide' ? q.status === 'valide' : q.status !== 'valide')),
+  const matchesEtat = (q: QuoteDoc, f: typeof filter) => {
+    if (!f) return true
+    if (f === 'attente') return q.status !== 'valide'
+    if (f === 'valide') return q.status === 'valide'
+    return q.status === 'valide' && (q.docType ?? 'devis') === f
+  }
+  const bySearchDate = useMemo(() => quotes.filter(q => matchesSearch(q) && inDates(q)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [quotes, filter, from, to, needle])
+    [quotes, from, to, needle])
+  const byEtat = useMemo(() => bySearchDate.filter(q => matchesEtat(q, filter)), [bySearchDate, filter])
   const shown = useMemo(() => byEtat.filter(q => matchesPay(q, payFilter)), [byEtat, payFilter])
   const payCount = (f: typeof payFilter) => byEtat.filter(q => matchesPay(q, f)).length
+  const etatCount = (f: typeof filter) => bySearchDate.filter(q => matchesEtat(q, f)).length
   const outstanding = shown.reduce((s, q) => s + (quotePayment(q).state === 'na' ? 0 : quotePayment(q).balance), 0)
   const pendingCount = quotes.filter(q => q.status !== 'valide').length
   // Credit : toutes les commandes non soldees, tous les temps confondus (pas seulement le jour affiche) ; reste dans cette liste jusqu'a reglement complet
@@ -136,7 +144,10 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
         <select value={filter} onChange={e => setFilter(e.target.value as typeof filter)} className={inputCls + ' max-w-[210px]'} aria-label="Filtrer par etat">
           <option value="">Tous les etats</option>
           <option value="attente">En attente ({pendingCount})</option>
-          <option value="valide">Valides</option>
+          <option value="valide">Valides (tous types)</option>
+          <option value="devis">Devis ({etatCount('devis')})</option>
+          <option value="bon_livraison">Bon de livraison ({etatCount('bon_livraison')})</option>
+          <option value="facture">Factures ({etatCount('facture')})</option>
         </select>
         <select value={payFilter} onChange={e => setPayFilter(e.target.value as typeof payFilter)} className={inputCls + ' max-w-[250px]'} aria-label="Filtrer par reglement">
           <option value="">Tous les reglements</option>
