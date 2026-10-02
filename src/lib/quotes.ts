@@ -25,6 +25,8 @@ export interface DeclaredCollection {
   note: string
   verified: boolean
   verifiedAt?: number
+  /** Montant reellement confirme par l'admin (peut etre inferieur au montant declare : reglement partiel). */
+  verifiedAmount?: number
   /** Id du Payment officiel cree lors de la verification. */
   paymentId?: string
 }

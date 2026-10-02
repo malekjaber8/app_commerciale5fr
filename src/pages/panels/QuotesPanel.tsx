@@ -8,7 +8,7 @@ import { CreditsList } from '../../components/CreditsList'
 import { db } from '../../firebase'
 import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type DeclaredCollection, type QuoteDoc } from '../../lib/quotes'
 import { deleteInvoice } from '../../lib/db'
-import { fetchAllCredits, fetchMyCredits, setCreditPaid, type CreditDoc } from '../../lib/credits'
+import { creditPayment, fetchAllCredits, fetchMyCredits, type CreditDoc } from '../../lib/credits'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
 import { useQuote } from '../../store/quote'
@@ -22,6 +22,7 @@ const ValidateQuoteModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => imp
 
 const PaymentModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/PaymentModal').then(m => ({ default: m.PaymentModal }))) : null
 const DailyReportModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/DailyReportModal').then(m => ({ default: m.DailyReportModal }))) : null
+const PayCreditModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/PayCreditModal').then(m => ({ default: m.PayCreditModal }))) : null
 const CreditModal = import.meta.env.VITE_DESKTOP === '1' ? lazy(() => import('../../components/CreditModal').then(m => ({ default: m.CreditModal }))) : null
 
 const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
@@ -53,6 +54,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
   const [addingCredit, setAddingCredit] = useState(false)
   const [editingCredit, setEditingCredit] = useState<CreditDoc | null>(null)
   const [showPaidCredits, setShowPaidCredits] = useState(false)
+  const [payingCredit, setPayingCredit] = useState<CreditDoc | null>(null)
 
   const load = useCallback(async (silent = false) => {
     if (!silent) { setLoading(true); setError(false) }
@@ -118,11 +120,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
     await deleteDoc(doc(db, 'quotes', q.id)); await load()
   }
 
-  const toggleCreditPaid = async (c: CreditDoc) => {
-    if (!c.paid && !(await ask(`Marquer le credit de ${c.client} (${dt(c.amount)}) comme regle ?`, { confirmLabel: 'Regle', danger: false }))) return
-    await setCreditPaid(c.id, !c.paid); await loadCredits()
-  }
-  const unpaidCredits = useMemo(() => credits.filter(c => !c.paid), [credits])
+  const unpaidCredits = useMemo(() => credits.filter(c => creditPayment(c).state !== 'paye'), [credits])
   const shownCredits = showPaidCredits ? credits : unpaidCredits
   const unpaidCreditsTotal = unpaidCredits.reduce((s, c) => s + c.amount, 0)
 
@@ -234,18 +232,19 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
             <button onClick={() => setAddingCredit(true)} className="ml-auto flex items-center gap-1.5 rounded-xl bg-navy px-3 py-2 text-xs font-bold text-white hover:opacity-90"><Plus size={14} /> Ajouter un credit</button>
           )}
         </div>
-        <CreditsList credits={shownCredits} showOwner={admin && !ownerUid} admin={admin} onEdit={setEditingCredit} onTogglePaid={toggleCreditPaid} />
+        <CreditsList credits={shownCredits} showOwner={admin && !ownerUid} admin={admin} onEdit={setEditingCredit} onPay={setPayingCredit} />
       </div>
 
       {collecting && <CollectModal quote={collecting.quote} existing={collecting.existing} onClose={() => setCollecting(null)} onDone={() => { setCollecting(null); load(true) }} />}
       {myReport && <MyDailyReportModal quotes={quotes} onClose={() => setMyReport(false)} />}
       <Suspense fallback={null}>
-        {report && DailyReportModal && <DailyReportModal quotes={quotes} onClose={() => setReport(false)} onVerified={() => load(true)} />}
+        {report && DailyReportModal && <DailyReportModal quotes={quotes} credits={credits} onClose={() => setReport(false)} onVerified={() => { load(true); loadCredits() }} />}
         {editing && QuoteEditor && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
         {paying && PaymentModal && <PaymentModal quote={paying} onClose={() => setPaying(null)} onDone={() => load(true)} />}
         {validating && ValidateQuoteModal && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}
         {addingCredit && CreditModal && <CreditModal ownerUid={ownerUid} ownerName={ownerName} onClose={() => setAddingCredit(false)} onDone={() => { setAddingCredit(false); loadCredits() }} />}
         {editingCredit && CreditModal && <CreditModal existing={editingCredit} onClose={() => setEditingCredit(null)} onDone={() => { setEditingCredit(null); loadCredits() }} />}
+        {payingCredit && PayCreditModal && <PayCreditModal credit={payingCredit} onClose={() => setPayingCredit(null)} onDone={() => loadCredits()} />}
       </Suspense>
     </div>
   )

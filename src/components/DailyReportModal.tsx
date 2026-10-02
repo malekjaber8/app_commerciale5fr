@@ -1,23 +1,25 @@
 import { useMemo, useState } from 'react'
-import { Banknote, CheckCheck, Printer } from 'lucide-react'
+import { Banknote, Check, CheckCheck, Printer, X } from 'lucide-react'
 import { DOC_TYPE_LABEL, PAYMENT_METHOD_LABEL, updateQuote, type DeclaredCollection, type Payment, type QuoteDoc } from '../lib/quotes'
+import type { CreditDoc } from '../lib/credits'
 import { dt } from '../lib/format'
 import { Modal } from './ui'
-import { useDialogs } from './Dialogs'
 
 const todayStr = () => {
   const d = new Date()
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-interface Row { quote: QuoteDoc; amount: number; method: string; note: string; at: number }
+interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; amount: number; method: string; note: string; at: number }
 interface DeclRow { quote: QuoteDoc; entry: DeclaredCollection }
 
-/** Rapport du jour : encaissements du jour choisi, par client, avec le total encaisse. Reserve a l'admin. */
-export function DailyReportModal({ quotes, onClose, onVerified }: { quotes: QuoteDoc[]; onClose: () => void; onVerified?: () => void }) {
-  const { ask } = useDialogs()
+/** Rapport du jour : encaissements du jour choisi (devis et credits), par client, avec le total encaisse. Reserve a l'admin. */
+export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quotes: QuoteDoc[]; credits: CreditDoc[]; onClose: () => void; onVerified?: () => void }) {
   const [date, setDate] = useState(todayStr)
   const [busy, setBusy] = useState('')
+  // Verification d'une declaration : l'admin peut confirmer un montant different de celui declare (reglement partiel)
+  const [verifying, setVerifying] = useState<string | null>(null)
+  const [verifyAmount, setVerifyAmount] = useState('')
 
   const rows = useMemo<Row[]>(() => {
     const start = new Date(date + 'T00:00:00').getTime()
@@ -25,14 +27,25 @@ export function DailyReportModal({ quotes, onClose, onVerified }: { quotes: Quot
     const out: Row[] = []
     for (const q of quotes) {
       for (const p of q.payments ?? []) {
-        if (p.at >= start && p.at <= end) out.push({ quote: q, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at })
+        if (p.at >= start && p.at <= end) {
+          const type = q.docType ?? 'devis'
+          const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
+          out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at })
+        }
+      }
+    }
+    for (const c of credits) {
+      for (const p of c.payments ?? []) {
+        if (p.at >= start && p.at <= end) {
+          out.push({ client: c.client, ownerName: c.ownerName, docLabel: 'Credit', docNumber: c.ref || '—', amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at })
+        }
       }
     }
     return out.sort((a, b) => a.at - b.at)
-  }, [quotes, date])
+  }, [quotes, credits, date])
 
   const total = rows.reduce((s, r) => s + r.amount, 0)
-  const clientCount = new Set(rows.map(r => r.quote.id)).size
+  const clientCount = new Set(rows.map(r => r.client)).size
   const label = new Date(date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
 
   // Declarations des commerciaux (argent pris a la livraison) pour ce jour-la, a rapprocher de ce qu'ils rapportent
@@ -53,15 +66,24 @@ export function DailyReportModal({ quotes, onClose, onVerified }: { quotes: Quot
     return [...m.entries()]
   }, [declRows])
 
+  const startVerify = (row: DeclRow) => { setVerifying(row.entry.id); setVerifyAmount(String(row.entry.amount)) }
+  const cancelVerify = () => { setVerifying(null); setVerifyAmount('') }
+
   const verify = async (row: DeclRow) => {
-    if (!(await ask(`Confirmer avoir recu ${dt(row.entry.amount)} de ${row.quote.ownerName || row.quote.ownerEmail} pour ${row.quote.client || 'ce client'} ?`, { confirmLabel: 'Verifier', danger: false }))) return
+    const value = parseFloat(verifyAmount.replace(',', '.'))
+    if (!(value > 0)) return
     setBusy(row.entry.id)
     try {
-      const payment: Payment = { id: crypto.randomUUID(), amount: row.entry.amount, at: Date.now(), method: 'especes', note: row.entry.note ? `Verifie (commercial) — ${row.entry.note}` : 'Verifie (commercial)' }
+      const partial = Math.round(value * 1000) / 1000 < row.entry.amount
+      const payment: Payment = {
+        id: crypto.randomUUID(), amount: Math.round(value * 1000) / 1000, at: Date.now(), method: 'especes',
+        note: [row.entry.note, partial ? `Verifie partiellement (declare ${dt(row.entry.amount)})` : 'Verifie (commercial)'].filter(Boolean).join(' — '),
+      }
       const nextPayments = [...(row.quote.payments ?? []), payment]
       const nextPaid = Math.round(nextPayments.reduce((s, p) => s + p.amount, 0) * 1000) / 1000
-      const nextDeclared = (row.quote.declared ?? []).map(d => (d.id === row.entry.id ? { ...d, verified: true, verifiedAt: Date.now(), paymentId: payment.id } : d))
+      const nextDeclared = (row.quote.declared ?? []).map(d => (d.id === row.entry.id ? { ...d, verified: true, verifiedAt: Date.now(), verifiedAmount: payment.amount, paymentId: payment.id } : d))
       await updateQuote(row.quote.id, { payments: nextPayments, paid: nextPaid, declared: nextDeclared })
+      cancelVerify()
       onVerified?.()
     } finally { setBusy('') }
   }
@@ -107,20 +129,16 @@ export function DailyReportModal({ quotes, onClose, onVerified }: { quotes: Quot
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((r, i) => {
-                    const type = r.quote.docType ?? 'devis'
-                    const number = type === 'devis' || !r.quote.docNumber ? r.quote.number : r.quote.docNumber
-                    return (
-                      <tr key={i} className="border-t border-slate-100">
-                        <td className="p-3 font-bold text-navy">{r.quote.client || '—'}</td>
-                        <td className="p-3 text-slate-600">{r.quote.ownerName || r.quote.ownerEmail}</td>
-                        <td className="p-3 text-slate-600">{DOC_TYPE_LABEL[type]} <span className="text-slate-400">{number}</span></td>
-                        <td className="p-3 text-slate-600">{r.method}</td>
-                        <td className="p-3 text-slate-400">{r.note || '—'}</td>
-                        <td className="p-3 text-right font-bold text-navy">{dt(r.amount)}</td>
-                      </tr>
-                    )
-                  })}
+                  {rows.map((r, i) => (
+                    <tr key={i} className="border-t border-slate-100">
+                      <td className="p-3 font-bold text-navy">{r.client}</td>
+                      <td className="p-3 text-slate-600">{r.ownerName}</td>
+                      <td className="p-3 text-slate-600">{r.docLabel} <span className="text-slate-400">{r.docNumber}</span></td>
+                      <td className="p-3 text-slate-600">{r.method}</td>
+                      <td className="p-3 text-slate-400">{r.note || '—'}</td>
+                      <td className="p-3 text-right font-bold text-navy">{dt(r.amount)}</td>
+                    </tr>
+                  ))}
                 </tbody>
                 <tfoot>
                   <tr className="border-t-2 border-slate-200 bg-slate-50">
@@ -147,12 +165,13 @@ export function DailyReportModal({ quotes, onClose, onVerified }: { quotes: Quot
               <div className="overflow-hidden rounded-2xl border border-slate-200">
                 <table className="w-full text-sm">
                   <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
-                    <tr><th className="p-3">Commercial</th><th className="p-3">Client</th><th className="p-3">Document</th><th className="p-3">Note</th><th className="p-3 text-right">Montant</th><th className="no-print p-3" /></tr>
+                    <tr><th className="p-3">Commercial</th><th className="p-3">Client</th><th className="p-3">Document</th><th className="p-3">Note</th><th className="p-3 text-right">Declare</th><th className="no-print p-3">Verification</th></tr>
                   </thead>
                   <tbody>
                     {declRows.map((r, i) => {
                       const type = r.quote.docType ?? 'devis'
                       const number = type === 'devis' || !r.quote.docNumber ? r.quote.number : r.quote.docNumber
+                      const isVerifying = verifying === r.entry.id
                       return (
                         <tr key={i} className="border-t border-slate-100">
                           <td className="p-3 font-semibold text-slate-700">{r.quote.ownerName || r.quote.ownerEmail}</td>
@@ -161,10 +180,23 @@ export function DailyReportModal({ quotes, onClose, onVerified }: { quotes: Quot
                           <td className="p-3 text-slate-400">{r.entry.note || '—'}</td>
                           <td className="p-3 text-right font-bold text-navy">{dt(r.entry.amount)}</td>
                           <td className="no-print p-3 text-right">
-                            {r.entry.verified
-                              ? <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700"><CheckCheck size={12} /> Verifie</span>
-                              : <button onClick={() => verify(r)} disabled={busy === r.entry.id}
-                                  className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white disabled:opacity-60"><Banknote size={13} /> Verifier</button>}
+                            {r.entry.verified ? (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700">
+                                <CheckCheck size={12} /> Verifie {r.entry.verifiedAmount != null && r.entry.verifiedAmount !== r.entry.amount ? `(${dt(r.entry.verifiedAmount)})` : ''}
+                              </span>
+                            ) : isVerifying ? (
+                              <div className="flex items-center justify-end gap-1.5">
+                                <span className="text-[11px] text-slate-500">Recu</span>
+                                <input autoFocus value={verifyAmount} onChange={e => setVerifyAmount(e.target.value)} inputMode="decimal"
+                                  className="w-20 rounded-lg border border-teal px-2 py-1 text-right text-xs font-bold outline-none" />
+                                <button onClick={() => verify(r)} disabled={busy === r.entry.id} title="Confirmer"
+                                  className="rounded-lg bg-navy p-1.5 text-white disabled:opacity-60"><Check size={14} /></button>
+                                <button onClick={cancelVerify} title="Annuler" className="rounded-lg border border-slate-200 p-1.5 text-slate-500"><X size={14} /></button>
+                              </div>
+                            ) : (
+                              <button onClick={() => startVerify(r)}
+                                className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white"><Banknote size={13} /> Verifier</button>
+                            )}
                           </td>
                         </tr>
                       )
@@ -172,6 +204,7 @@ export function DailyReportModal({ quotes, onClose, onVerified }: { quotes: Quot
                   </tbody>
                 </table>
               </div>
+              <p className="no-print mt-1.5 text-[11px] text-slate-400">« Verifier » laisse indiquer le montant reellement rapporte : s&apos;il est inferieur au montant declare, le reste reste du sur le devis.</p>
             </div>
           )}
         </div>
