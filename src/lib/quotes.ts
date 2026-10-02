@@ -10,8 +10,9 @@ export type QuoteStatus = 'attente' | 'valide'
 
 export type PaymentMethod = 'especes' | 'cheque' | 'virement' | 'traite'
 export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = { especes: 'Especes', cheque: 'Cheque', virement: 'Virement', traite: 'Traite / Effet' }
-/** Un encaissement enregistre par l'admin. */
-export interface Payment { id: string; amount: number; at: number; method: PaymentMethod; note: string }
+/** Un encaissement enregistre par l'admin. `source` distingue l'origine pour le Rapport du jour :
+ * 'commercial' = argent rapporte par le commercial et verifie par l'admin, 'admin' (ou absent, anciens paiements) = encaisse directement par l'admin. */
+export interface Payment { id: string; amount: number; at: number; method: PaymentMethod; note: string; source?: 'admin' | 'commercial' }
 
 /**
  * Encaissement declare par le commercial lui-meme (ex : argent pris a la livraison d'un bon de livraison).

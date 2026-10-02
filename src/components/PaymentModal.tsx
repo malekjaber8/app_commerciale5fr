@@ -36,7 +36,7 @@ export function PaymentModal({ quote, onClose, onDone }: { quote: QuoteDoc; onCl
 
   const add = async (value: number) => {
     if (!(value > 0)) return setError('Saisissez un montant superieur a 0.')
-    const p: Payment = { id: crypto.randomUUID(), amount: Math.round(value * 1000) / 1000, at: new Date(date + 'T12:00:00').getTime(), method, note: note.trim() }
+    const p: Payment = { id: crypto.randomUUID(), amount: Math.round(value * 1000) / 1000, at: new Date(date + 'T12:00:00').getTime(), method, note: note.trim(), source: 'admin' }
     if (await persist([...payments, p])) { setAmount(''); setNote('') }
   }
 

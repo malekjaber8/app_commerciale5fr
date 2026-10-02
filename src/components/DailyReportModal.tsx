@@ -10,8 +10,15 @@ const todayStr = () => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; amount: number; method: string; note: string; at: number }
+type Source = 'admin' | 'commercial' | 'credit'
+interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; amount: number; method: string; note: string; at: number; source: Source }
 interface DeclRow { quote: QuoteDoc; entry: DeclaredCollection }
+
+const SOURCE_STYLE: Record<Source, { row: string; bar: string; dot: string; label: string }> = {
+  admin: { row: 'bg-sky-50/60', bar: 'border-l-4 border-sky-400', dot: 'bg-sky-400', label: 'Regle par l’admin' },
+  commercial: { row: 'bg-amber-50/60', bar: 'border-l-4 border-amber-400', dot: 'bg-amber-400', label: 'Rapporte par le commercial' },
+  credit: { row: 'bg-violet-50/60', bar: 'border-l-4 border-violet-400', dot: 'bg-violet-400', label: 'Credit ajoute manuellement' },
+}
 
 /** Rapport du jour : encaissements du jour choisi (devis et credits), par client, avec le total encaisse. Reserve a l'admin. */
 export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quotes: QuoteDoc[]; credits: CreditDoc[]; onClose: () => void; onVerified?: () => void }) {
@@ -30,14 +37,14 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
         if (p.at >= start && p.at <= end) {
           const type = q.docType ?? 'devis'
           const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
-          out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at })
+          out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: p.source ?? 'admin' })
         }
       }
     }
     for (const c of credits) {
       for (const p of c.payments ?? []) {
         if (p.at >= start && p.at <= end) {
-          out.push({ client: c.client, ownerName: c.ownerName, docLabel: 'Credit', docNumber: c.ref || '—', amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at })
+          out.push({ client: c.client, ownerName: c.ownerName, docLabel: 'Credit', docNumber: c.ref || '—', amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: 'credit' })
         }
       }
     }
@@ -86,7 +93,7 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
     try {
       const partial = Math.round(value * 1000) / 1000 < row.entry.amount
       const payment: Payment = {
-        id: crypto.randomUUID(), amount: Math.round(value * 1000) / 1000, at: Date.now(), method: 'especes',
+        id: crypto.randomUUID(), amount: Math.round(value * 1000) / 1000, at: Date.now(), method: 'especes', source: 'commercial',
         note: [row.entry.note, partial ? `Verifie partiellement (declare ${dt(row.entry.amount)})` : 'Verifie (commercial)'].filter(Boolean).join(' — '),
       }
       const nextPayments = [...(row.quote.payments ?? []), payment]
@@ -138,6 +145,11 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
             <div className="rounded-2xl border border-dashed border-slate-300 p-10 text-center text-sm text-slate-400">Aucun reglement enregistre ce jour-la.</div>
           ) : (
             <div className="overflow-hidden rounded-2xl border border-slate-200">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-slate-500">
+                {(Object.keys(SOURCE_STYLE) as Source[]).map(s => (
+                  <span key={s} className="flex items-center gap-1.5"><span className={`h-2.5 w-2.5 rounded-full ${SOURCE_STYLE[s].dot}`} />{SOURCE_STYLE[s].label}</span>
+                ))}
+              </div>
               <table className="w-full text-sm">
                 <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
                   <tr>
@@ -151,8 +163,8 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
                 </thead>
                 <tbody>
                   {rows.map((r, i) => (
-                    <tr key={i} className="border-t border-slate-100">
-                      <td className="p-3 font-bold text-navy">{r.client}</td>
+                    <tr key={i} className={`border-t border-slate-100 ${SOURCE_STYLE[r.source].row}`}>
+                      <td className={`p-3 font-bold text-navy ${SOURCE_STYLE[r.source].bar}`}>{r.client}</td>
                       <td className="p-3 text-slate-600">{r.ownerName}</td>
                       <td className="p-3 text-slate-600">{r.docLabel} <span className="text-slate-400">{r.docNumber}</span></td>
                       <td className="p-3 text-slate-600">{r.method}</td>
