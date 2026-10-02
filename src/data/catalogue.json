@@ -712,45 +712,45 @@
     {
      "label": "190×60×14 cm",
      "code": "MM005",
-     "price": null
+     "price": 69
     },
     {
      "label": "190×65×13 cm",
      "code": "MM006",
-     "price": null
+     "price": 65
     },
     {
      "label": "190×65×14 cm",
      "code": "MM007",
-     "price": null
+     "price": 74
     },
     {
      "label": "190×65×10 cm",
      "code": "MM008",
-     "price": null
+     "price": 56
     },
     {
      "label": "190×70×13 cm",
      "code": "MM009",
-     "price": null
+     "price": 70
     },
     {
      "label": "190×70×14 cm",
      "code": "MM010",
-     "price": null
+     "price": 79
     },
     {
      "label": "190×80×13 cm",
      "code": "MM011",
-     "price": null
+     "price": 80
     },
     {
      "label": "190×80×14 cm",
      "code": "MM012",
-     "price": null
+     "price": 91
     }
    ],
-   "priceFrom": 0
+   "priceFrom": 56
   },
   {
    "id": "MM-22-24-souple",
@@ -787,95 +787,95 @@
     {
      "label": "190×60×13 cm",
      "code": "MM014",
-     "price": null
+     "price": 61
     },
     {
      "label": "190×60×14 cm",
      "code": "MM015",
-     "price": null
+     "price": 70
     },
     {
      "label": "190×65×13 cm",
      "code": "MM016",
-     "price": 67
+     "price": 69
     },
     {
      "label": "190×65×14 cm",
      "code": "MM017",
-     "price": null
+     "price": 76
     },
     {
      "label": "190×65×15 cm",
      "code": "MM018",
-     "price": null
+     "price": 87
     },
     {
      "label": "190×65×10 cm",
      "code": "MM019",
-     "price": null
+     "price": 58
     },
     {
      "label": "190×70×10 cm",
      "code": "MM020",
-     "price": 58
+     "price": 62
     },
     {
      "label": "190×70×13 cm",
      "code": "MM021",
-     "price": 72
+     "price": 71
     },
     {
      "label": "190×70×14 cm",
      "code": "MM022",
-     "price": 82
+     "price": 81
     },
     {
      "label": "190×70×20 cm",
      "code": "MM023",
-     "price": null
+     "price": 118
     },
     {
      "label": "190×75×13 cm",
      "code": "MM024",
-     "price": null
+     "price": 76
     },
     {
      "label": "190×75×14 cm",
      "code": "MM025",
-     "price": null
+     "price": 87
     },
     {
      "label": "190×80×10 cm",
      "code": "MM026",
-     "price": null
+     "price": 72
     },
     {
      "label": "190×80×13 cm",
      "code": "MM027",
-     "price": 93
+     "price": 81
     },
     {
      "label": "190×80×14 cm",
      "code": "MM028",
-     "price": 100
+     "price": 93
     },
     {
      "label": "190×80×20 cm",
      "code": "MM029",
-     "price": 150
+     "price": 161
     },
     {
      "label": "190×90×14 cm",
      "code": "MM030",
-     "price": 126
+     "price": 104
     },
     {
      "label": "190×95×14 cm",
      "code": "MM031",
-     "price": null
+     "price": 110
     }
    ],
-   "priceFrom": 0
+   "priceFrom": 58
   },
   {
    "id": "MM-magic30",
@@ -890,6 +890,11 @@
    "badge": "Premium",
    "variants": [
     {
+     "label": "190×60×14 cm",
+     "code": "MM047",
+     "price": 93
+    },
+    {
      "label": "190×65×13 cm",
      "code": "MM032",
      "price": null
@@ -897,27 +902,27 @@
     {
      "label": "190×65×14 cm",
      "code": "MM033",
-     "price": null
+     "price": 100
     },
     {
      "label": "190×70×10 cm",
      "code": "MM034",
-     "price": 77
+     "price": 84
     },
     {
      "label": "190×70×13 cm",
      "code": "MM035",
-     "price": 96
+     "price": 97
     },
     {
      "label": "190×70×14 cm",
      "code": "MM036",
-     "price": 107
+     "price": 109
     },
     {
      "label": "190×75×13 cm",
      "code": "MM037",
-     "price": null
+     "price": 103
     },
     {
      "label": "190×75×14 cm",
@@ -925,9 +930,14 @@
      "price": null
     },
     {
+     "label": "190×80×13 cm",
+     "code": "MM048",
+     "price": 116
+    },
+    {
      "label": "190×80×14 cm",
      "code": "MM039",
-     "price": null
+     "price": 123
     },
     {
      "label": "190×90×13 cm",
@@ -937,10 +947,10 @@
     {
      "label": "190×90×14 cm",
      "code": "MM041",
-     "price": null
+     "price": 139
     }
    ],
-   "priceFrom": 0
+   "priceFrom": 84
   },
   {
    "id": "MM-hr",
@@ -955,27 +965,37 @@
    "badge": "Pro",
    "variants": [
     {
+     "label": "190×70×10 cm",
+     "code": "MM049",
+     "price": 129
+    },
+    {
      "label": "190×70×13 cm",
      "code": "MM042",
-     "price": 152
+     "price": 164
     },
     {
      "label": "190×70×14 cm",
      "code": "MM043",
-     "price": 180
+     "price": 183
     },
     {
      "label": "190×80×13 cm",
      "code": "MM044",
-     "price": null
+     "price": 185
     },
     {
      "label": "190×80×14 cm",
      "code": "MM045",
-     "price": null
+     "price": 209
+    },
+    {
+     "label": "190×90×14 cm",
+     "code": "MM050",
+     "price": 236
     }
    ],
-   "priceFrom": 0
+   "priceFrom": 129
   },
   {
    "id": "MM-confort",
