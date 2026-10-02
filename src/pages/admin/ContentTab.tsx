@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ChevronDown, ChevronRight, Eye, EyeOff, Save } from 'lucide-react'
+import { ChevronDown, ChevronRight, Eye, EyeOff, RotateCcw, Save } from 'lucide-react'
 import { articles as baseArticles } from '../../lib/catalogue'
 import { dt } from '../../lib/format'
 import { useSettings } from '../../store/settings'
@@ -13,6 +13,8 @@ export function ContentTab() {
   const [query, setQuery] = useState('')
   const [onlyChanged, setOnlyChanged] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
+  // Force le remontage des champs de prix apres une reinitialisation groupee (les inputs sont non controles)
+  const [resetTick, setResetTick] = useState<Record<string, number>>({})
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
 
@@ -30,6 +32,12 @@ export function ContentTab() {
     ...d,
     hiddenIds: d.hiddenIds.includes(id) ? d.hiddenIds.filter(x => x !== id) : [...d.hiddenIds, id],
   }))
+
+  /** Retire tous les prix ajustes d'un article d'un coup : il reprend le prix du catalogue pour toutes ses tailles. */
+  const resetPrices = (id: string) => {
+    setDraft(d => { const po = { ...d.priceOverrides }; delete po[id]; return { ...d, priceOverrides: po } })
+    setResetTick(t => ({ ...t, [id]: (t[id] ?? 0) + 1 }))
+  }
 
   const setPrice = (id: string, label: string, base: number | null, raw: string) => setDraft(d => {
     const po = { ...d.priceOverrides }
@@ -94,13 +102,19 @@ export function ContentTab() {
                   <div className={`truncate text-sm font-medium ${isHidden ? 'text-slate-400 line-through' : 'text-slate-800'}`}>{a.name}</div>
                   <div className="text-[11px] text-slate-400">{a.id}{ov ? ' — prix ajuste' : ''}</div>
                 </div>
+                {ov && (
+                  <button onClick={() => resetPrices(a.id)} title="Retirer tous les prix ajustes de cet article"
+                    className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">
+                    <RotateCcw size={14} /> Reinitialiser les prix
+                  </button>
+                )}
                 <button onClick={() => toggleHidden(a.id)}
                   className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold ${isHidden ? 'border-amber-300 bg-amber-50 text-amber-700' : 'border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
                   {isHidden ? <><EyeOff size={14} /> Masque</> : <><Eye size={14} /> Visible</>}
                 </button>
               </div>
               {open && (
-                <div className="bg-slate-50 px-12 pb-3">
+                <div className="bg-slate-50 px-12 pb-3" key={resetTick[a.id] ?? 0}>
                   <div className="mb-1 text-[11px] text-slate-400">Laissez vide pour garder le prix du site.</div>
                   {a.variants.map(v => (
                     <div key={v.label} className="flex items-center gap-3 py-1 text-sm">
