@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowLeft, Activity, Clock, FileText, Package, Receipt, Users, UserSquare2 } from 'lucide-react'
+import { ArrowLeft, Activity, ClipboardList, Clock, FileText, Package, Receipt, Users, UserSquare2 } from 'lucide-react'
 import { emailToLogin } from '../../config'
 import { UsersTab } from './UsersTab'
 import { ContentTab } from './ContentTab'
@@ -7,8 +7,9 @@ import { ClientsPanel } from '../panels/ClientsPanel'
 import { QuotesPanel } from '../panels/QuotesPanel'
 import { InvoicesPanel } from '../panels/InvoicesPanel'
 import { ActivityPanel } from '../panels/ActivityPanel'
+import { ReportsPanel } from '../panels/ReportsPanel'
 
-type Tab = 'activity' | 'users' | 'clients' | 'invoices' | 'quotes' | 'content'
+type Tab = 'activity' | 'users' | 'clients' | 'invoices' | 'quotes' | 'content' | 'rapport'
 type SubTab = 'activity' | 'quotes' | 'clients' | 'invoices'
 interface Commercial { id: string; name: string; email: string }
 
@@ -48,6 +49,7 @@ export function AdminPage() {
     { id: 'clients', label: 'Clients', icon: UserSquare2 },
     { id: 'invoices', label: 'Factures', icon: Receipt },
     { id: 'content', label: 'Contenu et prix', icon: Package },
+    { id: 'rapport', label: 'Rapport', icon: ClipboardList },
   ]
   return (
     <div className="mx-auto h-full max-w-6xl overflow-y-auto p-4 sm:p-6">
@@ -68,6 +70,7 @@ export function AdminPage() {
       {tab === 'invoices' && <InvoicesPanel />}
       {tab === 'quotes' && <QuotesPanel admin />}
       {tab === 'content' && <ContentTab />}
+      {tab === 'rapport' && <ReportsPanel />}
     </div>
   )
 }

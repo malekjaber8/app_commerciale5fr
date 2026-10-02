@@ -24,8 +24,8 @@ const SOURCE_STYLE: Record<Source, { row: string; bar: string; dot: string; labe
   credit: { row: 'bg-violet-50/60', bar: 'border-l-4 border-violet-400', dot: 'bg-violet-400', label: 'Credit ajoute manuellement' },
 }
 
-/** Rapport du jour : encaissements du jour choisi (devis et credits), par client, avec le total encaisse. Reserve a l'admin. */
-export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quotes: QuoteDoc[]; credits: CreditDoc[]; onClose: () => void; onVerified?: () => void }) {
+/** Contenu du rapport (date + tableaux), reutilise dans la modale et dans l'onglet Rapport en page entiere. */
+export function DailyReportContent({ quotes, credits, onVerified, onClose }: { quotes: QuoteDoc[]; credits: CreditDoc[]; onVerified?: () => void; onClose?: () => void }) {
   const [date, setDate] = useState(todayStr)
   const [busy, setBusy] = useState('')
   // Verification d'une declaration : l'admin peut confirmer un montant different de celui declare (reglement partiel)
@@ -121,8 +121,7 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
   }
 
   return (
-    <Modal title="Rapport du jour" onClose={onClose} wide printable>
-      <div className="space-y-4">
+    <div className="space-y-4">
         <div className="no-print flex flex-wrap items-center gap-3">
           <label className="flex items-center gap-2 text-sm font-semibold text-slate-600">
             Date
@@ -257,8 +256,18 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
           )}
         </div>
 
-        <div className="no-print flex justify-end"><button onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600">Fermer</button></div>
-      </div>
+        {onClose && (
+          <div className="no-print flex justify-end"><button onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600">Fermer</button></div>
+        )}
+    </div>
+  )
+}
+
+/** Rapport du jour en modale (ouvert depuis la liste des devis). */
+export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quotes: QuoteDoc[]; credits: CreditDoc[]; onClose: () => void; onVerified?: () => void }) {
+  return (
+    <Modal title="Rapport du jour" onClose={onClose} wide printable>
+      <DailyReportContent quotes={quotes} credits={credits} onVerified={onVerified} onClose={onClose} />
     </Modal>
   )
 }
