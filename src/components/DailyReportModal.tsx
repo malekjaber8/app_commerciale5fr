@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Banknote, Check, CheckCheck, Printer, X } from 'lucide-react'
-import { DOC_TYPE_LABEL, PAYMENT_METHOD_LABEL, updateQuote, type DeclaredCollection, type Payment, type QuoteDoc } from '../lib/quotes'
+import { DOC_TYPE_LABEL, PAYMENT_METHOD_LABEL, quotePayment, updateQuote, type DeclaredCollection, type Payment, type QuoteDoc } from '../lib/quotes'
 import type { CreditDoc } from '../lib/credits'
 import { dt } from '../lib/format'
 import { Modal } from './ui'
@@ -62,11 +62,21 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
   }, [quotes, date])
   const pendingByCommercial = useMemo(() => {
     const m = new Map<string, number>()
-    for (const r of declRows) if (!r.entry.verified) m.set(r.quote.ownerName || r.quote.ownerEmail, (m.get(r.quote.ownerName || r.quote.ownerEmail) ?? 0) + r.entry.amount)
+    for (const r of declRows) {
+      if (r.entry.verified) continue
+      const balance = quotePayment(r.quote).balance
+      if (balance <= 0) continue // deja regle par ailleurs : rien a rapporter pour cette declaration
+      const name = r.quote.ownerName || r.quote.ownerEmail
+      m.set(name, (m.get(name) ?? 0) + Math.min(r.entry.amount, balance))
+    }
     return [...m.entries()]
   }, [declRows])
 
-  const startVerify = (row: DeclRow) => { setVerifying(row.entry.id); setVerifyAmount(String(row.entry.amount)) }
+  const startVerify = (row: DeclRow) => {
+    const balance = quotePayment(row.quote).balance
+    setVerifying(row.entry.id)
+    setVerifyAmount(String(balance > 0 ? Math.min(row.entry.amount, balance) : row.entry.amount))
+  }
   const cancelVerify = () => { setVerifying(null); setVerifyAmount('') }
 
   const verify = async (row: DeclRow) => {
@@ -84,6 +94,17 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
       const nextDeclared = (row.quote.declared ?? []).map(d => (d.id === row.entry.id ? { ...d, verified: true, verifiedAt: Date.now(), verifiedAmount: payment.amount, paymentId: payment.id } : d))
       await updateQuote(row.quote.id, { payments: nextPayments, paid: nextPaid, declared: nextDeclared })
       cancelVerify()
+      onVerified?.()
+    } finally { setBusy('') }
+  }
+
+  // Le devis est deja entierement regle par un autre reglement (ex : bouton Reglement manuel) : la declaration
+  // n'a plus de montant a encaisser. On la cloture sans creer de nouveau paiement, pour eviter un doublon.
+  const reconcile = async (row: DeclRow) => {
+    setBusy(row.entry.id)
+    try {
+      const nextDeclared = (row.quote.declared ?? []).map(d => (d.id === row.entry.id ? { ...d, verified: true, verifiedAt: Date.now(), verifiedAmount: 0 } : d))
+      await updateQuote(row.quote.id, { declared: nextDeclared })
       onVerified?.()
     } finally { setBusy('') }
   }
@@ -172,17 +193,22 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
                       const type = r.quote.docType ?? 'devis'
                       const number = type === 'devis' || !r.quote.docNumber ? r.quote.number : r.quote.docNumber
                       const isVerifying = verifying === r.entry.id
+                      const balance = quotePayment(r.quote).balance
+                      const alreadySettled = !r.entry.verified && balance <= 0
                       return (
                         <tr key={i} className="border-t border-slate-100">
                           <td className="p-3 font-semibold text-slate-700">{r.quote.ownerName || r.quote.ownerEmail}</td>
                           <td className="p-3 font-bold text-navy">{r.quote.client || '—'}</td>
                           <td className="p-3 text-slate-600">{DOC_TYPE_LABEL[type]} <span className="text-slate-400">{number}</span></td>
                           <td className="p-3 text-slate-400">{r.entry.note || '—'}</td>
-                          <td className="p-3 text-right font-bold text-navy">{dt(r.entry.amount)}</td>
+                          <td className="p-3 text-right">
+                            <div className="font-bold text-navy">{dt(r.entry.amount)}</div>
+                            {!r.entry.verified && <div className={`text-[10px] font-semibold ${alreadySettled ? 'text-green-600' : 'text-slate-400'}`}>Reste sur le devis : {dt(balance)}</div>}
+                          </td>
                           <td className="no-print p-3 text-right">
                             {r.entry.verified ? (
                               <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700">
-                                <CheckCheck size={12} /> Verifie {r.entry.verifiedAmount != null && r.entry.verifiedAmount !== r.entry.amount ? `(${dt(r.entry.verifiedAmount)})` : ''}
+                                <CheckCheck size={12} /> Verifie {r.entry.verifiedAmount != null && r.entry.verifiedAmount > 0 && r.entry.verifiedAmount !== r.entry.amount ? `(${dt(r.entry.verifiedAmount)})` : r.entry.verifiedAmount === 0 ? '(deja regle)' : ''}
                               </span>
                             ) : isVerifying ? (
                               <div className="flex items-center justify-end gap-1.5">
@@ -193,6 +219,9 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
                                   className="rounded-lg bg-navy p-1.5 text-white disabled:opacity-60"><Check size={14} /></button>
                                 <button onClick={cancelVerify} title="Annuler" className="rounded-lg border border-slate-200 p-1.5 text-slate-500"><X size={14} /></button>
                               </div>
+                            ) : alreadySettled ? (
+                              <button onClick={() => reconcile(r)} disabled={busy === r.entry.id} title="Le devis est deja entierement regle : ne cree pas de nouveau paiement"
+                                className="flex items-center gap-1.5 rounded-lg border border-green-300 bg-green-50 px-3 py-1.5 text-xs font-bold text-green-700 disabled:opacity-60"><CheckCheck size={13} /> Deja regle</button>
                             ) : (
                               <button onClick={() => startVerify(r)}
                                 className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white"><Banknote size={13} /> Verifier</button>
