@@ -1057,10 +1057,15 @@
     {
      "label": "0.8 cm — 190×140 cm",
      "code": "MT007",
-     "price": 5.5
+     "price": 5.8
+    },
+    {
+     "label": "0.9 cm — 190×140 cm",
+     "code": "MT034",
+     "price": 6.3
     }
    ],
-   "priceFrom": 5.5
+   "priceFrom": 5.8
   },
   {
    "id": "MT-15-17",
@@ -1077,35 +1082,35 @@
     {
      "label": "0.9 cm — 190×140 cm",
      "code": "MT008",
-     "price": 8.5
+     "price": 7.6
     },
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT009",
-     "price": 9.5
+     "price": 8.4
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT010",
-     "price": 19
+     "price": 16.8
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT011",
-     "price": 28.5
+     "price": 25.2
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT012",
-     "price": 37
+     "price": 33.6
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT013",
-     "price": 46.5
+     "price": 43.1
     }
    ],
-   "priceFrom": 8.5
+   "priceFrom": 7.6
   },
   {
    "id": "MT-20-22",
@@ -1122,30 +1127,30 @@
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT014",
-     "price": 10.8
+     "price": 11.4
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT015",
-     "price": 21.5
+     "price": 22.6
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT016",
-     "price": 32.4
+     "price": 34.1
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT017",
-     "price": 43
+     "price": 45.2
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT018",
-     "price": 54
+     "price": 56.7
     }
    ],
-   "priceFrom": 10.8
+   "priceFrom": 11.4
   },
   {
    "id": "MT-22-24",
@@ -1197,30 +1202,30 @@
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT023",
-     "price": 11
+     "price": 11.6
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT024",
-     "price": 27.5
+     "price": 23.1
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT025",
-     "price": 42.5
+     "price": 35.7
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT026",
-     "price": 54.5
+     "price": 47.3
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT027",
-     "price": 71
+     "price": 59.9
     }
    ],
-   "priceFrom": 11
+   "priceFrom": 11.6
   },
   {
    "id": "MT-hr",
@@ -1237,30 +1242,30 @@
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT028",
-     "price": 24
+     "price": 25.2
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT029",
-     "price": 48
+     "price": 50.4
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT030",
-     "price": 72
+     "price": 75.6
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT031",
-     "price": 96
+     "price": 100.8
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT032",
-     "price": 115
+     "price": 120.8
     }
    ],
-   "priceFrom": 24
+   "priceFrom": 25.2
   },
   {
    "id": "MT-magic30",
@@ -1275,12 +1280,32 @@
    "badge": "Premium",
    "variants": [
     {
+     "label": "1 cm — 190×140 cm",
+     "code": "MT035",
+     "price": 16.8
+    },
+    {
+     "label": "2 cm — 190×140 cm",
+     "code": "MT036",
+     "price": 33.6
+    },
+    {
+     "label": "3 cm — 190×140 cm",
+     "code": "MT037",
+     "price": 50.4
+    },
+    {
+     "label": "4 cm — 190×140 cm",
+     "code": "MT038",
+     "price": 67.2
+    },
+    {
      "label": "5 cm — 190×140 cm",
      "code": "MT033",
-     "price": 85
+     "price": 84
     }
    ],
-   "priceFrom": 85
+   "priceFrom": 16.8
   },
   {
    "id": "FP01",
