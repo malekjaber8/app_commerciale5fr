@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Banknote, Check, CheckCheck, Printer, X } from 'lucide-react'
 import { DOC_TYPE_LABEL, PAYMENT_METHOD_LABEL, quotePayment, updateQuote, type DeclaredCollection, type Payment, type QuoteDoc } from '../lib/quotes'
-import type { CreditDoc } from '../lib/credits'
+import { creditPayment, type CreditDoc } from '../lib/credits'
 import { dt } from '../lib/format'
 import { Modal } from './ui'
 
@@ -11,7 +11,7 @@ const todayStr = () => {
 }
 
 type Source = 'admin' | 'commercial' | 'credit'
-interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; amount: number; method: string; note: string; at: number; source: Source }
+interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; amount: number; method: string; note: string; at: number; source: Source; balance: number }
 interface DeclRow { quote: QuoteDoc; entry: DeclaredCollection }
 
 // Avant l'ajout du champ `source`, l'origine se devinait via la note laissee par verify() : on continue
@@ -41,14 +41,14 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
         if (p.at >= start && p.at <= end) {
           const type = q.docType ?? 'devis'
           const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
-          out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: guessSource(p) })
+          out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: guessSource(p), balance: quotePayment(q).balance })
         }
       }
     }
     for (const c of credits) {
       for (const p of c.payments ?? []) {
         if (p.at >= start && p.at <= end) {
-          out.push({ client: c.client, ownerName: c.ownerName, docLabel: 'Credit', docNumber: c.ref || '—', amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: 'credit' })
+          out.push({ client: c.client, ownerName: c.ownerName, docLabel: 'Credit', docNumber: c.ref || '—', amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: 'credit', balance: creditPayment(c).balance })
         }
       }
     }
@@ -173,7 +173,10 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
                       <td className="p-3 text-slate-600">{r.docLabel} <span className="text-slate-400">{r.docNumber}</span></td>
                       <td className="p-3 text-slate-600">{r.method}</td>
                       <td className="p-3 text-slate-400">{r.note || '—'}</td>
-                      <td className="p-3 text-right font-bold text-navy">{dt(r.amount)}</td>
+                      <td className="p-3 text-right">
+                        <div className="font-bold text-navy">{dt(r.amount)}</div>
+                        {r.balance > 0 && <div className="text-[10px] font-bold text-red-600">Reste : {dt(r.balance)}</div>}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
