@@ -14,6 +14,10 @@ type Source = 'admin' | 'commercial' | 'credit'
 interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; amount: number; method: string; note: string; at: number; source: Source }
 interface DeclRow { quote: QuoteDoc; entry: DeclaredCollection }
 
+// Avant l'ajout du champ `source`, l'origine se devinait via la note laissee par verify() : on continue
+// a la reconnaitre ainsi pour les paiements plus anciens, qui n'ont pas ce champ enregistre.
+const guessSource = (p: Payment): Source => p.source ?? (/Verifie \(commercial\)|Verifie partiellement/.test(p.note) ? 'commercial' : 'admin')
+
 const SOURCE_STYLE: Record<Source, { row: string; bar: string; dot: string; label: string }> = {
   admin: { row: 'bg-sky-50/60', bar: 'border-l-4 border-sky-400', dot: 'bg-sky-400', label: 'Regle par l’admin' },
   commercial: { row: 'bg-amber-50/60', bar: 'border-l-4 border-amber-400', dot: 'bg-amber-400', label: 'Rapporte par le commercial' },
@@ -37,7 +41,7 @@ export function DailyReportModal({ quotes, credits, onClose, onVerified }: { quo
         if (p.at >= start && p.at <= end) {
           const type = q.docType ?? 'devis'
           const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
-          out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: p.source ?? 'admin' })
+          out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, amount: p.amount, method: PAYMENT_METHOD_LABEL[p.method], note: p.note, at: p.at, source: guessSource(p) })
         }
       }
     }
