@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-25T08:18:04.987Z",
+ "generatedAt": "2026-10-02T09:32:16.437Z",
  "categories": [
   {
    "id": "tissu",
@@ -1551,62 +1551,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 200
+     "price": 210
     },
     {
      "label": "190×80 cm",
-     "price": 260
+     "price": 275
     },
     {
      "label": "190×90 cm",
-     "price": 290
+     "price": 305
     },
     {
      "label": "190×100 cm",
-     "price": 440
+     "price": 465
     },
     {
      "label": "190×110 cm",
-     "price": 480
+     "price": 505
     },
     {
      "label": "190×120 cm",
-     "price": 400
+     "price": 420
     },
     {
      "label": "190×140 cm",
-     "price": 410
+     "price": 435
     },
     {
      "label": "190×150 cm",
-     "price": 540
+     "price": 570
     },
     {
      "label": "190×160 cm",
-     "price": 460
+     "price": 485
     },
     {
      "label": "200×90 cm",
-     "price": 410
+     "price": 435
     },
     {
      "label": "200×100 cm",
-     "price": 460
+     "price": 485
     },
     {
      "label": "200×120 cm",
-     "price": 540
+     "price": 570
     },
     {
      "label": "200×160 cm",
-     "price": 520
+     "price": 550
     },
     {
      "label": "200×180 cm",
-     "price": 620
+     "price": 655
     }
    ],
-   "priceFrom": 200
+   "priceFrom": 210
   },
   {
    "id": "MR-venise",
@@ -1631,62 +1631,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 240
+     "price": 255
     },
     {
      "label": "190×80 cm",
-     "price": 310
+     "price": 330
     },
     {
      "label": "190×90 cm",
-     "price": 340
+     "price": 360
     },
     {
      "label": "190×100 cm",
-     "price": 490
+     "price": 515
     },
     {
      "label": "190×110 cm",
-     "price": 530
+     "price": 560
     },
     {
      "label": "190×120 cm",
-     "price": 460
+     "price": 485
     },
     {
      "label": "190×140 cm",
-     "price": 480
+     "price": 505
     },
     {
      "label": "190×150 cm",
-     "price": 630
+     "price": 665
     },
     {
      "label": "190×160 cm",
-     "price": 540
+     "price": 570
     },
     {
      "label": "200×90 cm",
-     "price": 490
+     "price": 515
     },
     {
      "label": "200×100 cm",
-     "price": 530
+     "price": 560
     },
     {
      "label": "200×120 cm",
-     "price": 630
+     "price": 665
     },
     {
      "label": "200×160 cm",
-     "price": 610
+     "price": 645
     },
     {
      "label": "200×180 cm",
-     "price": 730
+     "price": 770
     }
    ],
-   "priceFrom": 240
+   "priceFrom": 255
   },
   {
    "id": "MR-venise-pt",
@@ -1712,62 +1712,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 450
+     "price": 475
     },
     {
      "label": "190×80 cm",
-     "price": 620
+     "price": 655
     },
     {
      "label": "190×90 cm",
-     "price": 650
+     "price": 685
     },
     {
      "label": "190×100 cm",
-     "price": 900
+     "price": 945
     },
     {
      "label": "190×110 cm",
-     "price": 940
-    },
-    {
-     "label": "190×120 cm",
-     "price": 960
-    },
-    {
-     "label": "190×140 cm",
-     "price": 930
-    },
-    {
-     "label": "190×150 cm",
-     "price": 1100
-    },
-    {
-     "label": "190×160 cm",
      "price": 990
     },
     {
+     "label": "190×120 cm",
+     "price": 1010
+    },
+    {
+     "label": "190×140 cm",
+     "price": 980
+    },
+    {
+     "label": "190×150 cm",
+     "price": 1155
+    },
+    {
+     "label": "190×160 cm",
+     "price": 1040
+    },
+    {
      "label": "200×90 cm",
-     "price": 900
+     "price": 945
     },
     {
      "label": "200×100 cm",
-     "price": 940
+     "price": 990
     },
     {
      "label": "200×120 cm",
-     "price": 1100
+     "price": 1155
     },
     {
      "label": "200×160 cm",
-     "price": 1030
+     "price": 1085
     },
     {
      "label": "200×180 cm",
-     "price": 1400
+     "price": 1470
     }
    ],
-   "priceFrom": 450
+   "priceFrom": 475
   },
   {
    "id": "MR-medico",
@@ -1793,62 +1793,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 340
+     "price": 360
     },
     {
      "label": "190×80 cm",
-     "price": 440
+     "price": 465
     },
     {
      "label": "190×90 cm",
-     "price": 490
+     "price": 515
     },
     {
      "label": "190×100 cm",
-     "price": 670
+     "price": 705
     },
     {
      "label": "190×110 cm",
-     "price": 780
+     "price": 820
     },
     {
      "label": "190×120 cm",
-     "price": 720
+     "price": 760
     },
     {
      "label": "190×140 cm",
-     "price": 720
+     "price": 760
     },
     {
      "label": "190×150 cm",
-     "price": 910
+     "price": 960
     },
     {
      "label": "190×160 cm",
-     "price": 830
+     "price": 875
     },
     {
      "label": "200×90 cm",
-     "price": 670
+     "price": 705
     },
     {
      "label": "200×100 cm",
-     "price": 750
+     "price": 790
     },
     {
      "label": "200×120 cm",
-     "price": 880
+     "price": 925
     },
     {
      "label": "200×160 cm",
-     "price": 910
+     "price": 960
     },
     {
      "label": "200×180 cm",
-     "price": 1090
+     "price": 1145
     }
    ],
-   "priceFrom": 340
+   "priceFrom": 360
   },
   {
    "id": "MR-medico-pt",
@@ -1876,62 +1876,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 550
+     "price": 580
     },
     {
      "label": "190×80 cm",
-     "price": 750
+     "price": 790
     },
     {
      "label": "190×90 cm",
-     "price": 800
+     "price": 840
     },
     {
      "label": "190×100 cm",
-     "price": 1090
+     "price": 1145
     },
     {
      "label": "190×110 cm",
-     "price": 1190
+     "price": 1250
     },
     {
      "label": "190×120 cm",
-     "price": 1130
+     "price": 1190
     },
     {
      "label": "190×140 cm",
-     "price": 1180
+     "price": 1240
     },
     {
      "label": "190×150 cm",
-     "price": 1450
+     "price": 1525
     },
     {
      "label": "190×160 cm",
-     "price": 1310
+     "price": 1380
     },
     {
      "label": "200×90 cm",
-     "price": 1090
+     "price": 1145
     },
     {
      "label": "200×100 cm",
-     "price": 1160
+     "price": 1220
     },
     {
      "label": "200×120 cm",
-     "price": 1340
+     "price": 1410
     },
     {
      "label": "200×160 cm",
-     "price": 1540
+     "price": 1620
     },
     {
      "label": "200×180 cm",
-     "price": 1810
+     "price": 1905
     }
    ],
-   "priceFrom": 550
+   "priceFrom": 580
   },
   {
    "id": "MR-relax",
@@ -1959,62 +1959,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 420
+     "price": 445
     },
     {
      "label": "190×80 cm",
-     "price": 530
+     "price": 560
     },
     {
      "label": "190×90 cm",
-     "price": 590
+     "price": 620
     },
     {
      "label": "190×100 cm",
-     "price": 850
+     "price": 895
     },
     {
      "label": "190×110 cm",
-     "price": 930
+     "price": 895
     },
     {
      "label": "190×120 cm",
-     "price": 840
+     "price": 885
     },
     {
      "label": "190×140 cm",
-     "price": 860
+     "price": 905
     },
     {
      "label": "190×150 cm",
-     "price": 1100
+     "price": 1155
     },
     {
      "label": "190×160 cm",
-     "price": 990
+     "price": 1040
     },
     {
      "label": "200×90 cm",
-     "price": 780
+     "price": 820
     },
     {
      "label": "200×100 cm",
-     "price": 860
+     "price": 905
     },
     {
      "label": "200×120 cm",
-     "price": 1080
+     "price": 1135
     },
     {
      "label": "200×160 cm",
-     "price": 1140
+     "price": 1200
     },
     {
      "label": "200×180 cm",
-     "price": 1340
+     "price": 1410
     }
    ],
-   "priceFrom": 420
+   "priceFrom": 445
   },
   {
    "id": "MR-relax-pt",
@@ -2041,62 +2041,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 620
+     "price": 655
     },
     {
      "label": "190×80 cm",
-     "price": 880
+     "price": 925
     },
     {
      "label": "190×90 cm",
-     "price": 950
+     "price": 1000
     },
     {
      "label": "190×100 cm",
-     "price": 1260
+     "price": 1325
     },
     {
      "label": "190×110 cm",
-     "price": 1340
+     "price": 1410
     },
     {
      "label": "190×120 cm",
-     "price": 1320
+     "price": 1390
     },
     {
      "label": "190×140 cm",
-     "price": 1400
+     "price": 1470
     },
     {
      "label": "190×150 cm",
-     "price": 1550
+     "price": 1630
     },
     {
      "label": "190×160 cm",
-     "price": 1550
+     "price": 1630
     },
     {
      "label": "200×90 cm",
-     "price": 1190
+     "price": 1250
     },
     {
      "label": "200×100 cm",
-     "price": 1270
+     "price": 1335
     },
     {
      "label": "200×120 cm",
-     "price": 1550
+     "price": 1630
     },
     {
      "label": "200×160 cm",
-     "price": 1730
+     "price": 1820
     },
     {
      "label": "200×180 cm",
-     "price": 2030
+     "price": 2135
     }
    ],
-   "priceFrom": 620
+   "priceFrom": 655
   },
   {
    "id": "MR-tendresse",
@@ -2124,62 +2124,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 570
+     "price": 600
     },
     {
      "label": "190×80 cm",
-     "price": 730
+     "price": 770
     },
     {
      "label": "190×90 cm",
-     "price": 800
+     "price": 840
     },
     {
      "label": "190×100 cm",
-     "price": 1230
+     "price": 1295
     },
     {
      "label": "190×110 cm",
-     "price": 1290
+     "price": 1355
     },
     {
      "label": "190×120 cm",
-     "price": 1140
+     "price": 1200
     },
     {
      "label": "190×140 cm",
-     "price": 1189
+     "price": 1250
     },
     {
      "label": "190×150 cm",
-     "price": 1500
+     "price": 1575
     },
     {
      "label": "190×160 cm",
-     "price": 1370
+     "price": 1440
     },
     {
      "label": "200×90 cm",
-     "price": 1070
+     "price": 1125
     },
     {
      "label": "200×100 cm",
-     "price": 1190
+     "price": 1250
     },
     {
      "label": "200×120 cm",
-     "price": 1480
+     "price": 1555
     },
     {
      "label": "200×160 cm",
-     "price": 1520
+     "price": 1600
     },
     {
      "label": "200×180 cm",
-     "price": 1810
+     "price": 1905
     }
    ],
-   "priceFrom": 570
+   "priceFrom": 600
   },
   {
    "id": "MR-tendresse-pt",
@@ -2207,62 +2207,62 @@
    "variants": [
     {
      "label": "120×60 cm",
-     "price": 780
+     "price": 820
     },
     {
      "label": "190×80 cm",
-     "price": 1090
+     "price": 1145
     },
     {
      "label": "190×90 cm",
-     "price": 1160
+     "price": 1220
     },
     {
      "label": "190×100 cm",
-     "price": 1860
+     "price": 1955
     },
     {
      "label": "190×110 cm",
-     "price": 1700
+     "price": 1785
     },
     {
      "label": "190×120 cm",
-     "price": 1710
+     "price": 1800
     },
     {
      "label": "190×140 cm",
-     "price": 1790
+     "price": 1880
     },
     {
      "label": "190×150 cm",
-     "price": 2170
+     "price": 2280
     },
     {
      "label": "190×160 cm",
-     "price": 2090
+     "price": 2195
     },
     {
      "label": "200×90 cm",
-     "price": 1480
+     "price": 1555
     },
     {
      "label": "200×100 cm",
-     "price": 1600
+     "price": 1680
     },
     {
      "label": "200×120 cm",
-     "price": 1940
+     "price": 2040
     },
     {
      "label": "200×160 cm",
-     "price": 2250
+     "price": 2365
     },
     {
      "label": "200×180 cm",
-     "price": 2630
+     "price": 2765
     }
    ],
-   "priceFrom": 780
+   "priceFrom": 820
   },
   {
    "id": "PB001",
@@ -2672,6 +2672,11 @@
      "label": "Noir — 12cm",
      "price": 6.5,
      "raw": "Noir — 12cm — 6,500 DT"
+    },
+    {
+     "label": "Chrome — 12cm",
+     "price": 7.5,
+     "raw": "Chrome — 12cm — 7,500 DT"
     }
    ],
    "priceFrom": 6.5
@@ -2733,6 +2738,16 @@
      "label": "Chrome — 13cm",
      "price": 5,
      "raw": "Chrome — 13cm — 5,000 DT"
+    },
+    {
+     "label": "Noir — 13cm",
+     "price": 5,
+     "raw": "Noir — 13cm — 5,000 DT"
+    },
+    {
+     "label": "Fumé — 13cm",
+     "price": 5,
+     "raw": "Fumé — 13cm — 5,000 DT"
     }
    ],
    "priceFrom": 5
@@ -7122,11 +7137,11 @@
    "variants": [
     {
      "label": "unité",
-     "price": 15,
-     "raw": "15,000 DT / unité"
+     "price": 17.5,
+     "raw": "17,500 DT / unité"
     }
    ],
-   "priceFrom": 15
+   "priceFrom": 17.5
   },
   {
    "id": "MC010",
@@ -7141,11 +7156,30 @@
    "variants": [
     {
      "label": "unité",
-     "price": 18,
-     "raw": "18,000 DT / unité"
+     "price": 26,
+     "raw": "26,000 DT / unité"
     }
    ],
-   "priceFrom": 18
+   "priceFrom": 26
+  },
+  {
+   "id": "MC019",
+   "name": "Mécanisme 25×25",
+   "desc": "Mécanisme 25×25 pour meubles tapissés.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/25x25 .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "unité",
+     "price": 39,
+     "raw": "39,000 DT / unité"
+    }
+   ],
+   "priceFrom": 39
   },
   {
    "id": "MC011",
@@ -8352,6 +8386,44 @@
     }
    ],
    "priceFrom": 48
+  },
+  {
+   "id": "OUT032",
+   "name": "Pistolet de Colle 1 (H-827)",
+   "desc": "Modèle H-827 — réservoir haut",
+   "categoryId": "outils-2",
+   "img": "images/colle/pistolet de colle1.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 50,
+     "raw": "50,000 DT"
+    }
+   ],
+   "priceFrom": 50
+  },
+  {
+   "id": "OUT033",
+   "name": "Pistolet de Colle 2 (S-990)",
+   "desc": "Modèle S-990 — réservoir bas",
+   "categoryId": "outils-2",
+   "img": "images/colle/pistolet de colle2.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": 40,
+     "raw": "40,000 DT"
+    }
+   ],
+   "priceFrom": 40
   },
   {
    "id": "OUT014",
