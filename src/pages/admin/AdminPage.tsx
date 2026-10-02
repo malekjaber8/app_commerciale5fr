@@ -15,7 +15,7 @@ interface Commercial { id: string; name: string; email: string }
 function CommercialDetail({ user, onBack }: { user: Commercial; onBack: () => void }) {
   const [sub, setSub] = useState<SubTab>('activity')
   const subs: { id: SubTab; label: string }[] = [
-    { id: 'activity', label: 'Activite' }, { id: 'quotes', label: 'Devis' }, { id: 'clients', label: 'Clients' }, { id: 'invoices', label: 'Factures' },
+    { id: 'activity', label: 'Activite' }, { id: 'quotes', label: 'Commande du jour' }, { id: 'clients', label: 'Clients' }, { id: 'invoices', label: 'Factures' },
   ]
   return (
     <div className="space-y-4">
@@ -44,7 +44,7 @@ export function AdminPage() {
   const tabs: { id: Tab; label: string; icon: typeof Users }[] = [
     { id: 'activity', label: 'Activite du jour', icon: Clock },
     { id: 'users', label: 'Commerciaux', icon: Users },
-    { id: 'quotes', label: 'Devis', icon: FileText },
+    { id: 'quotes', label: 'Commande du jour', icon: FileText },
     { id: 'clients', label: 'Clients', icon: UserSquare2 },
     { id: 'invoices', label: 'Factures', icon: Receipt },
     { id: 'content', label: 'Contenu et prix', icon: Package },
