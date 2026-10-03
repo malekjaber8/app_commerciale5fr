@@ -49,7 +49,7 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
     const netUnitPrice = lineNetUnitPrice(l)
     const puht = netUnitPrice / (1 + TVA_RATE)
     const code = articles.find(a => a.id === l.articleId)?.variants.find(v => v.label === l.variant)?.code || (isCustomId(l.articleId) ? '' : l.articleId)
-    return { ...l, code, unitPrice: netUnitPrice, puht, mntHT: puht * l.qty }
+    return { ...l, code, grossUnitPrice: l.unitPrice, unitPrice: netUnitPrice, puht, mntHT: puht * l.qty }
   })
   const subTTC = rows.reduce((s, r) => s + r.unitPrice * r.qty, 0)
   const netTTC = subTTC - doc.discount
@@ -128,12 +128,18 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
             {rows.map((r, i) => (
               <tr key={i}>
                 <td className={td}>{r.code}</td>
-                <td className={td}>{r.name}{r.variant && r.variant !== 'Standard' && <span> — {r.variant}</span>}</td>
+                <td className={td}>
+                  {r.name}{r.variant && r.variant !== 'Standard' && <span> — {r.variant}</span>}
+                  {!!r.discountPct && <span className="ml-1 font-semibold" style={{ color: '#c62828' }}>(remise {r.discountPct}%)</span>}
+                </td>
                 <td className={td + ' text-center font-bold'}>{String(r.qty).replace('.', ',')}</td>
                 <td className={td + ' text-right'}>{num(r.puht)}</td>
                 <td className={td + ' text-right'}>{num(r.mntHT)}</td>
                 <td className={td + ' text-center'}>19.00</td>
-                <td className={td + ' text-right font-bold'}>{num(r.unitPrice)}</td>
+                <td className={td + ' text-right font-bold'}>
+                  {!!r.discountPct && <div className="font-normal text-slate-400" style={{ textDecoration: 'line-through' }}>{num(r.grossUnitPrice)}</div>}
+                  {num(r.unitPrice)}
+                </td>
               </tr>
             ))}
             <tr><td className="border-t border-slate-800" colSpan={7} /></tr>
