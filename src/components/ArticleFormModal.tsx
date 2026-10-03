@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
 import { ImagePlus, Layers, PackagePlus, Plus, Trash2, X } from 'lucide-react'
-import { categories, childrenOf, topCategories } from '../lib/catalogue'
 import { isCustomId, newProductId, resizeImage, saveProduct, type ProductRow } from '../lib/products'
 import { asset, dt } from '../lib/format'
 import { useSettings } from '../store/settings'
-import type { Variant } from '../types'
+import type { Category, Variant } from '../types'
 import { Field, Modal, inputCls } from './ui'
+
+const NEW_CAT_PREFIX = '__new__:'
+const slugify = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-+|-+$)/g, '')
 
 const MAX_PHOTOS = 5
 const MAX_CHARS = 850_000 // un document Firestore est limite a 1 Mo
@@ -23,9 +25,10 @@ const emptyRow = (): VariantRow => ({ label: '', price: '', code: '' })
  * (ex : une nouvelle dimension pour Matelas Mousse 28/30).
  */
 export function ArticleFormModal({ initial, defaultCategoryId, onClose }: { initial?: ProductRow; defaultCategoryId?: string | null; onClose: () => void }) {
-  const { settings, save, articles, products } = useSettings()
+  const { settings, save, articles, products, categories, topCategories, childrenOf, findCategory } = useSettings()
   const [mode, setMode] = useState<'new' | 'variants'>('new')
   const [categoryId, setCategoryId] = useState(initial?.categoryId ?? defaultCategoryId ?? (childrenOf(topCategories[0].id)[0]?.id ?? topCategories[0].id))
+  const [newCatLabel, setNewCatLabel] = useState('')
   const [targetId, setTargetId] = useState('')
   const [name, setName] = useState(initial?.name ?? '')
   const [desc, setDesc] = useState(initial?.desc ?? '')
@@ -35,14 +38,31 @@ export function ArticleFormModal({ initial, defaultCategoryId, onClose }: { init
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
 
+  const isNewCat = categoryId.startsWith(NEW_CAT_PREFIX)
+  const newCatParentId = isNewCat ? categoryId.slice(NEW_CAT_PREFIX.length) : null
+
   const inCategory = useMemo(() => articles.filter(a => a.categoryId === categoryId), [articles, categoryId])
   const target = inCategory.find(a => a.id === targetId) ?? null
+
+  /** Si une nouvelle sous-categorie a ete demandee, la cree (id unique, meme icone que le parent) et renvoie son id. */
+  const resolveCategoryId = async (): Promise<string> => {
+    if (!isNewCat) return categoryId
+    const label = newCatLabel.trim()
+    if (!label) throw new Error('empty-new-cat')
+    const base = `${newCatParentId}-${slugify(label) || 'sous-categorie'}`
+    let id = base; let n = 2
+    while (categories.some(c => c.id === id)) id = `${base}-${n++}`
+    const cat: Category = { id, label, icon: findCategory(newCatParentId!)?.icon ?? '📦', parentId: newCatParentId! }
+    await save({ ...settings, customCategories: [...(settings.customCategories ?? []), cat] })
+    return id
+  }
 
   const patch = (i: number, p: Partial<VariantRow>) => setRows(rs => rs.map((r, k) => (k === i ? { ...r, ...p } : r)))
 
   const switchMode = (m: 'new' | 'variants') => {
     setMode(m); setError('')
     setRows([m === 'new' ? { label: 'Standard', price: '', code: '' } : emptyRow()])
+    if (m === 'variants' && categoryId.startsWith(NEW_CAT_PREFIX)) { setCategoryId(topCategories[0].id); setNewCatLabel('') }
   }
 
   const addPhotos = async (files: FileList | null) => {
@@ -93,10 +113,12 @@ export function ArticleFormModal({ initial, defaultCategoryId, onClose }: { init
     }
 
     if (!name.trim()) return setError("Le nom de l'article est obligatoire.")
+    if (isNewCat && !newCatLabel.trim()) return setError('Donnez un nom a la nouvelle sous-categorie.')
     if (images.join('').length > MAX_CHARS) return setError('Photos trop lourdes : retirez-en une ou deux.')
     setBusy(true)
     try {
-      await saveProduct(initial?.id ?? newProductId(), { name: name.trim(), desc: desc.trim(), categoryId, unit: unit.trim(), variants, images, ...(initial?.overrideOf ? { overrideOf: initial.overrideOf } : {}) })
+      const finalCategoryId = await resolveCategoryId()
+      await saveProduct(initial?.id ?? newProductId(), { name: name.trim(), desc: desc.trim(), categoryId: finalCategoryId, unit: unit.trim(), variants, images, ...(initial?.overrideOf ? { overrideOf: initial.overrideOf } : {}) })
       if (initial?.overrideOf) {
         // prix ajustes et dimensions ajoutees sont desormais integres a la fiche : on les retire pour eviter un double effet
         const id = initial.overrideOf
@@ -149,16 +171,23 @@ export function ArticleFormModal({ initial, defaultCategoryId, onClose }: { init
           <select className={inputCls} value={categoryId} onChange={e => { setCategoryId(e.target.value); setTargetId('') }}>
             {topCategories.map(t => {
               const kids = childrenOf(t.id)
-              return kids.length ? (
+              return (
                 <optgroup key={t.id} label={`${t.icon} ${t.label}`}>
-                  <option value={t.id}>{t.label} (general)</option>
+                  <option value={t.id}>{kids.length ? `${t.label} (general)` : t.label}</option>
                   {kids.map(k => <option key={k.id} value={k.id}>{k.label}</option>)}
+                  {mode === 'new' && <option value={`${NEW_CAT_PREFIX}${t.id}`}>+ Nouvelle sous-categorie...</option>}
                 </optgroup>
-              ) : <option key={t.id} value={t.id}>{t.icon} {t.label}</option>
+              )
             })}
-            {!categories.some(c => c.id === categoryId) && <option value={categoryId}>{categoryId}</option>}
+            {!categories.some(c => c.id === categoryId) && !isNewCat && <option value={categoryId}>{categoryId}</option>}
           </select>
         </Field>
+        {isNewCat && (
+          <Field label="Nom de la nouvelle sous-categorie *">
+            <input className={inputCls} value={newCatLabel} onChange={e => setNewCatLabel(e.target.value)}
+              placeholder={`Ex : Accessoires ${findCategory(newCatParentId!)?.label ?? ''}`} autoFocus />
+          </Field>
+        )}
 
         {mode === 'variants' && !initial ? (
           <>

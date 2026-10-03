@@ -2,9 +2,9 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useAuth } from './auth'
-import { articles as baseArticles } from '../lib/catalogue'
+import { articles as baseArticles, categories as baseCategories } from '../lib/catalogue'
 import { productToArticle, type ProductRow } from '../lib/products'
-import type { Article, Settings } from '../types'
+import type { Article, Category, Settings } from '../types'
 
 export const DEFAULT_SETTINGS: Settings = { hiddenIds: [], priceOverrides: {}, extraVariants: {}, maxDiscountPct: 10 }
 
@@ -18,6 +18,12 @@ interface SettingsCtx {
   overrides: Map<string, ProductRow>
   /** Catalogue tel que le voit l'utilisateur courant (masques et prix ajustes appliques). */
   articles: Article[]
+  /** Categories du site + sous-categories creees par l'admin. */
+  categories: Category[]
+  topCategories: Category[]
+  childrenOf: (id: string) => Category[]
+  categoryScope: (id: string) => string[]
+  findCategory: (id: string) => Category | undefined
 }
 
 const Ctx = createContext<SettingsCtx | null>(null)
@@ -81,10 +87,17 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     return out
   }, [settings, role, products, overrides])
 
+  const categories = useMemo<Category[]>(() => [...baseCategories, ...(settings.customCategories ?? [])], [settings.customCategories])
+  const topCategories = useMemo(() => categories.filter(c => !c.parentId), [categories])
+  const childrenOf = (id: string) => categories.filter(c => c.parentId === id)
+  const categoryScope = (id: string) => [id, ...childrenOf(id).map(c => c.id)]
+  const findCategory = (id: string) => categories.find(c => c.id === id)
+
   const value = useMemo<SettingsCtx>(() => ({
-    settings, loaded, articles, products, overrides,
+    settings, loaded, articles, products, overrides, categories, topCategories, childrenOf, categoryScope, findCategory,
     save: async (s) => { await setDoc(doc(db, 'settings', 'catalogue'), s) },
-  }), [settings, loaded, articles, products, overrides])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [settings, loaded, articles, products, overrides, categories, topCategories])
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

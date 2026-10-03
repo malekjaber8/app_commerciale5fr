@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Minus, Pencil, Play, Plus, RotateCcw, ShoppingBag, Trash2, X, ZoomIn } from 'lucide-react'
 import type { Article } from '../types'
 import { asset, dt } from '../lib/format'
-import { findCategory } from '../lib/catalogue'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { AdminPriceEditor } from './AdminPriceEditor'
@@ -19,7 +18,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
   const removeArticle = useRemoveArticle()
   const { ask } = useDialogs()
   const { role } = useAuth()
-  const { products, overrides } = useSettings()
+  const { products, overrides, findCategory } = useSettings()
   const [editing, setEditing] = useState(false)
   const [variantIdx, setVariantIdx] = useState(0)
   const [qty, setQty] = useState(1)

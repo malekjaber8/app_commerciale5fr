@@ -34,6 +34,8 @@ export interface Settings {
   /** Variantes (dimensions) ajoutees par l'admin a un article du catalogue : articleId -> variantes */
   extraVariants?: Record<string, Variant[]>
   maxDiscountPct: number
+  /** Sous-categories creees par l'admin (absentes du site officiel), en plus de l'arbre du catalogue. */
+  customCategories?: Category[]
 }
 
 export interface Category {

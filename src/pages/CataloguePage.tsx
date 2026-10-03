@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import { ChevronDown, ChevronRight, PackagePlus, Search, X } from 'lucide-react'
-import { categoryScope, childrenOf, findCategory, topCategories } from '../lib/catalogue'
 import { useSettings } from '../store/settings'
 import { useAuth } from '../store/auth'
 import type { Article } from '../types'
@@ -12,7 +11,7 @@ import { ArticleFormModal } from '../components/ArticleFormModal'
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 export function CataloguePage() {
-  const { articles } = useSettings()
+  const { articles, topCategories, childrenOf, categoryScope, findCategory } = useSettings()
   const { role } = useAuth()
   const removeArticle = useRemoveArticle()
   const [adding, setAdding] = useState(false)
