@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { doc as fsDoc, getDoc } from 'firebase/firestore'
 import { Printer, X } from 'lucide-react'
 import { db } from '../firebase'
-import { TIMBRE, TVA_RATE } from '../lib/db'
+import { lineNetUnitPrice, TIMBRE, TVA_RATE } from '../lib/db'
 import { useSettings } from '../store/settings'
 import { isCustomId } from '../lib/products'
 import type { Client, DocLine } from '../types'
@@ -46,11 +46,12 @@ export function SalesDocView({ doc, onClose }: { doc: SalesDoc; onClose: () => v
   }, [doc.clientId])
 
   const rows = doc.lines.map(l => {
-    const puht = l.unitPrice / (1 + TVA_RATE)
+    const netUnitPrice = lineNetUnitPrice(l)
+    const puht = netUnitPrice / (1 + TVA_RATE)
     const code = articles.find(a => a.id === l.articleId)?.variants.find(v => v.label === l.variant)?.code || (isCustomId(l.articleId) ? '' : l.articleId)
-    return { ...l, code, puht, mntHT: puht * l.qty }
+    return { ...l, code, unitPrice: netUnitPrice, puht, mntHT: puht * l.qty }
   })
-  const subTTC = doc.lines.reduce((s, l) => s + l.unitPrice * l.qty, 0)
+  const subTTC = rows.reduce((s, r) => s + r.unitPrice * r.qty, 0)
   const netTTC = subTTC - doc.discount
   const totalHT = subTTC / (1 + TVA_RATE)
   const discountHT = doc.discount / (1 + TVA_RATE)

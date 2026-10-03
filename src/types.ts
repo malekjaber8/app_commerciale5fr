@@ -59,6 +59,8 @@ export interface QuoteLine {
   variant: string
   unitPrice: number
   qty: number
+  /** Remise en % propre a cette ligne (en plus de la remise globale du document). */
+  discountPct?: number
 }
 
 export type OrderStatus = 'nouvelle' | 'confirmee' | 'livree' | 'annulee'
@@ -76,6 +78,8 @@ export interface DocLine {
   variant: string
   unitPrice: number
   qty: number
+  /** Remise en % propre a cette ligne (en plus de la remise globale du document). */
+  discountPct?: number
 }
 
 export interface Client {

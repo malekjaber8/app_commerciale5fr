@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Plus, Search, Trash2 } from 'lucide-react'
 import type { DocLine } from '../types'
 import { dt } from '../lib/format'
+import { lineAmount } from '../lib/db'
 import { inputCls } from './ui'
 import { QtyInput } from './QtyInput'
 import { ArticlePickerModal } from './ArticlePickerModal'
@@ -21,7 +22,7 @@ export function LinesEditor({ lines, onChange }: { lines: DocLine[]; onChange: (
       <div className="overflow-x-auto rounded-xl border border-slate-200">
         <table className="w-full min-w-[560px] text-sm">
           <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
-            <tr><th className="p-2">Designation</th><th className="p-2">Variante</th><th className="w-28 p-2">P.U. TTC</th><th className="w-20 p-2">Qte</th><th className="w-28 p-2 text-right">Montant</th><th className="w-8" /></tr>
+            <tr><th className="p-2">Designation</th><th className="p-2">Variante</th><th className="w-28 p-2">P.U. TTC</th><th className="w-20 p-2">Qte</th><th className="w-20 p-2">Remise %</th><th className="w-28 p-2 text-right">Montant</th><th className="w-8" /></tr>
           </thead>
           <tbody>
             {lines.map((l, i) => (
@@ -30,7 +31,14 @@ export function LinesEditor({ lines, onChange }: { lines: DocLine[]; onChange: (
                 <td className="p-1.5"><input className={inputCls} value={l.variant} onChange={e => patch(i, { variant: e.target.value })} /></td>
                 <td className="p-1.5"><input className={inputCls + ' text-right'} defaultValue={l.unitPrice} key={'p' + i + l.articleId} onBlur={e => patch(i, { unitPrice: num(e.target.value) })} /></td>
                 <td className="p-1.5"><QtyInput className={inputCls + ' text-center'} value={l.qty} onChange={n => patch(i, { qty: n })} /></td>
-                <td className="p-1.5 text-right font-semibold">{dt(l.unitPrice * l.qty)}</td>
+                <td className="p-1.5">
+                  <input className={inputCls + ' text-center'} defaultValue={l.discountPct || ''} key={'d' + i + l.articleId} placeholder="0"
+                    onBlur={e => patch(i, { discountPct: Math.min(100, Math.max(0, num(e.target.value))) || undefined })} />
+                </td>
+                <td className="p-1.5 text-right font-semibold">
+                  {l.discountPct ? <div className="text-[11px] font-normal text-slate-400 line-through">{dt(l.unitPrice * l.qty)}</div> : null}
+                  {dt(lineAmount(l))}
+                </td>
                 <td className="p-1.5"><button onClick={() => onChange(lines.filter((_, k) => k !== i))} className="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={14} /></button></td>
               </tr>
             ))}

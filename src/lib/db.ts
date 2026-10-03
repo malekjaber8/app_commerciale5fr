@@ -15,7 +15,10 @@ const toRows = <T>(snap: { docs: { id: string; data: () => unknown }[] }) =>
   snap.docs.map(d => ({ id: d.id, ...(d.data() as object) }) as T)
 
 /* ───────── calculs ───────── */
-export const linesSubtotal = (lines: DocLine[]) => lines.reduce((s, l) => s + l.unitPrice * l.qty, 0)
+/** Prix unitaire d'une ligne apres sa propre remise (en plus de la remise globale du document). */
+export const lineNetUnitPrice = (l: DocLine) => l.unitPrice * (1 - Math.min(100, Math.max(0, l.discountPct || 0)) / 100)
+export const lineAmount = (l: DocLine) => lineNetUnitPrice(l) * l.qty
+export const linesSubtotal = (lines: DocLine[]) => lines.reduce((s, l) => s + lineAmount(l), 0)
 
 export function computeInvoiceTotals(lines: DocLine[], discountTTC: number) {
   const gross = linesSubtotal(lines)
