@@ -34,8 +34,10 @@ export function CreditsList({ credits, showOwner, admin, onEdit, onPay }: {
               {c.note && <div className="mt-0.5 text-xs text-slate-400">{c.note}</div>}
             </div>
             <div className="shrink-0 text-right">
-              <div className={`text-base font-extrabold ${paid ? 'text-slate-400 line-through' : 'text-red-600'}`}>{dt(c.amount)}</div>
-              {pay.state === 'partiel' && <div className="text-[11px] font-bold text-amber-600">Reste {dt(pay.balance)}</div>}
+              <div className={`text-base font-extrabold ${paid ? 'text-slate-400 line-through' : 'text-red-600'}`}>
+                {dt(pay.state === 'partiel' ? pay.balance : c.amount)}
+              </div>
+              {pay.state === 'partiel' && <div className="text-[11px] font-bold text-amber-600">Regle partiellement : {dt(pay.paid)}</div>}
             </div>
             {pay.state === 'paye' ? (
               <span className="shrink-0 rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">Regle</span>
