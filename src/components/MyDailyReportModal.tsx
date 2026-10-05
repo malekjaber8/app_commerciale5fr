@@ -9,7 +9,7 @@ const todayStr = () => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-interface Row { quote: QuoteDoc; amount: number; note: string; at: number; verified: boolean }
+interface Row { quote: QuoteDoc; amount: number; note: string; at: number; verified: boolean; rejected: boolean }
 
 /** Rapport du jour du commercial : ses propres declarations d'argent recu a la livraison, en attente ou verifiees par l'admin. */
 export function MyDailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; onClose: () => void }) {
@@ -21,15 +21,16 @@ export function MyDailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; on
     const out: Row[] = []
     for (const q of quotes) {
       for (const d of q.declared ?? []) {
-        if (d.at >= start && d.at <= end) out.push({ quote: q, amount: d.amount, note: d.note, at: d.at, verified: d.verified })
+        if (d.at >= start && d.at <= end) out.push({ quote: q, amount: d.amount, note: d.note, at: d.at, verified: d.verified, rejected: !!d.rejected })
       }
     }
     return out.sort((a, b) => a.at - b.at)
   }, [quotes, date])
 
   const total = rows.reduce((s, r) => s + r.amount, 0)
-  const verifiedTotal = rows.filter(r => r.verified).reduce((s, r) => s + r.amount, 0)
-  const pendingTotal = total - verifiedTotal
+  const verifiedTotal = rows.filter(r => r.verified && !r.rejected).reduce((s, r) => s + r.amount, 0)
+  const rejectedTotal = rows.filter(r => r.rejected).reduce((s, r) => s + r.amount, 0)
+  const pendingTotal = total - verifiedTotal - rejectedTotal
   const label = new Date(date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
@@ -67,6 +68,12 @@ export function MyDailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; on
                 <div className="text-[11px] font-semibold uppercase tracking-wide text-green-700">Verifie par l&apos;admin</div>
                 <div className="text-lg font-extrabold text-green-700">{dt(verifiedTotal)}</div>
               </div>
+              {rejectedTotal > 0 && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-2">
+                  <div className="text-[11px] font-semibold uppercase tracking-wide text-red-700">Rejete par l&apos;admin</div>
+                  <div className="text-lg font-extrabold text-red-700">{dt(rejectedTotal)}</div>
+                </div>
+              )}
             </div>
           )}
 
@@ -88,7 +95,9 @@ export function MyDailyReportModal({ quotes, onClose }: { quotes: QuoteDoc[]; on
                         <td className="p-3 text-slate-600">{DOC_TYPE_LABEL[type]} <span className="text-slate-400">{number}</span></td>
                         <td className="p-3 text-slate-400">{r.note || '—'}</td>
                         <td className="p-3">
-                          {r.verified
+                          {r.rejected
+                            ? <span className="inline-block rounded-full bg-red-100 px-2.5 py-1 text-[11px] font-bold text-red-700">Rejete : non rapporte</span>
+                            : r.verified
                             ? <span className="inline-block rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700">Verifie</span>
                             : <span className="inline-block rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-bold text-amber-700">En attente</span>}
                         </td>

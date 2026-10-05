@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
-import { Banknote, Check, CheckCheck, Printer, X } from 'lucide-react'
+import { Banknote, Check, CheckCheck, Printer, X, XCircle } from 'lucide-react'
 import { DOC_TYPE_LABEL, PAYMENT_METHOD_LABEL, quotePayment, updateQuote, type DeclaredCollection, type Payment, type QuoteDoc } from '../lib/quotes'
 import { creditPayment, type CreditDoc } from '../lib/credits'
 import { dt } from '../lib/format'
 import { Modal } from './ui'
+import { useDialogs } from './Dialogs'
 
 const todayStr = () => {
   const d = new Date()
@@ -26,6 +27,7 @@ const SOURCE_STYLE: Record<Source, { row: string; bar: string; dot: string; labe
 
 /** Contenu du rapport (date + tableaux), reutilise dans la modale et dans l'onglet Rapport en page entiere. */
 export function DailyReportContent({ quotes, credits, onVerified, onClose }: { quotes: QuoteDoc[]; credits: CreditDoc[]; onVerified?: () => void; onClose?: () => void }) {
+  const { ask } = useDialogs()
   const [date, setDate] = useState(todayStr)
   const [busy, setBusy] = useState('')
   // Verification d'une declaration : l'admin peut confirmer un montant different de celui declare (reglement partiel)
@@ -115,6 +117,18 @@ export function DailyReportContent({ quotes, credits, onVerified, onClose }: { q
     setBusy(row.entry.id)
     try {
       const nextDeclared = (row.quote.declared ?? []).map(d => (d.id === row.entry.id ? { ...d, verified: true, verifiedAt: Date.now(), verifiedAmount: 0 } : d))
+      await updateQuote(row.quote.id, { declared: nextDeclared })
+      onVerified?.()
+    } finally { setBusy('') }
+  }
+
+  // Le commercial a declare un encaissement mais n'a reellement rien rapporte : on retire la declaration du rapport
+  // sans creer de paiement. Le commercial retrouve le bouton « Argent recu » pour redeclarer si besoin.
+  const reject = async (row: DeclRow) => {
+    if (!(await ask(`Confirmer que ${dt(row.entry.amount)} declare par ${row.quote.ownerName || row.quote.ownerEmail} n'a pas ete rapporte ? Cette declaration sera retiree du rapport.`, { confirmLabel: 'Retirer du rapport', danger: true }))) return
+    setBusy(row.entry.id)
+    try {
+      const nextDeclared = (row.quote.declared ?? []).map(d => (d.id === row.entry.id ? { ...d, verified: true, verifiedAt: Date.now(), verifiedAmount: 0, rejected: true } : d))
       await updateQuote(row.quote.id, { declared: nextDeclared })
       onVerified?.()
     } finally { setBusy('') }
@@ -225,9 +239,15 @@ export function DailyReportContent({ quotes, credits, onVerified, onClose }: { q
                           </td>
                           <td className="no-print p-3 text-right">
                             {r.entry.verified ? (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700">
-                                <CheckCheck size={12} /> Verifie {r.entry.verifiedAmount != null && r.entry.verifiedAmount > 0 && r.entry.verifiedAmount !== r.entry.amount ? `(${dt(r.entry.verifiedAmount)})` : r.entry.verifiedAmount === 0 ? '(deja regle)' : ''}
-                              </span>
+                              r.entry.rejected ? (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-[11px] font-bold text-red-700">
+                                  <XCircle size={12} /> Rejete : argent non rapporte
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700">
+                                  <CheckCheck size={12} /> Verifie {r.entry.verifiedAmount != null && r.entry.verifiedAmount > 0 && r.entry.verifiedAmount !== r.entry.amount ? `(${dt(r.entry.verifiedAmount)})` : r.entry.verifiedAmount === 0 ? '(deja regle)' : ''}
+                                </span>
+                              )
                             ) : isVerifying ? (
                               <div className="flex items-center justify-end gap-1.5">
                                 <span className="text-[11px] text-slate-500">Recu</span>
@@ -241,8 +261,12 @@ export function DailyReportContent({ quotes, credits, onVerified, onClose }: { q
                               <button onClick={() => reconcile(r)} disabled={busy === r.entry.id} title="Le devis est deja entierement regle : ne cree pas de nouveau paiement"
                                 className="flex items-center gap-1.5 rounded-lg border border-green-300 bg-green-50 px-3 py-1.5 text-xs font-bold text-green-700 disabled:opacity-60"><CheckCheck size={13} /> Deja regle</button>
                             ) : (
-                              <button onClick={() => startVerify(r)}
-                                className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white"><Banknote size={13} /> Verifier</button>
+                              <div className="flex items-center justify-end gap-1.5">
+                                <button onClick={() => reject(r)} disabled={busy === r.entry.id} title="L'argent n'a pas ete rapporte : retirer cette declaration du rapport"
+                                  className="flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50 disabled:opacity-60"><XCircle size={13} /> Rejeter</button>
+                                <button onClick={() => startVerify(r)}
+                                  className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white"><Banknote size={13} /> Verifier</button>
+                              </div>
                             )}
                           </td>
                         </tr>

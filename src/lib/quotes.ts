@@ -30,6 +30,8 @@ export interface DeclaredCollection {
   verifiedAmount?: number
   /** Id du Payment officiel cree lors de la verification. */
   paymentId?: string
+  /** L'admin a verifie et constate que l'argent n'a pas ete rapporte (declaration erronee ou mensongere) : retiree du rapport, aucun paiement cree. */
+  rejected?: boolean
 }
 
 export interface QuoteDoc {
