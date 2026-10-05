@@ -218,7 +218,7 @@ export function DailyReportContent({ quotes, credits, onVerified, onClose }: { q
               <div className="overflow-hidden rounded-2xl border border-slate-200">
                 <table className="w-full text-sm">
                   <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
-                    <tr><th className="p-3">Commercial</th><th className="p-3">Client</th><th className="p-3">Document</th><th className="p-3">Note</th><th className="p-3 text-right">Declare</th><th className="no-print p-3">Verification</th></tr>
+                    <tr><th className="p-3">Commercial</th><th className="p-3">Client</th><th className="p-3">Document</th><th className="p-3">Note</th><th className="p-3 text-right">Declare</th><th className="p-3">Verification</th></tr>
                   </thead>
                   <tbody>
                     {declRows.map((r, i) => {
@@ -237,7 +237,7 @@ export function DailyReportContent({ quotes, credits, onVerified, onClose }: { q
                             <div className="font-bold text-navy">{dt(r.entry.amount)}</div>
                             {!r.entry.verified && <div className={`text-[10px] font-semibold ${alreadySettled ? 'text-green-600' : 'text-slate-400'}`}>Reste sur le devis : {dt(balance)}</div>}
                           </td>
-                          <td className="no-print p-3 text-right">
+                          <td className="p-3 text-right">
                             {r.entry.verified ? (
                               r.entry.rejected ? (
                                 <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-[11px] font-bold text-red-700">
@@ -248,24 +248,28 @@ export function DailyReportContent({ quotes, credits, onVerified, onClose }: { q
                                   <CheckCheck size={12} /> Verifie {r.entry.verifiedAmount != null && r.entry.verifiedAmount > 0 && r.entry.verifiedAmount !== r.entry.amount ? `(${dt(r.entry.verifiedAmount)})` : r.entry.verifiedAmount === 0 ? '(deja regle)' : ''}
                                 </span>
                               )
-                            ) : isVerifying ? (
-                              <div className="flex items-center justify-end gap-1.5">
-                                <span className="text-[11px] text-slate-500">Recu</span>
-                                <input autoFocus value={verifyAmount} onChange={e => setVerifyAmount(e.target.value)} inputMode="decimal"
-                                  className="w-20 rounded-lg border border-teal px-2 py-1 text-right text-xs font-bold outline-none" />
-                                <button onClick={() => verify(r)} disabled={busy === r.entry.id} title="Confirmer"
-                                  className="rounded-lg bg-navy p-1.5 text-white disabled:opacity-60"><Check size={14} /></button>
-                                <button onClick={cancelVerify} title="Annuler" className="rounded-lg border border-slate-200 p-1.5 text-slate-500"><X size={14} /></button>
-                              </div>
-                            ) : alreadySettled ? (
-                              <button onClick={() => reconcile(r)} disabled={busy === r.entry.id} title="Le devis est deja entierement regle : ne cree pas de nouveau paiement"
-                                className="flex items-center gap-1.5 rounded-lg border border-green-300 bg-green-50 px-3 py-1.5 text-xs font-bold text-green-700 disabled:opacity-60"><CheckCheck size={13} /> Deja regle</button>
                             ) : (
-                              <div className="flex items-center justify-end gap-1.5">
-                                <button onClick={() => reject(r)} disabled={busy === r.entry.id} title="L'argent n'a pas ete rapporte : retirer cette declaration du rapport"
-                                  className="flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50 disabled:opacity-60"><XCircle size={13} /> Rejeter</button>
-                                <button onClick={() => startVerify(r)}
-                                  className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white"><Banknote size={13} /> Verifier</button>
+                              <div className="no-print">
+                                {isVerifying ? (
+                                  <div className="flex items-center justify-end gap-1.5">
+                                    <span className="text-[11px] text-slate-500">Recu</span>
+                                    <input autoFocus value={verifyAmount} onChange={e => setVerifyAmount(e.target.value)} inputMode="decimal"
+                                      className="w-20 rounded-lg border border-teal px-2 py-1 text-right text-xs font-bold outline-none" />
+                                    <button onClick={() => verify(r)} disabled={busy === r.entry.id} title="Confirmer"
+                                      className="rounded-lg bg-navy p-1.5 text-white disabled:opacity-60"><Check size={14} /></button>
+                                    <button onClick={cancelVerify} title="Annuler" className="rounded-lg border border-slate-200 p-1.5 text-slate-500"><X size={14} /></button>
+                                  </div>
+                                ) : alreadySettled ? (
+                                  <button onClick={() => reconcile(r)} disabled={busy === r.entry.id} title="Le devis est deja entierement regle : ne cree pas de nouveau paiement"
+                                    className="flex items-center gap-1.5 rounded-lg border border-green-300 bg-green-50 px-3 py-1.5 text-xs font-bold text-green-700 disabled:opacity-60"><CheckCheck size={13} /> Deja regle</button>
+                                ) : (
+                                  <div className="flex items-center justify-end gap-1.5">
+                                    <button onClick={() => reject(r)} disabled={busy === r.entry.id} title="L'argent n'a pas ete rapporte : retirer cette declaration du rapport"
+                                      className="flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-50 disabled:opacity-60"><XCircle size={13} /> Rejeter</button>
+                                    <button onClick={() => startVerify(r)}
+                                      className="flex items-center gap-1.5 rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white"><Banknote size={13} /> Verifier</button>
+                                  </div>
+                                )}
                               </div>
                             )}
                           </td>
