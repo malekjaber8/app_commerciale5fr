@@ -282,6 +282,15 @@ export function DailyReportContent({ quotes, credits, onVerified, onClose }: { q
               <p className="no-print mt-1.5 text-[11px] text-slate-400">« Verifier » laisse indiquer le montant reellement rapporte : s&apos;il est inferieur au montant declare, le reste reste du sur le devis.</p>
             </div>
           )}
+
+          <div className="mt-10 grid grid-cols-2 gap-6">
+            <div className="rounded-xl border border-slate-300 p-3">
+              <div className="mb-10 text-xs font-semibold uppercase tracking-wide text-slate-500">Signature Commercial</div>
+            </div>
+            <div className="rounded-xl border border-slate-300 p-3">
+              <div className="mb-10 text-xs font-semibold uppercase tracking-wide text-slate-500">Signature Responsable Caisse</div>
+            </div>
+          </div>
         </div>
 
         {onClose && (
