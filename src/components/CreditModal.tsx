@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { Save, Trash2 } from 'lucide-react'
 import { db } from '../firebase'
-import { createCredit, deleteCredit, updateCredit, type CreditDoc } from '../lib/credits'
+import { createCredit, creditPayment, deleteCredit, updateCredit, type CreditDoc } from '../lib/credits'
 import { useAuth } from '../store/auth'
+import { dt } from '../lib/format'
 import { useDialogs } from './Dialogs'
 import { Field, Modal, inputCls } from './ui'
 
@@ -28,6 +29,8 @@ export function CreditModal({ ownerUid, ownerName, existing, onClose, onDone }: 
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
 
+  const paidSoFar = existing ? creditPayment(existing).paid : 0
+
   useEffect(() => {
     if (ownerUid) return
     getDocs(query(collection(db, 'users'), where('role', '==', 'commercial'), where('active', '==', true)))
@@ -42,6 +45,7 @@ export function CreditModal({ ownerUid, ownerName, existing, onClose, onDone }: 
     if (!assignTo) return setError('Choisissez le commercial concerne.')
     const value = parseFloat(amount.replace(',', '.'))
     if (!(value > 0)) return setError('Saisissez un montant superieur a 0.')
+    if (value < paidSoFar) return setError(`Le montant total ne peut pas etre inferieur a ce qui est deja regle (${dt(paidSoFar)}). Pour enregistrer un paiement, utilisez le bouton "Regler", pas ce champ.`)
     setBusy(true)
     try {
       const targetName = ownerName ?? commercials.find(c => c.id === assignTo)?.name ?? existing?.ownerName ?? ''
@@ -84,7 +88,14 @@ export function CreditModal({ ownerUid, ownerName, existing, onClose, onDone }: 
           <Field label="Date du BL / facture"><input type="date" className={inputCls} value={docDate} onChange={e => setDocDate(e.target.value)} /></Field>
           <Field label="N° BL / facture (optionnel)"><input className={inputCls} value={ref} onChange={e => setRef(e.target.value)} placeholder="BL-2026-0012" /></Field>
         </div>
-        <Field label="Montant a payer (DT) *"><input className={inputCls} inputMode="decimal" value={amount} onChange={e => setAmount(e.target.value)} /></Field>
+        <Field label="Montant total du credit (DT) *">
+          <input className={inputCls} inputMode="decimal" value={amount} onChange={e => setAmount(e.target.value)} />
+        </Field>
+        {paidSoFar > 0 && (
+          <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700">
+            Deja regle : <b>{dt(paidSoFar)}</b>. Ce champ est le <b>montant total</b> du du par le client, pas un reglement — pour enregistrer un paiement, fermez cette fenetre et utilisez le bouton « Regler ».
+          </p>
+        )}
         <Field label="Note (optionnel)"><input className={inputCls} value={note} onChange={e => setNote(e.target.value)} placeholder="Raison, accord particulier..." /></Field>
         {error && <div className="rounded-lg bg-red-50 px-3 py-2 text-xs font-medium text-red-700">{error}</div>}
         <div className="flex flex-wrap items-center justify-end gap-2">
