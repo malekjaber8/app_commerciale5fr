@@ -15,10 +15,10 @@ import { fileURLToPath } from 'node:url'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const siteDir = path.resolve(root, process.argv[2] || '../site5fre')
-const htmlPath = path.join(siteDir, 'catalogue.html')
+const htmlPath = path.join(siteDir, 'catalogue-data.js')
 
 if (!fs.existsSync(htmlPath)) {
-  console.error('catalogue.html introuvable :', htmlPath)
+  console.error('catalogue-data.js introuvable :', htmlPath)
   process.exit(1)
 }
 
@@ -203,7 +203,7 @@ groupWithSubs('socle', ['metal', 'bois'])
 groupWithSubs('chaise', ['tapissee', 'bois', 'inox'])
 
 // Catégories simples
-for (const k of ['accessoires', 'bordures', 'coussins', 'agrafes', 'miroirs', 'mecanisme', 'poignees', 'colle']) {
+for (const k of ['accessoires', 'quincaillerie', 'bordures', 'coussins', 'agrafes', 'miroirs', 'mecanisme', 'poignees', 'colle']) {
   const c = catalogue[k]
   addCat({ id: k, label: c.label, icon: c.icon, desc: c.desc })
   for (const p of c.products) articles.push(baseArticle(p, k))

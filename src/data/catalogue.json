@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-02T09:32:16.437Z",
+ "generatedAt": "2026-10-28T07:16:15.875Z",
  "categories": [
   {
    "id": "tissu",
@@ -120,6 +120,12 @@
    "desc": "Accessoires et connecteurs pour canapés et sièges — chaque article est accompagné d'un exemple d'utilisation."
   },
   {
+   "id": "quincaillerie",
+   "label": "Quincaillerie",
+   "icon": "🔩",
+   "desc": "Vis, écrous, plaques et roulettes pour l'assemblage et la fixation de meubles."
+  },
+  {
    "id": "bordures",
    "label": "Bordures Décoratives",
    "icon": "〰️",
@@ -235,6 +241,20 @@
    "label": "Soufflette d'Air",
    "icon": "💨",
    "desc": "Soufflettes pneumatiques ANI — Made in Italy",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-10",
+   "label": "Plaques de Fixation",
+   "icon": "🔩",
+   "desc": "Plaques de fixation à écrou pour pieds et sabots de meuble",
+   "parentId": "outils"
+  },
+  {
+   "id": "outils-11",
+   "label": "Canage (Rotin)",
+   "icon": "🪢",
+   "desc": "Cannage en rotin tissé pour chaises et meubles — vendu au rouleau",
    "parentId": "outils"
   }
  ],
@@ -712,45 +732,45 @@
     {
      "label": "190×60×14 cm",
      "code": "MM005",
-     "price": 69
+     "price": null
     },
     {
      "label": "190×65×13 cm",
      "code": "MM006",
-     "price": 65
+     "price": null
     },
     {
      "label": "190×65×14 cm",
      "code": "MM007",
-     "price": 74
+     "price": null
     },
     {
      "label": "190×65×10 cm",
      "code": "MM008",
-     "price": 56
+     "price": null
     },
     {
      "label": "190×70×13 cm",
      "code": "MM009",
-     "price": 70
+     "price": null
     },
     {
      "label": "190×70×14 cm",
      "code": "MM010",
-     "price": 79
+     "price": null
     },
     {
      "label": "190×80×13 cm",
      "code": "MM011",
-     "price": 80
+     "price": null
     },
     {
      "label": "190×80×14 cm",
      "code": "MM012",
-     "price": 91
+     "price": null
     }
    ],
-   "priceFrom": 56
+   "priceFrom": 0
   },
   {
    "id": "MM-22-24-souple",
@@ -787,95 +807,95 @@
     {
      "label": "190×60×13 cm",
      "code": "MM014",
-     "price": 61
+     "price": null
     },
     {
      "label": "190×60×14 cm",
      "code": "MM015",
-     "price": 70
+     "price": null
     },
     {
      "label": "190×65×13 cm",
      "code": "MM016",
-     "price": 69
+     "price": 67
     },
     {
      "label": "190×65×14 cm",
      "code": "MM017",
-     "price": 76
+     "price": null
     },
     {
      "label": "190×65×15 cm",
      "code": "MM018",
-     "price": 87
+     "price": null
     },
     {
      "label": "190×65×10 cm",
      "code": "MM019",
-     "price": 58
+     "price": null
     },
     {
      "label": "190×70×10 cm",
      "code": "MM020",
-     "price": 62
+     "price": 58
     },
     {
      "label": "190×70×13 cm",
      "code": "MM021",
-     "price": 71
+     "price": 72
     },
     {
      "label": "190×70×14 cm",
      "code": "MM022",
-     "price": 81
+     "price": 82
     },
     {
      "label": "190×70×20 cm",
      "code": "MM023",
-     "price": 118
+     "price": null
     },
     {
      "label": "190×75×13 cm",
      "code": "MM024",
-     "price": 76
+     "price": null
     },
     {
      "label": "190×75×14 cm",
      "code": "MM025",
-     "price": 87
+     "price": null
     },
     {
      "label": "190×80×10 cm",
      "code": "MM026",
-     "price": 72
+     "price": null
     },
     {
      "label": "190×80×13 cm",
      "code": "MM027",
-     "price": 81
+     "price": 93
     },
     {
      "label": "190×80×14 cm",
      "code": "MM028",
-     "price": 93
+     "price": 100
     },
     {
      "label": "190×80×20 cm",
      "code": "MM029",
-     "price": 161
+     "price": 150
     },
     {
      "label": "190×90×14 cm",
      "code": "MM030",
-     "price": 104
+     "price": 126
     },
     {
      "label": "190×95×14 cm",
      "code": "MM031",
-     "price": 110
+     "price": null
     }
    ],
-   "priceFrom": 58
+   "priceFrom": 0
   },
   {
    "id": "MM-magic30",
@@ -890,11 +910,6 @@
    "badge": "Premium",
    "variants": [
     {
-     "label": "190×60×14 cm",
-     "code": "MM047",
-     "price": 93
-    },
-    {
      "label": "190×65×13 cm",
      "code": "MM032",
      "price": null
@@ -902,27 +917,27 @@
     {
      "label": "190×65×14 cm",
      "code": "MM033",
-     "price": 100
+     "price": null
     },
     {
      "label": "190×70×10 cm",
      "code": "MM034",
-     "price": 84
+     "price": 77
     },
     {
      "label": "190×70×13 cm",
      "code": "MM035",
-     "price": 97
+     "price": 96
     },
     {
      "label": "190×70×14 cm",
      "code": "MM036",
-     "price": 109
+     "price": 107
     },
     {
      "label": "190×75×13 cm",
      "code": "MM037",
-     "price": 103
+     "price": null
     },
     {
      "label": "190×75×14 cm",
@@ -930,14 +945,9 @@
      "price": null
     },
     {
-     "label": "190×80×13 cm",
-     "code": "MM048",
-     "price": 116
-    },
-    {
      "label": "190×80×14 cm",
      "code": "MM039",
-     "price": 123
+     "price": null
     },
     {
      "label": "190×90×13 cm",
@@ -947,10 +957,10 @@
     {
      "label": "190×90×14 cm",
      "code": "MM041",
-     "price": 139
+     "price": null
     }
    ],
-   "priceFrom": 84
+   "priceFrom": 0
   },
   {
    "id": "MM-hr",
@@ -965,37 +975,27 @@
    "badge": "Pro",
    "variants": [
     {
-     "label": "190×70×10 cm",
-     "code": "MM049",
-     "price": 129
-    },
-    {
      "label": "190×70×13 cm",
      "code": "MM042",
-     "price": 164
+     "price": 152
     },
     {
      "label": "190×70×14 cm",
      "code": "MM043",
-     "price": 183
+     "price": 180
     },
     {
      "label": "190×80×13 cm",
      "code": "MM044",
-     "price": 185
+     "price": null
     },
     {
      "label": "190×80×14 cm",
      "code": "MM045",
-     "price": 209
-    },
-    {
-     "label": "190×90×14 cm",
-     "code": "MM050",
-     "price": 236
+     "price": null
     }
    ],
-   "priceFrom": 129
+   "priceFrom": 0
   },
   {
    "id": "MM-confort",
@@ -1077,15 +1077,10 @@
     {
      "label": "0.8 cm — 190×140 cm",
      "code": "MT007",
-     "price": 5.8
-    },
-    {
-     "label": "0.9 cm — 190×140 cm",
-     "code": "MT034",
-     "price": 6.3
+     "price": 5.5
     }
    ],
-   "priceFrom": 5.8
+   "priceFrom": 5.5
   },
   {
    "id": "MT-15-17",
@@ -1102,35 +1097,35 @@
     {
      "label": "0.9 cm — 190×140 cm",
      "code": "MT008",
-     "price": 7.6
+     "price": 8.5
     },
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT009",
-     "price": 8.4
+     "price": 9.5
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT010",
-     "price": 16.8
+     "price": 19
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT011",
-     "price": 25.2
+     "price": 28.5
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT012",
-     "price": 33.6
+     "price": 37
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT013",
-     "price": 43.1
+     "price": 46.5
     }
    ],
-   "priceFrom": 7.6
+   "priceFrom": 8.5
   },
   {
    "id": "MT-20-22",
@@ -1147,30 +1142,30 @@
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT014",
-     "price": 11.4
+     "price": 10.8
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT015",
-     "price": 22.6
+     "price": 21.5
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT016",
-     "price": 34.1
+     "price": 32.4
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT017",
-     "price": 45.2
+     "price": 43
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT018",
-     "price": 56.7
+     "price": 54
     }
    ],
-   "priceFrom": 11.4
+   "priceFrom": 10.8
   },
   {
    "id": "MT-22-24",
@@ -1222,30 +1217,30 @@
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT023",
-     "price": 11.6
+     "price": 11
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT024",
-     "price": 23.1
+     "price": 27.5
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT025",
-     "price": 35.7
+     "price": 42.5
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT026",
-     "price": 47.3
+     "price": 54.5
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT027",
-     "price": 59.9
+     "price": 71
     }
    ],
-   "priceFrom": 11.6
+   "priceFrom": 11
   },
   {
    "id": "MT-hr",
@@ -1262,30 +1257,30 @@
     {
      "label": "1 cm — 190×140 cm",
      "code": "MT028",
-     "price": 25.2
+     "price": 24
     },
     {
      "label": "2 cm — 190×140 cm",
      "code": "MT029",
-     "price": 50.4
+     "price": 48
     },
     {
      "label": "3 cm — 190×140 cm",
      "code": "MT030",
-     "price": 75.6
+     "price": 72
     },
     {
      "label": "4 cm — 190×140 cm",
      "code": "MT031",
-     "price": 100.8
+     "price": 96
     },
     {
      "label": "5 cm — 190×140 cm",
      "code": "MT032",
-     "price": 120.8
+     "price": 115
     }
    ],
-   "priceFrom": 25.2
+   "priceFrom": 24
   },
   {
    "id": "MT-magic30",
@@ -1300,32 +1295,12 @@
    "badge": "Premium",
    "variants": [
     {
-     "label": "1 cm — 190×140 cm",
-     "code": "MT035",
-     "price": 16.8
-    },
-    {
-     "label": "2 cm — 190×140 cm",
-     "code": "MT036",
-     "price": 33.6
-    },
-    {
-     "label": "3 cm — 190×140 cm",
-     "code": "MT037",
-     "price": 50.4
-    },
-    {
-     "label": "4 cm — 190×140 cm",
-     "code": "MT038",
-     "price": 67.2
-    },
-    {
      "label": "5 cm — 190×140 cm",
      "code": "MT033",
-     "price": 84
+     "price": 85
     }
    ],
-   "priceFrom": 16.8
+   "priceFrom": 85
   },
   {
    "id": "FP01",
@@ -4255,11 +4230,11 @@
    "variants": [
     {
      "label": "Doré — 13,5cm",
-     "price": 5.3,
-     "raw": "Doré — 13,5cm — 5,300 DT"
+     "price": 5.5,
+     "raw": "Doré — 13,5cm — 5,500 DT"
     }
    ],
-   "priceFrom": 5.3
+   "priceFrom": 5.5
   },
   {
    "id": "PP003",
@@ -4277,16 +4252,16 @@
    "variants": [
     {
      "label": "P08 — 13,5cm",
-     "price": 5.5,
-     "raw": "P08 — 13,5cm — 5,500 DT"
+     "price": 6,
+     "raw": "P08 — 13,5cm — 6,000 DT"
     },
     {
      "label": "Doré — 13,5cm",
-     "price": 4,
-     "raw": "Doré — 13,5cm — 4,000 DT"
+     "price": 5,
+     "raw": "Doré — 13,5cm — 5,000 DT"
     }
    ],
-   "priceFrom": 4
+   "priceFrom": 5
   },
   {
    "id": "PP004",
@@ -4785,6 +4760,25 @@
     }
    ],
    "priceFrom": 1.5
+  },
+  {
+   "id": "PP022",
+   "name": "Sabot Évasé",
+   "desc": "Pied plastique évasé à base carrée, finition marron chocolat.",
+   "categoryId": "pietement-plastique",
+   "img": "images/pietement-plastique/07ed9af5-c62f-4200-a3f7-df25e5b4fe97.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Marron",
+     "price": null,
+     "raw": "Marron — Sur devis"
+    }
+   ],
+   "priceFrom": null
   },
   {
    "id": "ST001",
@@ -5576,6 +5570,64 @@
    "priceFrom": 65
   },
   {
+   "id": "CI009",
+   "name": "Socle Chaise avec Mécanisme",
+   "desc": "Socle pivotant 4 pieds avec mécanisme rotatif 90° pour chaise — 2 tailles, 2 coloris disponibles.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/socle chaise avec mécanisme.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "42cm — Beige",
+     "price": null,
+     "raw": "42cm — Beige — Sur devis"
+    },
+    {
+     "label": "42cm — Noir",
+     "price": null,
+     "raw": "42cm — Noir — Sur devis"
+    },
+    {
+     "label": "40cm — Beige",
+     "price": null,
+     "raw": "40cm — Beige — Sur devis"
+    },
+    {
+     "label": "40cm — Noir",
+     "price": null,
+     "raw": "40cm — Noir — Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "CI010",
+   "name": "Socle Plateau",
+   "desc": "Plateau socle pour chaise ou table — Ø55cm, 2 finitions disponibles.",
+   "categoryId": "chaise-inox",
+   "img": "images/carcasses/socle plateau.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Noir",
+     "price": null,
+     "raw": "Noir — Sur devis"
+    },
+    {
+     "label": "Chrome",
+     "price": null,
+     "raw": "Chrome — Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
    "id": "ACC001",
    "name": "Accessoire H",
    "desc": "Connecteur horizontal pour canapé — assemble les éléments côte à côte.",
@@ -5899,6 +5951,306 @@
     }
    ],
    "priceFrom": 120
+  },
+  {
+   "id": "ACC016",
+   "name": "Punaise",
+   "desc": "Punaise de tapisserie 17mm — disponible en 3 couleurs.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/punaise.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold",
+     "price": null,
+     "raw": "Gold — Sur devis"
+    },
+    {
+     "label": "Silver",
+     "price": null,
+     "raw": "Silver — Sur devis"
+    },
+    {
+     "label": "Bronze",
+     "price": null,
+     "raw": "Bronze — Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "ACC017",
+   "name": "Aplique Murale B0010",
+   "desc": "Applique murale orientable avec lampe LED et prise USB.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/aplique b0010 1.jpg",
+   "gallery": [
+    "images/outil de tapissserie/aplique b0010 1.jpg",
+    "images/outil de tapissserie/aplique b0010 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "ACC018",
+   "name": "Support Téléphone pour Salon",
+   "desc": "Support téléphone flexible à fixer sur meuble de salon — bras orientable 800mm.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/support telephone pour salon 1.jpg",
+   "gallery": [
+    "images/outil de tapissserie/support telephone pour salon 1.jpg",
+    "images/outil de tapissserie/support telephone pour salon 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "ACC019",
+   "name": "Pousse-Lâche",
+   "desc": "Loqueteau push pour ouverture sans poignée de porte de meuble.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/pousse lache.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "ACC020",
+   "name": "Porte Gobelet",
+   "desc": "Anneau porte-gobelet encastrable pour accoudoir de canapé.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/porte goblet 1.jpg",
+   "gallery": [
+    "images/outil de tapissserie/porte goblet 1.jpg",
+    "images/outil de tapissserie/porte goblet 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "ACC021",
+   "name": "Bande à Clou",
+   "desc": "Bande à clou décorative — 1 mètre, disponible en 3 coloris.",
+   "categoryId": "accessoires",
+   "img": "images/outil de tapissserie/bande a clou .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Gold",
+     "price": null,
+     "raw": "Gold — Sur devis"
+    },
+    {
+     "label": "Silver",
+     "price": null,
+     "raw": "Silver — Sur devis"
+    },
+    {
+     "label": "Bronze",
+     "price": null,
+     "raw": "Bronze — Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC001",
+   "name": "Boulon à Double Tête",
+   "desc": "Vis à double filetage pour assemblage de pieds et structures de meuble.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/boulon a double tete .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC002",
+   "name": "Cache-Vis",
+   "desc": "Cache-vis décoratif Ø14mm — 2 finitions disponibles.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/cage vis.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Doré",
+     "price": null,
+     "raw": "Doré — Sur devis"
+    },
+    {
+     "label": "Chromé",
+     "price": null,
+     "raw": "Chromé — Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC003",
+   "name": "Écrou à Griffes",
+   "desc": "Écrou à griffes pour fixation dans le bois.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/ecrou a griffe .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC004",
+   "name": "Écrou de Fixation",
+   "desc": "Écrou de fixation pour pieds et sabots de meuble.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/ecrou de fixation .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC005",
+   "name": "Plaque de Fixation Inclinée",
+   "desc": "Plaque de fixation inclinée avec écrou intégré pour pied de meuble.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/plaque de fixation incliné .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC006",
+   "name": "Plaque de Montage",
+   "desc": "Plaque de montage perforée pour assemblage de meuble.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/plaque de montage.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC007",
+   "name": "Rondelle de Fixation",
+   "desc": "Rondelle de fixation avec vis intégrée.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/rondelle de fixation .jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "QC008",
+   "name": "Roue Pivot AP038 Poly",
+   "desc": "Roulette pivotante avec frein, revêtement polyuréthane — modèle AP038.",
+   "categoryId": "quincaillerie",
+   "img": "images/quinquillerie/roue pivot ap 038 poly.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
   },
   {
    "id": "BD001",
@@ -7397,6 +7749,213 @@
    "priceFrom": 250
   },
   {
+   "id": "MC020",
+   "name": "Mécanisme Articulation Canapé",
+   "desc": "Articulation mécanique pour structure de canapé modulable.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme articulation canapé 1.jpg",
+   "gallery": [
+    "images/mecanismes/mecanisme articulation canapé 1.jpg",
+    "images/mecanismes/mecanisme articulation canapé 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC021",
+   "name": "Mécanisme de Relaxation",
+   "desc": "Mécanisme relevable pour fauteuil et canapé de relaxation.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme de relaxation 1 .jpg",
+   "gallery": [
+    "images/mecanismes/mecanisme de relaxation 1 .jpg",
+    "images/mecanismes/mecanisme de relaxation 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC022",
+   "name": "Mécanisme Dos avec Clic Clac",
+   "desc": "Mécanisme de dossier combiné avec système clic-clac.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme dos avec clic clac 1.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC023",
+   "name": "Mécanisme Métallique Pliable",
+   "desc": "Mécanisme métallique pliable pour meubles tapissés.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme métalique pliable 1.jpg",
+   "gallery": [
+    "images/mecanismes/mecanisme métalique pliable 1.jpg",
+    "images/mecanismes/mecanisme métalique pliable 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC024",
+   "name": "Mécanisme Métallique Réglable",
+   "desc": "Mécanisme métallique réglable pour meubles tapissés.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme métalique reglable 1.jpg",
+   "gallery": [
+    "images/mecanismes/mecanisme métalique reglable 1.jpg",
+    "images/mecanismes/mecanisme métalique reglable 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC025",
+   "name": "Plaque Tournante 360°",
+   "desc": "Plaque tournante rotative 360° pour fauteuil et meubles pivotants — 2 tailles disponibles.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/plaque tournanate 360 1.jpg",
+   "gallery": [
+    "images/mecanismes/plaque tournanate 360 1.jpg",
+    "images/mecanismes/plaque tournanate 360 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "30cm",
+     "price": null,
+     "raw": "30cm — Sur devis"
+    },
+    {
+     "label": "35cm",
+     "price": null,
+     "raw": "35cm — Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC026",
+   "name": "Plateau Pivotant pour Canapé 90°",
+   "desc": "Plateau pivotant 90° pour canapé modulable.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/plateau pivotant pour canapé 90 1.jpg",
+   "gallery": [
+    "images/mecanismes/plateau pivotant pour canapé 90 1.jpg",
+    "images/mecanismes/plateau pivotant pour canapé 90 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC027",
+   "name": "Plateau Tournant Carré",
+   "desc": "Embase pivotante carrée pour meubles rotatifs (table, présentoir, support TV...) — 3 tailles disponibles.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/support tv 1.jpg",
+   "gallery": [
+    "images/mecanismes/support tv 1.jpg",
+    "images/mecanismes/support tv 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "7cm",
+     "price": null,
+     "raw": "7cm — Sur devis"
+    },
+    {
+     "label": "9.5cm",
+     "price": null,
+     "raw": "9.5cm — Sur devis"
+    },
+    {
+     "label": "16cm",
+     "price": null,
+     "raw": "16cm — Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "MC028",
+   "name": "Support Mécanisme d'Assise",
+   "desc": "Châssis métallique support de mécanisme pour assise de fauteuil ou canapé.",
+   "categoryId": "mecanisme",
+   "img": "images/mecanismes/mecanisme.png",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
    "id": "IM0328",
    "name": "Poignée Fumé 856-0",
    "desc": "Poignée bouton tubulaire striée finition Fumé — bouton simple (entraxe 0).",
@@ -8243,6 +8802,25 @@
    "priceFrom": 25
   },
   {
+   "id": "OUT034",
+   "name": "Agrafeuse à Air",
+   "desc": "",
+   "categoryId": "outils-0",
+   "img": "images/outil de tapissserie/agrafeuse a air.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
    "id": "OUT006",
    "name": "Pointe Tête H14/T20 (boîte 12)",
    "desc": "Réf. QNR0409",
@@ -8585,6 +9163,44 @@
    "priceFrom": 0.15
   },
   {
+   "id": "OUT035",
+   "name": "Patin Marron 19mm",
+   "desc": "",
+   "categoryId": "outils-5",
+   "img": "images/outil de tapissserie/pattin marron.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "OUT038",
+   "name": "Patin Marron 22mm",
+   "desc": "",
+   "categoryId": "outils-5",
+   "img": "images/outil de tapissserie/pattin marron.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
    "id": "OUT020",
    "name": "Fermeture Éclair (rouleau)",
    "desc": "",
@@ -8763,6 +9379,47 @@
     }
    ],
    "priceFrom": 39
+  },
+  {
+   "id": "OUT036",
+   "name": "Plaque de Fixation Écrou",
+   "desc": "",
+   "categoryId": "outils-10",
+   "img": "images/outil de tapissserie/plaque de fixation ecrou.jpg",
+   "gallery": [],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "Standard",
+     "price": null,
+     "raw": "Sur devis"
+    }
+   ],
+   "priceFrom": null
+  },
+  {
+   "id": "OUT037",
+   "name": "Canage Rotin",
+   "desc": "Couleur naturel beige",
+   "categoryId": "outils-11",
+   "img": "images/outil de tapissserie/canage 1.jpg",
+   "gallery": [
+    "images/outil de tapissserie/canage 1.jpg",
+    "images/outil de tapissserie/canage 2.jpg"
+   ],
+   "video": null,
+   "promo": false,
+   "oldPrice": null,
+   "variants": [
+    {
+     "label": "m",
+     "price": null,
+     "raw": "Sur devis / m"
+    }
+   ],
+   "priceFrom": null
   }
  ]
 }
