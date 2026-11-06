@@ -1,9 +1,10 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
-import { Banknote, CheckCircle2, ClipboardList, CreditCard, Hourglass, Lock, Pencil, Plus, Search, X } from 'lucide-react'
+import { Banknote, CheckCircle2, ClipboardList, CreditCard, FileText, Hourglass, Lock, Pencil, Plus, Search, X } from 'lucide-react'
 import { CollectModal } from '../../components/CollectModal'
 import { MyDailyReportModal } from '../../components/MyDailyReportModal'
+import { CreditReportModal } from '../../components/CreditReportModal'
 import { CreditsList } from '../../components/CreditsList'
 import { db } from '../../firebase'
 import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type DeclaredCollection, type QuoteDoc } from '../../lib/quotes'
@@ -50,6 +51,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
   const [report, setReport] = useState(false)
   const [collecting, setCollecting] = useState<{ quote: QuoteDoc; existing?: DeclaredCollection } | null>(null)
   const [myReport, setMyReport] = useState(false)
+  const [creditReport, setCreditReport] = useState(false)
   const [credits, setCredits] = useState<CreditDoc[]>([])
   const [addingCredit, setAddingCredit] = useState(false)
   const [editingCredit, setEditingCredit] = useState<CreditDoc | null>(null)
@@ -167,6 +169,10 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
           className="flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-100">
           <CreditCard size={14} /> Credit ({creditCount})
         </button>
+        <button onClick={() => setCreditReport(true)} title="Rapport imprimable des credits, filtre sur la plage de dates Du/Au ci-dessus"
+          className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-navy hover:bg-slate-50">
+          <FileText size={14} /> Rapport de credit
+        </button>
         {!isDefaultView && (
           <button onClick={() => { setFilter(''); setPayFilter(''); setFrom(todayStr()); setTo(todayStr()); setSearch('') }} className="text-xs font-bold text-teal-dark underline">Reinitialiser les filtres</button>
         )}
@@ -248,6 +254,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
 
       {collecting && <CollectModal quote={collecting.quote} existing={collecting.existing} onClose={() => setCollecting(null)} onDone={() => { setCollecting(null); load(true) }} />}
       {myReport && <MyDailyReportModal quotes={quotes} onClose={() => setMyReport(false)} />}
+      {creditReport && <CreditReportModal quotes={quotes} credits={credits} from={from} to={to} onClose={() => setCreditReport(false)} />}
       <Suspense fallback={null}>
         {report && DailyReportModal && <DailyReportModal quotes={quotes} credits={credits} onClose={() => setReport(false)} onVerified={() => { load(true); loadCredits() }} />}
         {editing && QuoteEditor && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
