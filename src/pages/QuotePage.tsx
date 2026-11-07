@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import { ArrowLeft, Crown, Minus, Plus, Printer, Save, Trash2, UserCheck, UserRound } from 'lucide-react'
+import { ArrowLeft, Crown, FileSpreadsheet, Minus, Plus, Printer, Save, Trash2, UserCheck, UserRound } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQuote } from '../store/quote'
 import { db } from '../firebase'
@@ -10,6 +10,7 @@ import { saveQuote, updateQuote } from '../lib/quotes'
 import { dt } from '../lib/format'
 import { ClientPickerModal, type PickedClient } from '../components/ClientPickerModal'
 import { ArticlePickerModal } from '../components/ArticlePickerModal'
+import { ImportOrderModal } from '../components/ImportOrderModal'
 import { useDialogs } from '../components/Dialogs'
 import { QtyInput, stepQty } from '../components/QtyInput'
 
@@ -36,6 +37,7 @@ export function QuotePage() {
   }, [])
   const [picking, setPicking] = useState(false)
   const [adding, setAdding] = useState(false)
+  const [importing, setImporting] = useState(false)
   const [client, setClient] = useState<PickedClient | null>(editing ? { id: editing.clientId, name: editing.client, phone: editing.phone } : null)
   const [note, setNote] = useState(editing?.note ?? '')
   const [discountPct, setDiscountPct] = useState(editing?.discountPct ?? 0)
@@ -104,7 +106,9 @@ export function QuotePage() {
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           <Link to="/" className="rounded-xl bg-teal px-5 py-2.5 text-sm font-bold text-navy">Parcourir le catalogue</Link>
           {step === 'review' && <button onClick={() => setAdding(true)} className="rounded-xl border border-navy px-5 py-2.5 text-sm font-bold text-navy">Ajouter un article</button>}
+          <button onClick={() => setImporting(true)} className="flex items-center gap-2 rounded-xl border border-navy px-5 py-2.5 text-sm font-bold text-navy"><FileSpreadsheet size={15} /> Importer une commande</button>
         </div>
+        {importing && <ImportOrderModal onClose={() => setImporting(false)} />}
       </div>
     )
   }
@@ -117,6 +121,7 @@ export function QuotePage() {
           <h1 className="text-xl font-bold text-navy">Mon panier</h1>
           <div className="flex gap-2">
             <Link to="/" className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"><Plus size={15} /> Ajouter des articles</Link>
+            <button onClick={() => setImporting(true)} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"><FileSpreadsheet size={15} /> Importer une commande</button>
             <button onClick={async () => { if (await ask('Vider le panier ?', { confirmLabel: 'Vider' })) clear() }} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"><Trash2 size={15} /> Vider</button>
           </div>
         </div>
@@ -149,6 +154,7 @@ export function QuotePage() {
           <ClientPickerModal uid={uid} ownerName={profile?.name || ''} searchAll={role === 'admin'} onClose={() => setPicking(false)}
             onPick={c => { setClient(c); setPicking(false); setStep('review') }} />
         )}
+        {importing && <ImportOrderModal onClose={() => setImporting(false)} />}
       </div>
     )
   }
@@ -257,9 +263,14 @@ export function QuotePage() {
           </tbody>
         </table>
 
-        <button onClick={() => setAdding(true)} className="no-print mt-3 flex items-center gap-2 rounded-xl border border-dashed border-teal px-4 py-2.5 text-sm font-bold text-teal-dark hover:bg-teal/10">
-          <Plus size={15} /> Ajouter un article
-        </button>
+        <div className="no-print mt-3 flex flex-wrap gap-2">
+          <button onClick={() => setAdding(true)} className="flex items-center gap-2 rounded-xl border border-dashed border-teal px-4 py-2.5 text-sm font-bold text-teal-dark hover:bg-teal/10">
+            <Plus size={15} /> Ajouter un article
+          </button>
+          <button onClick={() => setImporting(true)} className="flex items-center gap-2 rounded-xl border border-dashed border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-500 hover:bg-slate-50">
+            <FileSpreadsheet size={15} /> Importer une commande
+          </button>
+        </div>
 
         <div className="ml-auto mt-5 w-full max-w-xs space-y-1 text-sm">
           <div className="flex justify-between"><span className="text-slate-500">Sous-total</span><span>{dt(total)}</span></div>
@@ -283,6 +294,7 @@ export function QuotePage() {
       </div>
 
       {adding && <ArticlePickerModal onClose={() => setAdding(false)} />}
+      {importing && <ImportOrderModal onClose={() => setImporting(false)} />}
       {picking && uid && (
         <ClientPickerModal uid={uid} ownerName={profile?.name || ''} searchAll={role === 'admin'} onClose={() => setPicking(false)}
           onPick={c => { setClient(c); setPicking(false) }} />
