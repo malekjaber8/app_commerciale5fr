@@ -54,7 +54,7 @@ export function ImportOrderModal({ onClose }: { onClose: () => void }) {
         return {
           id: `${i}-${p.code ?? p.designation}`,
           parsed: p,
-          query: selected ? `${selected.name} — ${selected.variant}` : '',
+          query: selected ? `${selected.name} — ${selected.variant}` : p.designation,
           selected,
           score: m?.score ?? 0,
           skip: false,
@@ -134,30 +134,40 @@ export function ImportOrderModal({ onClose }: { onClose: () => void }) {
                       </button>
                     </div>
 
-                    {!r.skip && (
-                      <div className="relative mt-2">
+                    {!r.skip && r.selected && openRow !== r.id && (
+                      <div className="mt-2 flex items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
+                        <div className="flex min-w-0 items-center gap-2 text-sm">
+                          <Check size={15} className="shrink-0 text-green-600" />
+                          <span className="min-w-0 truncate font-semibold text-slate-700">{r.selected.name} <span className="text-slate-400">— {r.selected.variant}</span></span>
+                          <span className="shrink-0 font-bold text-navy">{dt(r.selected.unitPrice)}</span>
+                        </div>
+                        <button onClick={() => setOpenRow(r.id)} className="shrink-0 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-teal-dark hover:bg-slate-50">Changer</button>
+                      </div>
+                    )}
+
+                    {!r.skip && (!r.selected || openRow === r.id) && (
+                      <div className="mt-2">
                         <div className="relative">
                           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                           <input
+                            autoFocus={openRow === r.id}
                             value={r.query}
-                            onFocus={() => setOpenRow(r.id)}
-                            onChange={e => setRow(r.id, { query: e.target.value, selected: null })}
-                            placeholder="Rechercher l'article du catalogue correspondant..."
-                            className={inputCls + ' pl-8 pr-8 text-sm'} />
-                          {r.selected && <Check size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600" />}
+                            onChange={e => { setOpenRow(r.id); setRow(r.id, { query: e.target.value, selected: null }) }}
+                            placeholder="Tapez le nom de l'article du catalogue..."
+                            className={inputCls + ' pl-8 text-sm'} />
                         </div>
-                        {openRow === r.id && (
-                          <div className="absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white shadow-lg">
-                            {filteredOptions(r.query).map(o => (
-                              <button key={o.key} onClick={() => { setRow(r.id, { selected: o, query: `${o.name} — ${o.variant}` }); setOpenRow(null) }}
-                                className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-sm hover:bg-teal/10">
-                                <span className="min-w-0 truncate text-slate-700">{o.name} <span className="text-slate-400">— {o.variant}</span></span>
-                                <span className="shrink-0 font-bold text-navy">{dt(o.unitPrice)}</span>
-                              </button>
-                            ))}
-                            {filteredOptions(r.query).length === 0 && <div className="px-3 py-3 text-center text-xs text-slate-400">Aucun article trouve.</div>}
-                            <button onClick={() => setOpenRow(null)} className="w-full border-t border-slate-100 px-3 py-2 text-center text-xs font-semibold text-slate-400 hover:bg-slate-50">Fermer</button>
-                          </div>
+                        <div className="mt-1 max-h-56 overflow-y-auto rounded-xl border border-slate-200 bg-white">
+                          {filteredOptions(r.query).map(o => (
+                            <button key={o.key} onClick={() => setRow(r.id, { selected: o, query: `${o.name} — ${o.variant}` })}
+                              className="flex w-full items-center justify-between gap-2 border-b border-slate-50 px-3 py-2.5 text-left text-sm last:border-0 hover:bg-teal/10">
+                              <span className="min-w-0 truncate text-slate-700">{o.name} <span className="text-slate-400">— {o.variant}</span></span>
+                              <span className="shrink-0 font-bold text-navy">{dt(o.unitPrice)}</span>
+                            </button>
+                          ))}
+                          {filteredOptions(r.query).length === 0 && <div className="px-3 py-3 text-center text-xs text-slate-400">Aucun article trouve. Essayez un autre mot-cle.</div>}
+                        </div>
+                        {r.selected && (
+                          <button onClick={() => setOpenRow(null)} className="mt-1 text-xs font-semibold text-slate-400 underline">Fermer sans changer</button>
                         )}
                       </div>
                     )}
