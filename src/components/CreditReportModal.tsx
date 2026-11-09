@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react'
-import { Pencil, Plus, Printer } from 'lucide-react'
+import { Banknote, Pencil, Plus, Printer } from 'lucide-react'
 import { DOC_TYPE_LABEL, quotePayment, type QuoteDoc } from '../lib/quotes'
 import { creditPayment, type CreditDoc } from '../lib/credits'
 import { dt } from '../lib/format'
 import { Modal } from './ui'
 
-interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; dateKey: string; dateLabel: string; total: number; paid: number; balance: number; creditRef?: CreditDoc }
+interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; dateKey: string; dateLabel: string; total: number; paid: number; balance: number; creditRef?: CreditDoc; quoteRef?: QuoteDoc }
 interface ClientGroup { client: string; rows: Row[]; total: number; paid: number; balance: number }
 
 /** Regroupe par client (nom normalise : sans accents/casse/espaces superflus), pour fusionner les commandes (BL/facture)
@@ -35,11 +35,13 @@ interface Props {
   admin?: boolean
   onAddCredit?: (initialClient?: string) => void
   onEditCredit?: (credit: CreditDoc) => void
+  onEditQuote?: (quote: QuoteDoc) => void
+  onPayQuote?: (quote: QuoteDoc) => void
 }
 
 /** Contenu du rapport de credit : toutes les commandes et credits non soldes, filtres par la plage de dates choisie.
  * Par defaut (aucune date passee), couvre tout l'historique — comme le bouton « Credit » de la liste des devis. */
-export function CreditReportContent({ quotes, credits, from: initialFrom, to: initialTo, admin, onAddCredit, onEditCredit }: Props) {
+export function CreditReportContent({ quotes, credits, from: initialFrom, to: initialTo, admin, onAddCredit, onEditCredit, onEditQuote, onPayQuote }: Props) {
   const [from, setFrom] = useState(initialFrom ?? '')
   const [to, setTo] = useState(initialTo ?? '')
 
@@ -56,7 +58,7 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
       if (to && dateKey > to) continue
       const type = q.docType ?? 'devis'
       const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
-      out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, dateKey, dateLabel: d.toLocaleDateString('fr-FR'), total: pay.due, paid: pay.paid, balance: pay.balance })
+      out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, dateKey, dateLabel: d.toLocaleDateString('fr-FR'), total: pay.due, paid: pay.paid, balance: pay.balance, quoteRef: q })
     }
     // Les credits ajoutes manuellement sont toujours inclus, meme sans BL/facture correspondant pour ce client :
     // ils forment alors leur propre groupe (cree par nom de client lors du regroupement ci-dessous).
@@ -156,11 +158,21 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
                         <td className="px-4 py-2 text-right text-slate-600">{dt(r.paid)}</td>
                         <td className="px-4 py-2 text-right font-bold text-red-600">{dt(r.balance)}</td>
                         {admin && (
-                          <td className="no-print px-4 py-2 text-right">
-                            {r.creditRef && onEditCredit && (
-                              <button onClick={() => onEditCredit(r.creditRef as CreditDoc)} title="Modifier ce credit"
-                                className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:bg-slate-100"><Pencil size={13} /></button>
-                            )}
+                          <td className="no-print px-4 py-2">
+                            <div className="flex items-center justify-end gap-1.5">
+                              {r.creditRef && onEditCredit && (
+                                <button onClick={() => onEditCredit(r.creditRef as CreditDoc)} title="Modifier ce credit"
+                                  className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:bg-slate-100"><Pencil size={13} /></button>
+                              )}
+                              {r.quoteRef && onEditQuote && (
+                                <button onClick={() => onEditQuote(r.quoteRef as QuoteDoc)} title="Modifier le devis/BL/facture (lignes, prix)"
+                                  className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:bg-slate-100"><Pencil size={13} /></button>
+                              )}
+                              {r.quoteRef && onPayQuote && (
+                                <button onClick={() => onPayQuote(r.quoteRef as QuoteDoc)} title="Enregistrer un reglement"
+                                  className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:bg-green-50 hover:text-green-700"><Banknote size={13} /></button>
+                              )}
+                            </div>
                           </td>
                         )}
                       </tr>
@@ -197,11 +209,11 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
 }
 
 /** Rapport de credit en modale : commandes et credits non soldes, filtrables par plage de dates (toutes dates par defaut). */
-export function CreditReportModal({ quotes, credits, from, to, admin, onAddCredit, onEditCredit, onClose }: Props & { onClose: () => void }) {
+export function CreditReportModal({ quotes, credits, from, to, admin, onAddCredit, onEditCredit, onEditQuote, onPayQuote, onClose }: Props & { onClose: () => void }) {
   return (
     <Modal title="Rapport de credit" onClose={onClose} wide printable>
       <div className="space-y-4">
-        <CreditReportContent quotes={quotes} credits={credits} from={from} to={to} admin={admin} onAddCredit={onAddCredit} onEditCredit={onEditCredit} />
+        <CreditReportContent quotes={quotes} credits={credits} from={from} to={to} admin={admin} onAddCredit={onAddCredit} onEditCredit={onEditCredit} onEditQuote={onEditQuote} onPayQuote={onPayQuote} />
         <div className="no-print flex justify-end"><button onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600">Fermer</button></div>
       </div>
     </Modal>

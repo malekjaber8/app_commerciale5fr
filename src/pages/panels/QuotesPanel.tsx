@@ -258,7 +258,9 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
       {creditReport && (
         <CreditReportModal quotes={quotes} credits={credits} admin={admin} onClose={() => setCreditReport(false)}
           onAddCredit={initialClient => { setAddCreditInitialClient(initialClient ?? ''); setAddingCredit(true) }}
-          onEditCredit={c => setEditingCredit(c)} />
+          onEditCredit={c => setEditingCredit(c)}
+          onEditQuote={q => setEditing(q)}
+          onPayQuote={q => setPaying(q)} />
       )}
       <Suspense fallback={null}>
         {report && DailyReportModal && <DailyReportModal quotes={quotes} credits={credits} onClose={() => setReport(false)} onVerified={() => { load(true); loadCredits() }} />}
