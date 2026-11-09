@@ -14,14 +14,14 @@ const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${Stri
  * Ajout ou modification d'un credit par l'admin (montant du par un client, independant d'un devis de l'app).
  * `ownerUid` fixe : pas de choix de commercial (deja filtre, ex. depuis la fiche d'un commercial).
  */
-export function CreditModal({ ownerUid, ownerName, existing, onClose, onDone }: {
-  ownerUid?: string; ownerName?: string; existing?: CreditDoc; onClose: () => void; onDone: () => void
+export function CreditModal({ ownerUid, ownerName, existing, initialClient, onClose, onDone }: {
+  ownerUid?: string; ownerName?: string; existing?: CreditDoc; initialClient?: string; onClose: () => void; onDone: () => void
 }) {
   const { profile, email } = useAuth()
   const { ask } = useDialogs()
   const [commercials, setCommercials] = useState<{ id: string; name: string }[]>([])
   const [assignTo, setAssignTo] = useState(existing?.ownerUid ?? ownerUid ?? '')
-  const [client, setClient] = useState(existing?.client ?? '')
+  const [client, setClient] = useState(existing?.client ?? initialClient ?? '')
   const [docDate, setDocDate] = useState(existing?.docDate ?? todayStr())
   const [ref, setRef] = useState(existing?.ref ?? '')
   const [amount, setAmount] = useState(existing ? String(existing.amount) : '')

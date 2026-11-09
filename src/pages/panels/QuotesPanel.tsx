@@ -54,6 +54,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
   const [creditReport, setCreditReport] = useState(false)
   const [credits, setCredits] = useState<CreditDoc[]>([])
   const [addingCredit, setAddingCredit] = useState(false)
+  const [addCreditInitialClient, setAddCreditInitialClient] = useState('')
   const [editingCredit, setEditingCredit] = useState<CreditDoc | null>(null)
   const [showPaidCredits, setShowPaidCredits] = useState(false)
   const [payingCredit, setPayingCredit] = useState<CreditDoc | null>(null)
@@ -254,13 +255,21 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
 
       {collecting && <CollectModal quote={collecting.quote} existing={collecting.existing} onClose={() => setCollecting(null)} onDone={() => { setCollecting(null); load(true) }} />}
       {myReport && <MyDailyReportModal quotes={quotes} onClose={() => setMyReport(false)} />}
-      {creditReport && <CreditReportModal quotes={quotes} credits={credits} from={from} to={to} onClose={() => setCreditReport(false)} />}
+      {creditReport && (
+        <CreditReportModal quotes={quotes} credits={credits} admin={admin} onClose={() => setCreditReport(false)}
+          onAddCredit={initialClient => { setAddCreditInitialClient(initialClient ?? ''); setAddingCredit(true) }}
+          onEditCredit={c => setEditingCredit(c)} />
+      )}
       <Suspense fallback={null}>
         {report && DailyReportModal && <DailyReportModal quotes={quotes} credits={credits} onClose={() => setReport(false)} onVerified={() => { load(true); loadCredits() }} />}
         {editing && QuoteEditor && <QuoteEditor quote={editing} onClose={() => setEditing(null)} onSaved={() => load()} />}
         {paying && PaymentModal && <PaymentModal quote={paying} onClose={() => setPaying(null)} onDone={() => load(true)} />}
         {validating && ValidateQuoteModal && <ValidateQuoteModal quote={validating} onClose={() => setValidating(null)} onDone={() => load()} />}
-        {addingCredit && CreditModal && <CreditModal ownerUid={ownerUid} ownerName={ownerName} onClose={() => setAddingCredit(false)} onDone={() => { setAddingCredit(false); loadCredits() }} />}
+        {addingCredit && CreditModal && (
+          <CreditModal ownerUid={ownerUid} ownerName={ownerName} initialClient={addCreditInitialClient}
+            onClose={() => { setAddingCredit(false); setAddCreditInitialClient('') }}
+            onDone={() => { setAddingCredit(false); setAddCreditInitialClient(''); loadCredits() }} />
+        )}
         {editingCredit && CreditModal && <CreditModal existing={editingCredit} onClose={() => setEditingCredit(null)} onDone={() => { setEditingCredit(null); loadCredits() }} />}
         {payingCredit && PayCreditModal && <PayCreditModal credit={payingCredit} onClose={() => setPayingCredit(null)} onDone={() => loadCredits()} />}
       </Suspense>

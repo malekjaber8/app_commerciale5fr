@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react'
-import { Printer } from 'lucide-react'
+import { Pencil, Plus, Printer } from 'lucide-react'
 import { DOC_TYPE_LABEL, quotePayment, type QuoteDoc } from '../lib/quotes'
 import { creditPayment, type CreditDoc } from '../lib/credits'
 import { dt } from '../lib/format'
 import { Modal } from './ui'
 
-interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; dateKey: string; dateLabel: string; total: number; paid: number; balance: number }
+interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; dateKey: string; dateLabel: string; total: number; paid: number; balance: number; creditRef?: CreditDoc }
 interface ClientGroup { client: string; rows: Row[]; total: number; paid: number; balance: number }
 
 /** Regroupe par client (nom normalise : sans accents/casse/espaces superflus), pour fusionner les commandes (BL/facture)
@@ -26,8 +26,20 @@ function groupByClient(rows: Row[]): ClientGroup[] {
     .sort((a, b) => b.balance - a.balance)
 }
 
-/** Contenu du rapport de credit : toutes les commandes et credits non soldes, filtres par la plage de dates choisie. */
-export function CreditReportContent({ quotes, credits, from: initialFrom, to: initialTo }: { quotes: QuoteDoc[]; credits: CreditDoc[]; from?: string; to?: string }) {
+interface Props {
+  quotes: QuoteDoc[]
+  credits: CreditDoc[]
+  from?: string
+  to?: string
+  /** Affiche les actions d'ajout/modification de credit (reservees a l'admin). */
+  admin?: boolean
+  onAddCredit?: (initialClient?: string) => void
+  onEditCredit?: (credit: CreditDoc) => void
+}
+
+/** Contenu du rapport de credit : toutes les commandes et credits non soldes, filtres par la plage de dates choisie.
+ * Par defaut (aucune date passee), couvre tout l'historique — comme le bouton « Credit » de la liste des devis. */
+export function CreditReportContent({ quotes, credits, from: initialFrom, to: initialTo, admin, onAddCredit, onEditCredit }: Props) {
   const [from, setFrom] = useState(initialFrom ?? '')
   const [to, setTo] = useState(initialTo ?? '')
 
@@ -46,13 +58,15 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
       const number = type === 'devis' || !q.docNumber ? q.number : q.docNumber
       out.push({ client: q.client || '—', ownerName: q.ownerName || q.ownerEmail, docLabel: DOC_TYPE_LABEL[type], docNumber: number, dateKey, dateLabel: d.toLocaleDateString('fr-FR'), total: pay.due, paid: pay.paid, balance: pay.balance })
     }
+    // Les credits ajoutes manuellement sont toujours inclus, meme sans BL/facture correspondant pour ce client :
+    // ils forment alors leur propre groupe (cree par nom de client lors du regroupement ci-dessous).
     for (const c of credits) {
       const pay = creditPayment(c)
       if (pay.state === 'paye') continue
       const dateKey = c.docDate || ''
       if (from && dateKey < from) continue
       if (to && dateKey > to) continue
-      out.push({ client: c.client, ownerName: c.ownerName, docLabel: 'Credit', docNumber: c.ref || '—', dateKey, dateLabel: dateKey ? new Date(dateKey + 'T12:00:00').toLocaleDateString('fr-FR') : '—', total: c.amount, paid: pay.paid, balance: pay.balance })
+      out.push({ client: c.client, ownerName: c.ownerName, docLabel: 'Credit', docNumber: c.ref || '—', dateKey, dateLabel: dateKey ? new Date(dateKey + 'T12:00:00').toLocaleDateString('fr-FR') : '—', total: c.amount, paid: pay.paid, balance: pay.balance, creditRef: c })
     }
     return out.sort((a, b) => a.dateKey.localeCompare(b.dateKey))
   }, [quotes, credits, from, to])
@@ -83,6 +97,9 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
         {(from || to) && (
           <button onClick={() => { setFrom(''); setTo('') }} className="text-xs font-bold text-teal-dark underline">Toutes dates</button>
         )}
+        {admin && onAddCredit && (
+          <button onClick={() => onAddCredit()} className="no-print flex items-center gap-1.5 rounded-xl border border-teal px-3 py-2 text-xs font-bold text-teal-dark hover:bg-teal/10"><Plus size={14} /> Ajouter un credit</button>
+        )}
         <button onClick={() => window.print()} className="ml-auto flex items-center gap-1.5 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white hover:opacity-90"><Printer size={15} /> Imprimer</button>
       </div>
 
@@ -106,9 +123,15 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
               <div key={g.client} className="overflow-hidden rounded-2xl border border-slate-200">
                 <div className="flex items-center justify-between bg-slate-50 px-4 py-2.5">
                   <div className="text-sm font-extrabold text-navy">{g.client}</div>
-                  <div className="text-right">
-                    <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Total du par ce client</div>
-                    <div className="text-base font-extrabold text-red-600">{dt(g.balance)}</div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Total du par ce client</div>
+                      <div className="text-base font-extrabold text-red-600">{dt(g.balance)}</div>
+                    </div>
+                    {admin && onAddCredit && (
+                      <button onClick={() => onAddCredit(g.client)} title="Ajouter un credit pour ce client"
+                        className="no-print rounded-lg border border-slate-200 bg-white p-1.5 text-teal-dark hover:bg-teal/10"><Plus size={14} /></button>
+                    )}
                   </div>
                 </div>
                 <table className="w-full text-sm">
@@ -120,6 +143,7 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
                       <th className="px-4 py-1.5 text-right font-semibold">Total</th>
                       <th className="px-4 py-1.5 text-right font-semibold">Paye</th>
                       <th className="px-4 py-1.5 text-right font-semibold">Reste</th>
+                      {admin && <th className="no-print px-4 py-1.5" />}
                     </tr>
                   </thead>
                   <tbody>
@@ -131,6 +155,14 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
                         <td className="px-4 py-2 text-right text-slate-600">{dt(r.total)}</td>
                         <td className="px-4 py-2 text-right text-slate-600">{dt(r.paid)}</td>
                         <td className="px-4 py-2 text-right font-bold text-red-600">{dt(r.balance)}</td>
+                        {admin && (
+                          <td className="no-print px-4 py-2 text-right">
+                            {r.creditRef && onEditCredit && (
+                              <button onClick={() => onEditCredit(r.creditRef as CreditDoc)} title="Modifier ce credit"
+                                className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:bg-slate-100"><Pencil size={13} /></button>
+                            )}
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -141,6 +173,7 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
                         <td className="px-4 py-2 text-right font-bold text-navy">{dt(g.total)}</td>
                         <td className="px-4 py-2 text-right font-bold text-navy">{dt(g.paid)}</td>
                         <td className="px-4 py-2 text-right font-extrabold text-red-600">{dt(g.balance)}</td>
+                        {admin && <td className="no-print" />}
                       </tr>
                     </tfoot>
                   )}
@@ -163,12 +196,12 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
   )
 }
 
-/** Rapport de credit en modale : commandes et credits non soldes, filtrables par plage de dates. */
-export function CreditReportModal({ quotes, credits, from, to, onClose }: { quotes: QuoteDoc[]; credits: CreditDoc[]; from?: string; to?: string; onClose: () => void }) {
+/** Rapport de credit en modale : commandes et credits non soldes, filtrables par plage de dates (toutes dates par defaut). */
+export function CreditReportModal({ quotes, credits, from, to, admin, onAddCredit, onEditCredit, onClose }: Props & { onClose: () => void }) {
   return (
     <Modal title="Rapport de credit" onClose={onClose} wide printable>
       <div className="space-y-4">
-        <CreditReportContent quotes={quotes} credits={credits} from={from} to={to} />
+        <CreditReportContent quotes={quotes} credits={credits} from={from} to={to} admin={admin} onAddCredit={onAddCredit} onEditCredit={onEditCredit} />
         <div className="no-print flex justify-end"><button onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600">Fermer</button></div>
       </div>
     </Modal>
