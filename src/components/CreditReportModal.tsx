@@ -1,9 +1,16 @@
 import { useMemo, useState } from 'react'
-import { Banknote, Pencil, Plus, Printer } from 'lucide-react'
+import { Banknote, Download, Pencil, Plus, Printer } from 'lucide-react'
 import { DOC_TYPE_LABEL, quotePayment, type QuoteDoc } from '../lib/quotes'
 import { creditPayment, type CreditDoc } from '../lib/credits'
 import { dt } from '../lib/format'
+import { useDialogs } from './Dialogs'
 import { Modal } from './ui'
+
+/** Present uniquement dans l'application bureau (voir electron/preload.cjs) : enregistre la page en PDF via
+ * Electron sans dependre des imprimantes installees sur le poste (ex. "Microsoft Print to PDF" absente). */
+declare global {
+  interface Window { desktopAPI?: { savePDF: (suggestedName?: string) => Promise<{ ok: boolean; filePath?: string; canceled?: boolean; error?: string }> } }
+}
 
 interface Row { client: string; ownerName: string; docLabel: string; docNumber: string; dateKey: string; dateLabel: string; total: number; paid: number; balance: number; creditRef?: CreditDoc; quoteRef?: QuoteDoc }
 interface ClientGroup { client: string; rows: Row[]; total: number; paid: number; balance: number }
@@ -42,8 +49,22 @@ interface Props {
 /** Contenu du rapport de credit : toutes les commandes et credits non soldes, filtres par la plage de dates choisie.
  * Par defaut (aucune date passee), couvre tout l'historique — comme le bouton « Credit » de la liste des devis. */
 export function CreditReportContent({ quotes, credits, from: initialFrom, to: initialTo, admin, onAddCredit, onEditCredit, onEditQuote, onPayQuote }: Props) {
+  const { notify } = useDialogs()
   const [from, setFrom] = useState(initialFrom ?? '')
   const [to, setTo] = useState(initialTo ?? '')
+  const [savingPdf, setSavingPdf] = useState(false)
+
+  const savePDF = async () => {
+    if (!window.desktopAPI) return
+    setSavingPdf(true)
+    try {
+      const res = await window.desktopAPI.savePDF(`rapport-credit-${new Date().toISOString().slice(0, 10)}.pdf`)
+      if (res.ok) await notify(`PDF enregistre : ${res.filePath}`)
+      else if (!res.canceled) await notify("Impossible d'enregistrer le PDF.")
+    } finally {
+      setSavingPdf(false)
+    }
+  }
 
   const rows = useMemo<Row[]>(() => {
     const out: Row[] = []
@@ -102,7 +123,12 @@ export function CreditReportContent({ quotes, credits, from: initialFrom, to: in
         {admin && onAddCredit && (
           <button onClick={() => onAddCredit()} className="no-print flex items-center gap-1.5 rounded-xl border border-teal px-3 py-2 text-xs font-bold text-teal-dark hover:bg-teal/10"><Plus size={14} /> Ajouter un credit</button>
         )}
-        <button onClick={() => window.print()} className="ml-auto flex items-center gap-1.5 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white hover:opacity-90"><Printer size={15} /> Imprimer</button>
+        {window.desktopAPI && (
+          <button onClick={savePDF} disabled={savingPdf} className="ml-auto flex items-center gap-1.5 rounded-xl border border-teal px-4 py-2 text-sm font-bold text-teal-dark hover:bg-teal/10 disabled:opacity-60">
+            <Download size={15} /> {savingPdf ? 'Enregistrement...' : 'Enregistrer en PDF'}
+          </button>
+        )}
+        <button onClick={() => window.print()} className={`${window.desktopAPI ? '' : 'ml-auto '}flex items-center gap-1.5 rounded-xl bg-navy px-4 py-2 text-sm font-bold text-white hover:opacity-90`}><Printer size={15} /> Imprimer</button>
       </div>
 
       <div className="print-area">

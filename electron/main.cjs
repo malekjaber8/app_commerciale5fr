@@ -1,7 +1,7 @@
 // Application bureau (admin) : ouvre l'interface admin dans une fenetre native.
 // Un mini serveur local (127.0.0.1) sert les fichiers compiles : l'origine est http://localhost,
 // deja autorisee par Firebase Auth, et les images/videos se chargent normalement.
-const { app, BrowserWindow, Menu, shell } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain, shell } = require('electron')
 const fs = require('node:fs')
 const http = require('node:http')
 const path = require('node:path')
@@ -47,7 +47,7 @@ async function createWindow() {
     width: 1400, height: 900, minWidth: 900, minHeight: 600,
     title: 'Administration - Les Cinq Freres',
     backgroundColor: '#f8fafc',
-    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, preload: path.join(__dirname, 'preload.cjs') },
   })
   Menu.setApplicationMenu(null)
   win.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' } })
@@ -62,6 +62,26 @@ async function createWindow() {
     }, 12000)
   }
 }
+
+// Enregistre la page courante (vue d'impression) en PDF sans dependre des imprimantes installees sur le poste
+// (ex. "Microsoft Print to PDF" absente de la liste systeme).
+ipcMain.handle('save-pdf', async (event, suggestedName) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  if (!win) return { ok: false, error: 'Fenetre introuvable' }
+  try {
+    const data = await win.webContents.printToPDF({ printBackground: true, pageSize: 'A4' })
+    const { canceled, filePath } = await dialog.showSaveDialog(win, {
+      title: 'Enregistrer en PDF',
+      defaultPath: suggestedName || 'rapport.pdf',
+      filters: [{ name: 'PDF', extensions: ['pdf'] }],
+    })
+    if (canceled || !filePath) return { ok: false, canceled: true }
+    fs.writeFileSync(filePath, data)
+    return { ok: true, filePath }
+  } catch (err) {
+    return { ok: false, error: String(err) }
+  }
+})
 
 app.whenReady().then(createWindow)
 app.on('window-all-closed', () => app.quit())
