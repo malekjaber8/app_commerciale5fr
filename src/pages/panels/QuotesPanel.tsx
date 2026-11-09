@@ -169,7 +169,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
           className="flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-100">
           <CreditCard size={14} /> Credit ({creditCount})
         </button>
-        <button onClick={() => setCreditReport(true)} title="Rapport imprimable des credits, filtre sur la plage de dates Du/Au ci-dessus"
+        <button onClick={() => { setCreditReport(true); load(true); loadCredits() }} title="Rapport imprimable des credits, filtre sur la plage de dates Du/Au ci-dessus"
           className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-navy hover:bg-slate-50">
           <FileText size={14} /> Rapport de credit
         </button>
