@@ -10,6 +10,9 @@ import { ClientPickerModal } from './ClientPickerModal'
 import { Field, Modal, inputCls } from './ui'
 
 const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
+// parseFloat s'arrete au premier caractere non numerique : un espace (separateur de milliers, ex. "11 681.266")
+// tronquerait sinon le montant a "11". On l'enleve avant de parser.
+const parseAmt = (s: string) => parseFloat(s.replace(/\s/g, '').replace(',', '.'))
 
 let lineSeq = 0
 interface CreditLine { key: number; docDate: string; ref: string; amount: string }
@@ -40,7 +43,7 @@ export function CreditModal({ ownerUid, ownerName, existing, initialClient, onCl
   const [error, setError] = useState('')
 
   const paidSoFar = existing ? creditPayment(existing).paid : 0
-  const linesTotal = Math.round(lines.reduce((s, l) => s + (parseFloat(l.amount.replace(',', '.')) || 0), 0) * 1000) / 1000
+  const linesTotal = Math.round(lines.reduce((s, l) => s + (parseAmt(l.amount) || 0), 0) * 1000) / 1000
 
   useEffect(() => {
     if (ownerUid) return
@@ -62,12 +65,12 @@ export function CreditModal({ ownerUid, ownerName, existing, initialClient, onCl
     try {
       const targetName = ownerName ?? commercials.find(c => c.id === assignTo)?.name ?? existing?.ownerName ?? ''
       if (existing) {
-        const value = parseFloat(amount.replace(',', '.'))
+        const value = parseAmt(amount)
         if (!(value > 0)) { setError('Saisissez un montant superieur a 0.'); setBusy(false); return }
         if (value < paidSoFar) { setError(`Le montant total ne peut pas etre inferieur a ce qui est deja regle (${dt(paidSoFar)}). Pour enregistrer un paiement, utilisez le bouton "Regler", pas ce champ.`); setBusy(false); return }
         await updateCredit(existing.id, { ownerUid: assignTo, ownerName: targetName, client: name, docDate, ref: ref.trim(), amount: Math.round(value * 1000) / 1000, note: note.trim() })
       } else {
-        const valid = lines.map(l => ({ ...l, value: Math.round((parseFloat(l.amount.replace(',', '.')) || 0) * 1000) / 1000 })).filter(l => l.value > 0)
+        const valid = lines.map(l => ({ ...l, value: Math.round((parseAmt(l.amount) || 0) * 1000) / 1000 })).filter(l => l.value > 0)
         if (valid.length === 0) { setError('Saisissez au moins un montant superieur a 0.'); setBusy(false); return }
         await Promise.all(valid.map(l => createCredit({
           ownerUid: assignTo, ownerName: targetName, client: name, docDate: l.docDate, ref: l.ref.trim(),
@@ -150,7 +153,7 @@ export function CreditModal({ ownerUid, ownerName, existing, initialClient, onCl
               </button>
             </div>
             <div className="mt-2 flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm">
-              <span className="font-semibold text-slate-500">Total ({lines.filter(l => parseFloat(l.amount.replace(',', '.')) > 0).length} ligne{lines.filter(l => parseFloat(l.amount.replace(',', '.')) > 0).length > 1 ? 's' : ''})</span>
+              <span className="font-semibold text-slate-500">Total ({lines.filter(l => parseAmt(l.amount) > 0).length} ligne{lines.filter(l => parseAmt(l.amount) > 0).length > 1 ? 's' : ''})</span>
               <span className="text-base font-extrabold text-navy">{dt(linesTotal)}</span>
             </div>
           </Field>
