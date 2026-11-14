@@ -1,6 +1,8 @@
 export interface Variant {
   label: string
   price: number | null
+  /** Prix gros (voir `Settings.priceOverridesGros`) ; a defaut, egal a `price`. */
+  priceGros?: number | null
   code?: string
   oldPrice?: number
 }

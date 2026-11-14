@@ -29,8 +29,7 @@ interface SettingsCtx {
 const Ctx = createContext<SettingsCtx | null>(null)
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const { status, role, profile } = useAuth()
-  const wholesale = !!profile?.wholesaleEnabled
+  const { status, role } = useAuth()
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
   const [loaded, setLoaded] = useState(false)
   const [allProducts, setAllProducts] = useState<ProductRow[]>([])
@@ -81,9 +80,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       }
       if (ov || ovGros || extra?.length) {
         const variants = [...art.variants, ...(extra ?? [])].map(v => {
-          const detail = ov?.[v.label] != null ? ov[v.label] : v.price
-          const price = wholesale && ovGros?.[v.label] != null ? ovGros[v.label] : detail
-          return { ...v, price }
+          const price = ov?.[v.label] != null ? ov[v.label] : v.price
+          const priceGros = ovGros?.[v.label] != null ? ovGros[v.label] : price
+          return { ...v, price, priceGros }
         })
         const prices = variants.map(v => v.price).filter((x): x is number => x != null)
         art = { ...art, variants, priceFrom: prices.length ? Math.min(...prices) : art.priceFrom, adjusted: !!ov }
@@ -91,7 +90,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       out.push(isHidden ? { ...art, hidden: true } : art)
     }
     return out
-  }, [settings, role, products, overrides, wholesale])
+  }, [settings, role, products, overrides])
 
   const categories = useMemo<Category[]>(() => [...baseCategories, ...(settings.customCategories ?? [])], [settings.customCategories])
   const topCategories = useMemo(() => categories.filter(c => !c.parentId), [categories])

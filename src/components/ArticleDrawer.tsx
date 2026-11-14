@@ -17,7 +17,7 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
   const { add } = useQuote()
   const removeArticle = useRemoveArticle()
   const { ask } = useDialogs()
-  const { role } = useAuth()
+  const { role, profile } = useAuth()
   const { products, overrides, findCategory } = useSettings()
   const [editing, setEditing] = useState(false)
   const [variantIdx, setVariantIdx] = useState(0)
@@ -27,14 +27,18 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
   const [zoom, setZoom] = useState(false)
   // « Sur devis » (prix null) : l'admin peut saisir un prix pour cette vente precise, sans changer la fiche de l'article
   const [manualPrice, setManualPrice] = useState('')
+  // Commercial avec le tarif gros active : choisit lui-meme detail ou gros pour cette ligne
+  const [tier, setTier] = useState<'detail' | 'gros'>('gros')
 
   const images = article.gallery.length ? article.gallery : article.img ? [article.img] : []
   const variant = article.variants[variantIdx]
   const cat = findCategory(article.categoryId)
+  const hasGrosChoice = !!profile?.wholesaleEnabled && variant.price != null && variant.priceGros != null && variant.priceGros !== variant.price
+  const basePrice = hasGrosChoice ? (tier === 'gros' ? (variant.priceGros as number) : variant.price) : variant.price
   const manualValue = parseFloat(manualPrice.replace(',', '.'))
-  const effectivePrice = variant.price ?? (role === 'admin' && manualValue > 0 ? manualValue : null)
+  const effectivePrice = basePrice ?? (role === 'admin' && manualValue > 0 ? manualValue : null)
 
-  useEffect(() => { setManualPrice('') }, [variantIdx])
+  useEffect(() => { setManualPrice(''); setTier('gros') }, [variantIdx])
 
   const addToQuote = () => {
     if (effectivePrice == null) return
@@ -146,7 +150,18 @@ export function ArticleDrawer({ article, onClose }: { article: Article; onClose:
         <footer className="sticky bottom-0 mt-auto border-t border-slate-200 bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 shadow-[0_-6px_16px_rgba(0,0,0,0.06)]">
           <div className="mb-3 flex items-baseline justify-between gap-3 text-sm">
             <span className="min-w-0 truncate text-slate-500">Choix : <b className="text-navy">{variant.label}</b></span>
-            {variant.price != null ? (
+            {hasGrosChoice ? (
+              <div className="flex shrink-0 gap-1.5">
+                <button type="button" onClick={() => setTier('detail')}
+                  className={`rounded-lg border-2 px-2.5 py-1 text-center text-xs font-bold ${tier === 'detail' ? 'border-teal bg-teal/10 text-navy' : 'border-slate-200 text-slate-500'}`}>
+                  Detail<span className="block text-sm">{dt(variant.price)}</span>
+                </button>
+                <button type="button" onClick={() => setTier('gros')}
+                  className={`rounded-lg border-2 px-2.5 py-1 text-center text-xs font-bold ${tier === 'gros' ? 'border-teal bg-teal/10 text-navy' : 'border-slate-200 text-slate-500'}`}>
+                  Gros<span className="block text-sm">{dt(variant.priceGros as number)}</span>
+                </button>
+              </div>
+            ) : variant.price != null ? (
               <span className="shrink-0 text-slate-500">{dt(variant.price)}{article.unit ? ` / ${article.unit}` : ''}</span>
             ) : role === 'admin' ? (
               <label className="flex shrink-0 items-center gap-1.5 text-xs font-semibold text-amber-700">
