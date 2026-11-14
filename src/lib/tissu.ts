@@ -29,7 +29,8 @@ export function tissuLinesOf(
   const out: TissuLine[] = []
   for (const l of lines) {
     const a = byId.get(l.articleId)
-    if (a && tissuScope.includes(a.categoryId)) out.push({ name: l.name, variant: l.variant, qty: l.qty, unit: a.unit })
+    // `unit` ne doit etre inclus que s'il existe : Firestore refuse un champ a `undefined`
+    if (a && tissuScope.includes(a.categoryId)) out.push({ name: l.name, variant: l.variant, qty: l.qty, ...(a.unit ? { unit: a.unit } : {}) })
   }
   return out
 }
