@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { FileText, History, LayoutGrid, LogOut, Shield, Users } from 'lucide-react'
+import { FileText, History, LayoutGrid, LogOut, Scissors, Shield, Users } from 'lucide-react'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { IS_DESKTOP } from '../config'
@@ -12,6 +12,25 @@ export function Layout() {
     `relative flex min-h-[60px] min-w-[68px] flex-col items-center justify-center gap-1 rounded-xl px-3 py-2 text-[13px] font-semibold leading-none transition sm:min-w-[84px] ${
       isActive ? 'bg-white/20 text-white shadow-inner' : 'text-white/75 hover:bg-white/10 hover:text-white active:bg-white/20'
     }`
+
+  // Session dediee a la personne responsable du tissu : rien d'autre que ses commandes a preparer.
+  if (role === 'tissu') {
+    return (
+      <div className="flex h-full flex-col">
+        <header className="no-print flex items-center gap-4 bg-navy px-4 py-3 shadow-lg sm:px-6">
+          <img src={import.meta.env.BASE_URL + 'logo.png'} alt="Les Cinq Freres" className="h-14 rounded-lg bg-white p-1.5" />
+          <div className="hidden min-w-0 md:block">
+            <div className="flex items-center gap-2 text-xl font-extrabold leading-tight text-white"><Scissors size={20} /> Atelier Tissu</div>
+            <div className="truncate text-base font-semibold leading-tight text-teal">{profile?.name || email}</div>
+          </div>
+          <button onClick={logout} title="Se deconnecter" className="ml-auto flex min-h-[60px] min-w-[68px] flex-col items-center justify-center gap-1 rounded-xl px-3 py-2 text-[13px] font-semibold leading-none text-white/75 transition hover:bg-white/10 hover:text-white active:bg-white/20 sm:min-w-[84px]">
+            <LogOut size={26} /><span>Quitter</span>
+          </button>
+        </header>
+        <main className="min-h-0 flex-1"><Outlet /></main>
+      </div>
+    )
+  }
 
   return (
     <div className="flex h-full flex-col">

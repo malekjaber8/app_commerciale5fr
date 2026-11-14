@@ -9,6 +9,7 @@ import { CreditsList } from '../../components/CreditsList'
 import { db } from '../../firebase'
 import { DOC_TYPE_LABEL, fetchAllQuotes, fetchMyQuotes, quotePayment, type DeclaredCollection, type QuoteDoc } from '../../lib/quotes'
 import { deleteInvoice } from '../../lib/db'
+import { deleteTissuOrder } from '../../lib/tissu'
 import { creditPayment, fetchAllCredits, fetchMyCredits, type CreditDoc } from '../../lib/credits'
 import { dt } from '../../lib/format'
 import { useAuth } from '../../store/auth'
@@ -128,6 +129,7 @@ export function QuotesPanel({ ownerUid, ownerName, admin }: Props) {
     const extra = q.invoiceId ? "\n\nLa facture correspondante sera aussi supprimee de l'onglet Factures." : ''
     if (!(await ask(`Supprimer definitivement le ${label} ${number} (${q.client || 'sans client'}) ?${extra}`, { confirmLabel: 'Supprimer' }))) return
     if (q.invoiceId) { try { await deleteInvoice(q.invoiceId) } catch { /* facture deja supprimee */ } }
+    await deleteTissuOrder(q.id)
     await deleteDoc(doc(db, 'quotes', q.id)); await load()
   }
 

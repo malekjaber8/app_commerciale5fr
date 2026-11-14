@@ -25,14 +25,22 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
     }
 
+    // Tissu : compte cree par l'admin, responsable de la preparation/decoupe du tissu des commandes
+    function isTissu() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'tissu'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
+    }
+
     // Profils : lisibles par les admins et par la personne concernee.
-    // Le proprietaire gere tout ; un autre admin ne peut creer/modifier/supprimer que des commerciaux.
+    // Le proprietaire gere tout ; un autre admin ne peut creer/modifier/supprimer que des commerciaux et comptes tissu.
     match /users/{uid} {
       allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);
-      allow create: if isOwner() || (isAdmin() && request.resource.data.role == 'commercial');
+      allow create: if isOwner() || (isAdmin() && request.resource.data.role in ['commercial', 'tissu']);
       allow update: if isOwner()
-        || (isAdmin() && resource.data.role == 'commercial' && request.resource.data.role == 'commercial');
-      allow delete: if isOwner() || (isAdmin() && resource.data.role == 'commercial');
+        || (isAdmin() && resource.data.role in ['commercial', 'tissu'] && request.resource.data.role == resource.data.role);
+      allow delete: if isOwner() || (isAdmin() && resource.data.role in ['commercial', 'tissu']);
     }
 
     // Reglages du contenu (articles masques, prix ajustes, remise maximale)
@@ -95,6 +103,18 @@ service cloud.firestore {
       allow read: if isAdmin()
         || (isCommercial() && resource.data.ownerUid == request.auth.uid);
       allow create, update, delete: if isAdmin();
+    }
+
+    // Taches de preparation du tissu : generees automatiquement a partir des lignes "Tissu" d'un devis.
+    // Le commercial (proprietaire du devis) et l'admin les creent/actualisent (contenu) ; la personne tissu
+    // ne peut que marquer la preparation terminee (champs status/preparedAt/preparedBy), jamais le contenu.
+    match /tissuOrders/{taskId} {
+      allow read: if isAdmin() || isTissu()
+        || (isCommercial() && resource.data.ownerUid == request.auth.uid);
+      allow create, update: if isAdmin()
+        || (isCommercial() && request.resource.data.ownerUid == request.auth.uid)
+        || (isTissu() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'preparedAt', 'preparedBy']));
+      allow delete: if isAdmin() || (isCommercial() && resource.data.ownerUid == request.auth.uid);
     }
 
     // Factures et compteurs : admin uniquement

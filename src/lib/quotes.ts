@@ -69,8 +69,9 @@ export interface QuoteDoc {
 
 export type NewQuote = Omit<QuoteDoc, 'id' | 'createdAt' | 'status' | 'docType' | 'docNumber' | 'invoiceId' | 'validatedAt' | 'payments' | 'paid'>
 
-export async function saveQuote(q: NewQuote): Promise<void> {
-  await addDoc(collection(db, 'quotes'), { ...q, status: 'attente', createdAt: serverTimestamp() })
+export async function saveQuote(q: NewQuote): Promise<string> {
+  const ref = await addDoc(collection(db, 'quotes'), { ...q, status: 'attente', createdAt: serverTimestamp() })
+  return ref.id
 }
 
 const toDoc = (d: { id: string; data: () => unknown }) => ({ id: d.id, ...(d.data() as Omit<QuoteDoc, 'id'>) })

@@ -4,7 +4,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase'
 import { ADMIN_EMAIL, loginToEmail } from '../config'
 
-export type Role = 'admin' | 'commercial'
+export type Role = 'admin' | 'commercial' | 'tissu'
 
 export interface Profile {
   role: Role
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const snap = await getDoc(doc(db, 'users', u.uid))
         const data = snap.exists() ? (snap.data() as Profile) : null
-        if (data && data.active && (data.role === 'commercial' || data.role === 'admin')) {
+        if (data && data.active && (data.role === 'commercial' || data.role === 'admin' || data.role === 'tissu')) {
           setProfile(data)
           setStatus('ready')
         } else {

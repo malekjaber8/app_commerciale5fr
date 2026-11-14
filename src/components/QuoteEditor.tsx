@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { linesSubtotal } from '../lib/db'
 import { updateQuote, type QuoteDoc } from '../lib/quotes'
+import { syncTissuOrder, tissuLinesOf } from '../lib/tissu'
+import { useSettings } from '../store/settings'
 import { dt } from '../lib/format'
 import { LinesEditor } from './LinesEditor'
 import { Field, Modal, inputCls } from './ui'
 
 /** Modification d'un devis par l'admin : client, lignes (prix, quantites), note, remise. */
 export function QuoteEditor({ quote, onClose, onSaved }: { quote: QuoteDoc; onClose: () => void; onSaved: () => void }) {
+  const { articles, categoryScope } = useSettings()
   const [client, setClient] = useState(quote.client)
   const [phone, setPhone] = useState(quote.phone)
   const [note, setNote] = useState(quote.note)
@@ -26,6 +29,11 @@ export function QuoteEditor({ quote, onClose, onSaved }: { quote: QuoteDoc; onCl
         client: client.trim(), phone: phone.trim(), note: note.trim(), discountPct: pct,
         lines, subtotal, discount, total: subtotal - discount,
       })
+      const tissuScope = categoryScope('tissu')
+      await syncTissuOrder(
+        quote.id, { ownerUid: quote.ownerUid, ownerName: quote.ownerName, client: client.trim() },
+        tissuLinesOf(lines, articles, tissuScope), tissuLinesOf(quote.lines, articles, tissuScope),
+      )
       onSaved(); onClose()
     } catch {
       setError('Enregistrement impossible.')

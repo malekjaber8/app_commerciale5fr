@@ -42,10 +42,12 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
       const login = cleanUsername(username)
       const mail = usernameToEmail(login)
       const uid = await createAccount(mail, password)
+      const finalRole: Role = role === 'admin' && !isOwner ? 'commercial' : role
       await setDoc(doc(db, 'users', uid), {
-        role: isOwner ? role : 'commercial', name: name.trim(), username: login, email: mail, active: true, createdAt: serverTimestamp(),
+        role: finalRole, name: name.trim(), username: login, email: mail, active: true, createdAt: serverTimestamp(),
       })
-      setMsg({ ok: true, text: `Compte ${isOwner && role === 'admin' ? 'administrateur ' : ''}cree. Nom d'utilisateur : ${login} — communiquez-lui son mot de passe.` })
+      const roleLabel = finalRole === 'admin' ? 'administrateur ' : finalRole === 'tissu' ? 'tissu ' : ''
+      setMsg({ ok: true, text: `Compte ${roleLabel}cree. Nom d'utilisateur : ${login} — communiquez-lui son mot de passe.` })
       setName(''); setUsername(''); setPassword('')
       await load()
     } catch (err) {
@@ -86,17 +88,16 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
     <div className="space-y-6">
       <form onSubmit={create} className="rounded-2xl border border-slate-200 bg-white p-5">
         <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-navy"><UserPlus size={16} /> Nouveau compte</h3>
-        {isOwner && (
-          <div className="mb-3 flex gap-2">
-            {(['commercial', 'admin'] as Role[]).map(r => (
-              <button type="button" key={r} onClick={() => setRole(r)}
-                className={`rounded-lg border-2 px-4 py-2 text-sm font-bold ${role === r ? 'border-teal bg-teal/10 text-navy' : 'border-slate-200 text-slate-500 hover:bg-slate-50'}`}>
-                {r === 'commercial' ? 'Commercial' : 'Administrateur'}
-              </button>
-            ))}
-            {role === 'admin' && <span className="self-center text-xs text-slate-500">Acces complet : tout ce que vous pouvez faire, sauf gerer les autres administrateurs.</span>}
-          </div>
-        )}
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          {(['commercial', 'tissu', ...(isOwner ? (['admin'] as Role[]) : [])] as Role[]).map(r => (
+            <button type="button" key={r} onClick={() => setRole(r)}
+              className={`rounded-lg border-2 px-4 py-2 text-sm font-bold ${role === r ? 'border-teal bg-teal/10 text-navy' : 'border-slate-200 text-slate-500 hover:bg-slate-50'}`}>
+              {r === 'commercial' ? 'Commercial' : r === 'tissu' ? 'Tissu' : 'Administrateur'}
+            </button>
+          ))}
+          {role === 'tissu' && <span className="text-xs text-slate-500">Voit les commandes contenant du tissu (client + quantite), pour preparer/couper.</span>}
+          {role === 'admin' && isOwner && <span className="text-xs text-slate-500">Acces complet : tout ce que vous pouvez faire, sauf gerer les autres administrateurs.</span>}
+        </div>
         <div className="grid gap-3 sm:grid-cols-3">
           <input required value={name} onChange={e => setName(e.target.value)} placeholder="Nom complet" className={input} />
           <input required value={username} onChange={e => setUsername(e.target.value)} placeholder="Nom d'utilisateur (ex: houssem)" autoCapitalize="none" className={input} />
@@ -124,7 +125,9 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
                 <td className="p-3 font-medium">{u.name}</td>
                 <td className="p-3 text-slate-600">{emailToLogin(u.email)}</td>
                 <td className="p-3">
-                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${u.role === 'admin' ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}`}>{u.role === 'admin' ? 'Admin' : 'Commercial'}</span>
+                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${u.role === 'admin' ? 'bg-navy text-white' : u.role === 'tissu' ? 'bg-violet-100 text-violet-700' : 'bg-slate-100 text-slate-600'}`}>
+                    {u.role === 'admin' ? 'Admin' : u.role === 'tissu' ? 'Tissu' : 'Commercial'}
+                  </span>
                 </td>
                 <td className="p-3">
                   <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${u.active ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
@@ -137,7 +140,7 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
                 <td className="p-3">
                   {u.role === 'admin' && !isOwner ? <div className="text-right text-xs text-slate-400">Reserve au proprietaire</div> : (
                   <div className="flex justify-end gap-1">
-                    {u.role !== 'admin' && <button onClick={() => onOpen({ id: u.id, name: u.name, email: u.email })} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white hover:opacity-90">Voir l'activite</button>}
+                    {u.role === 'commercial' && <button onClick={() => onOpen({ id: u.id, name: u.name, email: u.email })} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white hover:opacity-90">Voir l'activite</button>}
                     {u.role === 'commercial' && (
                       <button onClick={() => toggleWholesale(u)} title="Ce commercial voit les prix gros a la place des prix detail"
                         className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${u.wholesaleEnabled ? 'border-teal bg-teal/10 text-teal-dark' : 'border-slate-200 hover:bg-slate-50'}`}>

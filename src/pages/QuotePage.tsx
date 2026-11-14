@@ -7,6 +7,7 @@ import { db } from '../firebase'
 import { useAuth } from '../store/auth'
 import { useSettings } from '../store/settings'
 import { saveQuote, updateQuote } from '../lib/quotes'
+import { syncTissuOrder, tissuLinesOf } from '../lib/tissu'
 import { dt } from '../lib/format'
 import { ClientPickerModal, type PickedClient } from '../components/ClientPickerModal'
 import { ArticlePickerModal } from '../components/ArticlePickerModal'
@@ -21,7 +22,7 @@ export function QuotePage() {
   const { lines, setQty, remove, clear, total, editing } = useQuote()
   const { ask } = useDialogs()
   const { uid, email, profile, role } = useAuth()
-  const { settings } = useSettings()
+  const { settings, articles, categoryScope } = useSettings()
   const navigate = useNavigate()
   const [step, setStep] = useState<'cart' | 'review'>(editing ? 'review' : 'cart')
   // Un admin peut creer un devis pour un commercial : il choisit qui, le devis est enregistre affecte a lui, colore dans les listes
@@ -64,22 +65,29 @@ export function QuotePage() {
         lines: lines.map(({ articleId, name, variant, unitPrice, qty }) => ({ articleId, name, variant, unitPrice, qty })),
         subtotal: total, discount, total: net,
       }
+      const tissuScope = categoryScope('tissu')
+      const fabricLines = tissuLinesOf(fields.lines, articles, tissuScope)
       if (editing) {
         await updateQuote(editing.id, fields)
+        const previousFabricLines = tissuLinesOf(editing.originalLines, articles, tissuScope)
+        await syncTissuOrder(editing.id, { ownerUid: editing.ownerUid, ownerName: editing.ownerName, client: client.name }, fabricLines, previousFabricLines)
         clear()
         navigate('/mes-devis')
         return
       }
       const assigned = isAdminCreating ? commercials.find(c => c.id === assignTo) : null
-      await saveQuote({
+      const ownerUid = assigned?.id ?? uid
+      const ownerName = assigned?.name ?? (profile?.name || '')
+      const quoteId = await saveQuote({
         number,
-        ownerUid: assigned?.id ?? uid, ownerName: assigned?.name ?? (profile?.name || ''), ownerEmail: assigned?.email ?? (email || ''),
+        ownerUid, ownerName, ownerEmail: assigned?.email ?? (email || ''),
         clientId: client.id,
         client: client.name, phone: client.phone, note: note.trim(), discountPct: pct,
-        lines: lines.map(({ articleId, name, variant, unitPrice, qty }) => ({ articleId, name, variant, unitPrice, qty })),
+        lines: fields.lines,
         subtotal: total, discount, total: net,
         ...(isAdminCreating ? { createdByAdmin: true } : {}),
       })
+      await syncTissuOrder(quoteId, { ownerUid, ownerName, client: client.name }, fabricLines)
       clear()
       navigate('/mes-devis')
     } catch {

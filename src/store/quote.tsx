@@ -3,7 +3,12 @@ import type { QuoteLine } from '../types'
 import type { QuoteDoc } from '../lib/quotes'
 
 /** Devis enregistre en cours de modification par son commercial (tant que l'admin ne l'a pas valide). */
-export interface EditInfo { id: string; number: string; clientId: string; client: string; phone: string; note: string; discountPct: number }
+export interface EditInfo {
+  id: string; number: string; clientId: string; client: string; phone: string; note: string; discountPct: number
+  ownerUid: string; ownerName: string
+  /** Lignes du devis avant modification (pour detecter si le tissu a change). */
+  originalLines: Omit<QuoteLine, 'key'>[]
+}
 
 interface QuoteCtx {
   lines: QuoteLine[]
@@ -52,7 +57,10 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
     editing,
     startEdit: (q) => {
       setLines(q.lines.map(l => ({ ...l, key: `${l.articleId}|${l.variant}` })))
-      setEditing({ id: q.id, number: q.number, clientId: q.clientId || '', client: q.client, phone: q.phone, note: q.note, discountPct: q.discountPct })
+      setEditing({
+        id: q.id, number: q.number, clientId: q.clientId || '', client: q.client, phone: q.phone, note: q.note, discountPct: q.discountPct,
+        ownerUid: q.ownerUid, ownerName: q.ownerName, originalLines: q.lines,
+      })
     },
     total: lines.reduce((s, l) => s + l.unitPrice * l.qty, 0),
     count: Math.round(lines.reduce((s, l) => s + l.qty, 0) * 1000) / 1000,

@@ -8,6 +8,7 @@ import { DialogsProvider } from './components/Dialogs'
 import { CataloguePage } from './pages/CataloguePage'
 import { QuotePage } from './pages/QuotePage'
 import { MyClientsPage, MyOrdersPage, MyQuotesPage } from './pages/CommercialPages'
+import { TissuPage } from './pages/TissuPage'
 import { AdminOnlyPage, DeniedPage, LoginPage } from './pages/LoginPage'
 
 // L'interface admin n'existe que dans l'application bureau (build avec VITE_DESKTOP=1).
@@ -23,6 +24,16 @@ function Gate() {
   if (status === 'out') return <LoginPage />
   if (status === 'denied') return <DeniedPage />
   if (IS_DESKTOP && role !== 'admin') return <AdminOnlyPage />
+  if (role === 'tissu') {
+    return (
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<TissuPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    )
+  }
   return (
     <Routes>
       <Route element={<Layout />}>
