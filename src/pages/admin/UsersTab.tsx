@@ -60,6 +60,11 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
     await load()
   }
 
+  const toggleWholesale = async (u: UserRow) => {
+    await updateDoc(doc(db, 'users', u.id), { wholesaleEnabled: !u.wholesaleEnabled })
+    await load()
+  }
+
   const remove = async (u: UserRow) => {
     if (!(await ask(`Supprimer l'acces de ${u.name || u.email} ? (le compte de connexion reste visible dans la console Firebase)`, { confirmLabel: 'Supprimer' }))) return
     await deleteDoc(doc(db, 'users', u.id))
@@ -125,11 +130,20 @@ export function UsersTab({ onOpen }: { onOpen: (u: { id: string; name: string; e
                   <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${u.active ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
                     {u.active ? 'Actif' : 'Suspendu'}
                   </span>
+                  {u.role === 'commercial' && u.wholesaleEnabled && (
+                    <span className="ml-1.5 rounded-full bg-teal/15 px-2.5 py-0.5 text-xs font-bold text-teal-dark">Prix gros</span>
+                  )}
                 </td>
                 <td className="p-3">
                   {u.role === 'admin' && !isOwner ? <div className="text-right text-xs text-slate-400">Reserve au proprietaire</div> : (
                   <div className="flex justify-end gap-1">
                     {u.role !== 'admin' && <button onClick={() => onOpen({ id: u.id, name: u.name, email: u.email })} className="rounded-lg bg-navy px-3 py-1.5 text-xs font-bold text-white hover:opacity-90">Voir l'activite</button>}
+                    {u.role === 'commercial' && (
+                      <button onClick={() => toggleWholesale(u)} title="Ce commercial voit les prix gros a la place des prix detail"
+                        className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${u.wholesaleEnabled ? 'border-teal bg-teal/10 text-teal-dark' : 'border-slate-200 hover:bg-slate-50'}`}>
+                        {u.wholesaleEnabled ? 'Desactiver prix gros' : 'Activer prix gros'}
+                      </button>
+                    )}
                     <button onClick={() => toggle(u)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:bg-slate-50">
                       {u.active ? 'Suspendre' : 'Reactiver'}
                     </button>

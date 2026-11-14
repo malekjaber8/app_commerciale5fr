@@ -19,7 +19,10 @@ export function Layout() {
         <img src={import.meta.env.BASE_URL + 'logo.png'} alt="Les Cinq Freres" className="h-14 rounded-lg bg-white p-1.5" />
         <div className="hidden min-w-0 md:block">
           <div className="text-xl font-extrabold leading-tight text-white">{IS_DESKTOP ? 'Administration' : 'Espace Commercial'}</div>
-          <div className="truncate text-base font-semibold leading-tight text-teal">{profile?.name || email}{role === 'admin' ? ' (admin)' : ''}</div>
+          <div className="truncate text-base font-semibold leading-tight text-teal">
+            {profile?.name || email}{role === 'admin' ? ' (admin)' : ''}
+            {profile?.wholesaleEnabled && <span className="ml-2 rounded-full bg-teal/20 px-2 py-0.5 text-xs font-bold text-teal">Tarif gros</span>}
+          </div>
         </div>
         <nav className="ml-auto flex items-center gap-1 sm:gap-2">
           {IS_DESKTOP && role === 'admin' && (

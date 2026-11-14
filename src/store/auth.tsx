@@ -11,6 +11,8 @@ export interface Profile {
   name: string
   email: string
   active: boolean
+  /** Tarif gros active pour ce commercial (choisi par l'admin) : voit les prix de `priceOverridesGros` a la place des prix detail. */
+  wholesaleEnabled?: boolean
 }
 
 type Status = 'loading' | 'out' | 'ready' | 'denied'

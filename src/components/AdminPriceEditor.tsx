@@ -12,8 +12,11 @@ export function AdminPriceEditor({ article }: { article: Article }) {
   const { ask } = useDialogs()
   const base = baseArticles.find(a => a.id === article.id)
   const ov = settings.priceOverrides[article.id] || {}
+  const ovGros = settings.priceOverridesGros?.[article.id] || {}
   const [vals, setVals] = useState<Record<string, string>>(() =>
     Object.fromEntries(article.variants.map(v => [v.label, v.price != null ? String(v.price) : ''])))
+  const [valsGros, setValsGros] = useState<Record<string, string>>(() =>
+    Object.fromEntries(article.variants.map(v => [v.label, ovGros[v.label] != null ? String(ovGros[v.label]) : ''])))
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
   const isHidden = settings.hiddenIds.includes(article.id)
@@ -33,16 +36,27 @@ export function AdminPriceEditor({ article }: { article: Article }) {
       const val = parseFloat(raw)
       if (raw !== '' && !Number.isNaN(val) && val !== bv.price) cur[bv.label] = val
     }
+    const curGros: Record<string, number> = {}
+    for (const bv of base.variants) {
+      const raw = (valsGros[bv.label] ?? '').trim().replace(',', '.')
+      const val = parseFloat(raw)
+      if (raw !== '' && !Number.isNaN(val)) curGros[bv.label] = val
+    }
     const po = { ...settings.priceOverrides }
     if (Object.keys(cur).length) po[article.id] = cur; else delete po[article.id]
-    return write({ ...settings, priceOverrides: po }, 'Prix enregistres. Les commerciaux voient le changement immediatement.')
+    const pog = { ...settings.priceOverridesGros }
+    if (Object.keys(curGros).length) pog[article.id] = curGros; else delete pog[article.id]
+    return write({ ...settings, priceOverrides: po, priceOverridesGros: pog }, 'Prix enregistres. Les commerciaux voient le changement immediatement.')
   }
 
   const reset = () => {
     setVals(Object.fromEntries(base.variants.map(v => [v.label, v.price != null ? String(v.price) : ''])))
+    setValsGros(Object.fromEntries(base.variants.map(v => [v.label, ''])))
     const po = { ...settings.priceOverrides }
     delete po[article.id]
-    return write({ ...settings, priceOverrides: po }, 'Prix du site retablis.')
+    const pog = { ...settings.priceOverridesGros }
+    delete pog[article.id]
+    return write({ ...settings, priceOverrides: po, priceOverridesGros: pog }, 'Prix du site retablis.')
   }
 
   const writeExtras = (next: typeof extras, text: string) => {
@@ -84,12 +98,22 @@ export function AdminPriceEditor({ article }: { article: Article }) {
         </button>
       </div>
       <div className="max-h-56 overflow-y-auto">
+        <div className="flex items-center gap-2 pb-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">
+          <div className="flex-1" />
+          <div className="w-24 text-right">Site</div>
+          <div className="w-24 text-right">Detail</div>
+          <div className="w-24 text-right">Gros</div>
+        </div>
         {base.variants.map(v => (
           <div key={v.label} className="flex items-center gap-2 py-1 text-sm">
             <div className="flex-1 truncate text-slate-700">{v.label}</div>
-            <div className="w-24 text-right text-[11px] text-slate-400">Site : {dt(v.price)}</div>
+            <div className="w-24 text-right text-[11px] text-slate-400">{dt(v.price)}</div>
             <input value={vals[v.label] ?? ''} onChange={e => setVals(s => ({ ...s, [v.label]: e.target.value }))} placeholder="DT"
+              title="Prix detail"
               className={`w-24 rounded-lg border bg-white px-2 py-1.5 text-right text-sm font-semibold outline-none focus:border-teal ${ov[v.label] != null ? 'border-teal' : 'border-slate-200'}`} />
+            <input value={valsGros[v.label] ?? ''} onChange={e => setValsGros(s => ({ ...s, [v.label]: e.target.value }))} placeholder="= Detail"
+              title="Prix gros"
+              className={`w-24 rounded-lg border bg-white px-2 py-1.5 text-right text-sm font-semibold outline-none focus:border-amber-400 ${ovGros[v.label] != null ? 'border-amber-400' : 'border-slate-200'}`} />
           </div>
         ))}
       </div>

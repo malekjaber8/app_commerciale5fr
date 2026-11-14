@@ -31,6 +31,8 @@ export interface Settings {
   hiddenIds: string[]
   /** articleId -> libelle de variante -> prix impose par l'admin */
   priceOverrides: Record<string, Record<string, number>>
+  /** articleId -> libelle de variante -> prix gros (applique aux commerciaux avec `wholesaleEnabled`), a defaut le prix detail */
+  priceOverridesGros?: Record<string, Record<string, number>>
   /** Variantes (dimensions) ajoutees par l'admin a un article du catalogue : articleId -> variantes */
   extraVariants?: Record<string, Variant[]>
   maxDiscountPct: number

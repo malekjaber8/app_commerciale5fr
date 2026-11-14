@@ -6,7 +6,7 @@ import { articles as baseArticles, categories as baseCategories } from '../lib/c
 import { productToArticle, type ProductRow } from '../lib/products'
 import type { Article, Category, Settings } from '../types'
 
-export const DEFAULT_SETTINGS: Settings = { hiddenIds: [], priceOverrides: {}, extraVariants: {}, maxDiscountPct: 10 }
+export const DEFAULT_SETTINGS: Settings = { hiddenIds: [], priceOverrides: {}, priceOverridesGros: {}, extraVariants: {}, maxDiscountPct: 10 }
 
 interface SettingsCtx {
   settings: Settings
@@ -29,7 +29,8 @@ interface SettingsCtx {
 const Ctx = createContext<SettingsCtx | null>(null)
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const { status, role } = useAuth()
+  const { status, role, profile } = useAuth()
+  const wholesale = !!profile?.wholesaleEnabled
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
   const [loaded, setLoaded] = useState(false)
   const [allProducts, setAllProducts] = useState<ProductRow[]>([])
@@ -68,6 +69,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       const isHidden = hidden.has(a.id)
       if (isHidden && role !== 'admin') continue
       const ov = settings.priceOverrides[a.id]
+      const ovGros = settings.priceOverridesGros?.[a.id]
       const extra = settings.extraVariants?.[a.id]
       let art = a
       const fiche = overrides.get(a.id)
@@ -77,15 +79,19 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           variants: fiche.variants, gallery: fiche.images, img: fiche.images[0] ?? null, promo: false, oldPrice: null,
           priceFrom: fp.length ? Math.min(...fp) : null, edited: true }
       }
-      if (ov || extra?.length) {
-        const variants = [...art.variants, ...(extra ?? [])].map(v => (ov?.[v.label] != null ? { ...v, price: ov[v.label] } : v))
+      if (ov || ovGros || extra?.length) {
+        const variants = [...art.variants, ...(extra ?? [])].map(v => {
+          const detail = ov?.[v.label] != null ? ov[v.label] : v.price
+          const price = wholesale && ovGros?.[v.label] != null ? ovGros[v.label] : detail
+          return { ...v, price }
+        })
         const prices = variants.map(v => v.price).filter((x): x is number => x != null)
         art = { ...art, variants, priceFrom: prices.length ? Math.min(...prices) : art.priceFrom, adjusted: !!ov }
       }
       out.push(isHidden ? { ...art, hidden: true } : art)
     }
     return out
-  }, [settings, role, products, overrides])
+  }, [settings, role, products, overrides, wholesale])
 
   const categories = useMemo<Category[]>(() => [...baseCategories, ...(settings.customCategories ?? [])], [settings.customCategories])
   const topCategories = useMemo(() => categories.filter(c => !c.parentId), [categories])
