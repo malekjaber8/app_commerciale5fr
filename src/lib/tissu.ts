@@ -2,7 +2,12 @@ import { collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc, update
 import { db } from '../firebase'
 import type { Article, QuoteLine } from '../types'
 
-export interface TissuLine { name: string; variant: string; qty: number; unit?: string; cutQty?: number; ruptured?: boolean }
+export interface TissuLine {
+  name: string; variant: string; qty: number; unit?: string; cutQty?: number; ruptured?: boolean
+  /** Presents uniquement si la coupe a necessite deux rouleaux : metrage pris sur le rouleau deja entame et sur un rouleau neuf. */
+  qtyExistingRoll?: number
+  qtyNewRoll?: number
+}
 
 export type TissuStatus = 'a_preparer' | 'coupe'
 

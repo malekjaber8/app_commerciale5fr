@@ -31,6 +31,8 @@ export function TissuPage() {
   const [confirming, setConfirming] = useState<TissuOrderDoc | null>(null)
   const [cutVals, setCutVals] = useState<string[]>([])
   const [ruptured, setRuptured] = useState<boolean[]>([])
+  const [splitRoll, setSplitRoll] = useState<boolean[]>([])
+  const [rollVals, setRollVals] = useState<{ existing: string; new: string }[]>([])
 
   useEffect(() => watchTissuOrders(setOrders), [])
 
@@ -40,13 +42,26 @@ export function TissuPage() {
     setConfirming(o)
     setCutVals(o.lines.map(l => String(l.cutQty ?? l.qty)))
     setRuptured(o.lines.map(l => !!l.ruptured))
+    setSplitRoll(o.lines.map(l => l.qtyExistingRoll != null || l.qtyNewRoll != null))
+    setRollVals(o.lines.map(l => ({ existing: l.qtyExistingRoll != null ? String(l.qtyExistingRoll) : '', new: l.qtyNewRoll != null ? String(l.qtyNewRoll) : '' })))
   }
   const confirmDone = async () => {
     if (!confirming) return
     const lines: TissuLine[] = confirming.lines.map((l, i) => {
-      if (ruptured[i]) return { ...l, cutQty: 0, ruptured: true }
+      if (ruptured[i]) return { ...l, cutQty: 0, ruptured: true, qtyExistingRoll: undefined, qtyNewRoll: undefined }
+      if (splitRoll[i]) {
+        const ve = parseFloat(rollVals[i].existing.replace(',', '.'))
+        const vn = parseFloat(rollVals[i].new.replace(',', '.'))
+        const qtyExistingRoll = Number.isFinite(ve) ? ve : 0
+        const qtyNewRoll = Number.isFinite(vn) ? vn : 0
+        return { ...l, cutQty: qtyExistingRoll + qtyNewRoll, ruptured: false, qtyExistingRoll, qtyNewRoll }
+      }
       const v = parseFloat(cutVals[i].replace(',', '.'))
-      return { ...l, cutQty: Number.isFinite(v) ? v : l.qty, ruptured: false }
+      return { ...l, cutQty: Number.isFinite(v) ? v : l.qty, ruptured: false, qtyExistingRoll: undefined, qtyNewRoll: undefined }
+    }).map(l => {
+      // Firestore refuse un champ a `undefined` : on ne garde ces cles que si elles sont definies
+      const { qtyExistingRoll, qtyNewRoll, ...rest } = l
+      return { ...rest, ...(qtyExistingRoll != null ? { qtyExistingRoll } : {}), ...(qtyNewRoll != null ? { qtyNewRoll } : {}) }
     })
     setBusy(confirming.id)
     try {
@@ -120,6 +135,8 @@ export function TissuPage() {
                       <div className="text-lg font-extrabold text-navy">{l.qty}{l.unit ? ` ${l.unit}` : ''}</div>
                       {o.status === 'coupe' && (l.ruptured ? (
                         <div className="flex items-center gap-1 text-xs font-bold text-red-600"><AlertTriangle size={12} /> rupture</div>
+                      ) : l.qtyExistingRoll != null ? (
+                        <div className="text-xs font-semibold text-teal-dark">{l.qtyExistingRoll}{l.unit} (en cours) + {l.qtyNewRoll}{l.unit} (nouveau)</div>
                       ) : l.cutQty != null && l.cutQty !== l.qty && (
                         <div className="text-xs font-semibold text-teal-dark">coupe : {l.cutQty}{l.unit ? ` ${l.unit}` : ''}</div>
                       ))}
@@ -155,16 +172,40 @@ export function TissuPage() {
                   <div className="truncate text-sm font-semibold text-slate-700">{l.name}</div>
                   <div className="truncate text-xs text-slate-400">{l.variant} — commande : {l.qty}{l.unit ? ` ${l.unit}` : ''}</div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <input type="number" inputMode="decimal" step="any" value={cutVals[i] ?? ''} disabled={ruptured[i]}
-                    onChange={e => setCutVals(v => v.map((x, j) => j === i ? e.target.value : x))}
-                    className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right text-sm font-bold text-navy outline-none focus:border-teal disabled:bg-slate-50 disabled:text-slate-300" />
-                  {l.unit && <span className="shrink-0 text-sm text-slate-400">{l.unit}</span>}
-                  <button type="button" onClick={() => setRuptured(v => v.map((x, j) => j === i ? !x : x))}
-                    className={`ml-auto flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-bold ${ruptured[i] ? 'border-red-600 bg-red-600 text-white' : 'border-red-200 text-red-600'}`}>
-                    <AlertTriangle size={13} /> Rupture de stock
-                  </button>
-                </div>
+                {!ruptured[i] && !splitRoll[i] && (
+                  <div className="flex items-center gap-2">
+                    <input type="number" inputMode="decimal" step="any" value={cutVals[i] ?? ''}
+                      onChange={e => setCutVals(v => v.map((x, j) => j === i ? e.target.value : x))}
+                      className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right text-sm font-bold text-navy outline-none focus:border-teal" />
+                    {l.unit && <span className="shrink-0 text-sm text-slate-400">{l.unit}</span>}
+                    <button type="button" onClick={() => setSplitRoll(v => v.map((x, j) => j === i ? !x : x))}
+                      className="shrink-0 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-500">2 rouleaux</button>
+                  </div>
+                )}
+                {!ruptured[i] && splitRoll[i] && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-32 shrink-0 text-xs text-slate-500">Rouleau en cours</span>
+                      <input type="number" inputMode="decimal" step="any" value={rollVals[i]?.existing ?? ''}
+                        onChange={e => setRollVals(v => v.map((x, j) => j === i ? { ...x, existing: e.target.value } : x))}
+                        className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right text-sm font-bold text-navy outline-none focus:border-teal" />
+                      {l.unit && <span className="shrink-0 text-sm text-slate-400">{l.unit}</span>}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-32 shrink-0 text-xs text-slate-500">Nouveau rouleau</span>
+                      <input type="number" inputMode="decimal" step="any" value={rollVals[i]?.new ?? ''}
+                        onChange={e => setRollVals(v => v.map((x, j) => j === i ? { ...x, new: e.target.value } : x))}
+                        className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right text-sm font-bold text-navy outline-none focus:border-teal" />
+                      {l.unit && <span className="shrink-0 text-sm text-slate-400">{l.unit}</span>}
+                    </div>
+                    <button type="button" onClick={() => setSplitRoll(v => v.map((x, j) => j === i ? !x : x))}
+                      className="text-xs font-semibold text-slate-400 underline">Revenir a un seul rouleau</button>
+                  </div>
+                )}
+                <button type="button" onClick={() => setRuptured(v => v.map((x, j) => j === i ? !x : x))}
+                  className={`mt-2 flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-bold ${ruptured[i] ? 'border-red-600 bg-red-600 text-white' : 'border-red-200 text-red-600'}`}>
+                  <AlertTriangle size={13} /> Rupture de stock
+                </button>
               </div>
             ))}
             <div className="flex justify-end gap-2 pt-2">

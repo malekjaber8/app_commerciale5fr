@@ -96,6 +96,9 @@ export function TissuReportPanel() {
                       ) : (
                         <div className="text-lg font-extrabold text-navy">{l.cutQty ?? l.qty}{l.unit ? ` ${l.unit}` : ''}</div>
                       )}
+                      {l.qtyExistingRoll != null && (
+                        <div className="text-xs font-semibold text-teal-dark">{l.qtyExistingRoll}{l.unit} (en cours) + {l.qtyNewRoll}{l.unit} (nouveau)</div>
+                      )}
                     </div>
                   </div>
                 ))}
