@@ -97,6 +97,9 @@ export function TissuPage() {
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-slate-100 bg-slate-50 px-3 py-2.5 sm:px-4">
                 <User size={15} className="shrink-0 text-slate-400" />
                 <div className="min-w-0 flex-1 truncate text-sm font-extrabold text-navy">{o.client || 'Sans client'}</div>
+                {o.invoiceCode && (
+                  <div className="shrink-0 rounded-full bg-teal/15 px-2 py-0.5 text-xs font-bold text-teal-dark">{o.invoiceCode}</div>
+                )}
                 <div className="flex shrink-0 items-center gap-1.5 text-xs font-semibold text-slate-400">
                   <CalendarDays size={13} /> {fmtDate(o.createdAt)}
                 </div>

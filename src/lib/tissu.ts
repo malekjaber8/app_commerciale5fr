@@ -20,6 +20,7 @@ export interface TissuOrderDoc {
   verified?: boolean
   verifiedAt?: { toDate: () => Date } | null
   verifiedBy?: string
+  invoiceCode?: string
 }
 
 /** Lignes d'un devis qui appartiennent a la categorie Tissu (et ses sous-categories eventuelles). */
@@ -85,3 +86,7 @@ export const setTissuVerified = (id: string, verified: boolean, verifiedBy: stri
   updateDoc(doc(db, 'tissuOrders', id), verified
     ? { verified: true, verifiedAt: serverTimestamp(), verifiedBy }
     : { verified: false, verifiedAt: null, verifiedBy: null })
+
+/** Admin : associe le code de facture/bon de commande a cette tache de tissu — visible ensuite par la personne tissu. */
+export const setTissuInvoiceCode = (id: string, invoiceCode: string) =>
+  updateDoc(doc(db, 'tissuOrders', id), { invoiceCode })

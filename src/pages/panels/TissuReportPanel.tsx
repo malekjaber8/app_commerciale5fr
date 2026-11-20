@@ -1,11 +1,36 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, CheckCircle2, Scissors } from 'lucide-react'
-import { setTissuVerified, watchTissuOrders, type TissuOrderDoc } from '../../lib/tissu'
+import { AlertTriangle, CheckCircle2, Save, Scissors } from 'lucide-react'
+import { setTissuInvoiceCode, setTissuVerified, watchTissuOrders, type TissuOrderDoc } from '../../lib/tissu'
 import { useAuth } from '../../store/auth'
 import { Empty, inputCls } from '../../components/ui'
 
 const dayKey = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 const hhmm = (d: Date) => d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+
+/** Champ independant (etat local) pour ne pas perdre la saisie en cours quand le flux temps reel rafraichit la liste. */
+function InvoiceCodeField({ order }: { order: TissuOrderDoc }) {
+  const [value, setValue] = useState(order.invoiceCode ?? '')
+  const [saving, setSaving] = useState(false)
+  const dirty = value !== (order.invoiceCode ?? '')
+
+  const save = async () => {
+    setSaving(true)
+    try { await setTissuInvoiceCode(order.id, value.trim()) } finally { setSaving(false) }
+  }
+
+  return (
+    <div className="flex items-center gap-1.5 border-t border-slate-100 px-4 py-2.5">
+      <span className="shrink-0 text-xs font-semibold text-slate-500">Code facture/BL :</span>
+      <input value={value} onChange={e => setValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && save()}
+        placeholder="ex. BL-0245" className={inputCls + ' h-8 max-w-[160px] py-1'} />
+      {dirty && (
+        <button onClick={save} disabled={saving} className="flex shrink-0 items-center gap-1 rounded-lg bg-navy px-2.5 py-1.5 text-xs font-bold text-white disabled:opacity-60">
+          <Save size={13} /> {saving ? '...' : 'Envoyer'}
+        </button>
+      )}
+    </div>
+  )
+}
 
 /** Rapport journalier des commandes de tissu traitees (preparees/coupees), avec verification par l'admin. */
 export function TissuReportPanel() {
@@ -70,6 +95,7 @@ export function TissuReportPanel() {
                   </div>
                 ))}
               </div>
+              <InvoiceCodeField order={o} />
             </div>
           ))}
         </div>
