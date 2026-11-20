@@ -12,3 +12,8 @@ if (typeof window !== 'undefined') {
 export const getInstallEvent = () => saved
 export const clearInstallEvent = () => { saved = null; listeners.forEach(l => l()) }
 export const onInstallChange = (fn: () => void) => { listeners.add(fn); return () => { listeners.delete(fn) } }
+
+/** Safari iOS ne declenche jamais `beforeinstallprompt` : on detecte la plateforme pour proposer les etapes manuelles. */
+export const isIOS = () => typeof navigator !== 'undefined' && /iphone|ipad|ipod/i.test(navigator.userAgent)
+export const isStandalone = () => typeof window !== 'undefined'
+  && (window.matchMedia?.('(display-mode: standalone)').matches || (navigator as unknown as { standalone?: boolean }).standalone === true)

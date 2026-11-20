@@ -1,8 +1,9 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { FileText, History, LayoutGrid, LogOut, Scissors, Shield, Users } from 'lucide-react'
+import { Download, FileText, History, LayoutGrid, LogOut, Scissors, Shield, Users } from 'lucide-react'
 import { useQuote } from '../store/quote'
 import { useAuth } from '../store/auth'
 import { IS_DESKTOP } from '../config'
+import { InstallButton } from './InstallButton'
 
 export function Layout() {
   const { count } = useQuote()
@@ -23,7 +24,11 @@ export function Layout() {
             <div className="flex items-center gap-1.5 text-base font-extrabold leading-tight text-white sm:gap-2 sm:text-xl"><Scissors size={18} className="shrink-0" /> <span className="truncate">Atelier Tissu</span></div>
             <div className="truncate text-sm font-semibold leading-tight text-teal sm:text-base">{profile?.name || email}</div>
           </div>
-          <button onClick={logout} title="Se deconnecter" className="ml-auto flex min-h-[52px] min-w-[52px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-semibold leading-none text-white/75 transition hover:bg-white/10 hover:text-white active:bg-white/20 sm:min-h-[60px] sm:min-w-[84px] sm:gap-1 sm:px-3 sm:py-2 sm:text-[13px]">
+          {!IS_DESKTOP && (
+            <InstallButton label="Installer" icon={<Download size={22} />}
+              className="ml-auto flex min-h-[52px] min-w-[52px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-semibold leading-none text-white/75 transition hover:bg-white/10 hover:text-white active:bg-white/20 sm:min-h-[60px] sm:min-w-[84px] sm:gap-1 sm:px-3 sm:py-2 sm:text-[13px]" />
+          )}
+          <button onClick={logout} title="Se deconnecter" className={`${IS_DESKTOP ? 'ml-auto' : ''} flex min-h-[52px] min-w-[52px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-semibold leading-none text-white/75 transition hover:bg-white/10 hover:text-white active:bg-white/20 sm:min-h-[60px] sm:min-w-[84px] sm:gap-1 sm:px-3 sm:py-2 sm:text-[13px]`}>
             <LogOut size={22} className="sm:hidden" /><LogOut size={26} className="hidden sm:block" /><span>Quitter</span>
           </button>
         </header>
