@@ -17,14 +17,14 @@ export function Layout() {
   if (role === 'tissu') {
     return (
       <div className="flex h-full flex-col">
-        <header className="no-print flex items-center gap-4 bg-navy px-4 py-3 shadow-lg sm:px-6">
-          <img src={import.meta.env.BASE_URL + 'logo.png'} alt="Les Cinq Freres" className="h-14 rounded-lg bg-white p-1.5" />
-          <div className="hidden min-w-0 md:block">
-            <div className="flex items-center gap-2 text-xl font-extrabold leading-tight text-white"><Scissors size={20} /> Atelier Tissu</div>
-            <div className="truncate text-base font-semibold leading-tight text-teal">{profile?.name || email}</div>
+        <header className="no-print flex items-center gap-3 bg-navy px-3 py-2.5 shadow-lg sm:gap-4 sm:px-6 sm:py-3">
+          <img src={import.meta.env.BASE_URL + 'logo.png'} alt="Les Cinq Freres" className="h-11 shrink-0 rounded-lg bg-white p-1.5 sm:h-14" />
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 text-base font-extrabold leading-tight text-white sm:gap-2 sm:text-xl"><Scissors size={18} className="shrink-0" /> <span className="truncate">Atelier Tissu</span></div>
+            <div className="truncate text-sm font-semibold leading-tight text-teal sm:text-base">{profile?.name || email}</div>
           </div>
-          <button onClick={logout} title="Se deconnecter" className="ml-auto flex min-h-[60px] min-w-[68px] flex-col items-center justify-center gap-1 rounded-xl px-3 py-2 text-[13px] font-semibold leading-none text-white/75 transition hover:bg-white/10 hover:text-white active:bg-white/20 sm:min-w-[84px]">
-            <LogOut size={26} /><span>Quitter</span>
+          <button onClick={logout} title="Se deconnecter" className="ml-auto flex min-h-[52px] min-w-[52px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-semibold leading-none text-white/75 transition hover:bg-white/10 hover:text-white active:bg-white/20 sm:min-h-[60px] sm:min-w-[84px] sm:gap-1 sm:px-3 sm:py-2 sm:text-[13px]">
+            <LogOut size={22} className="sm:hidden" /><LogOut size={26} className="hidden sm:block" /><span>Quitter</span>
           </button>
         </header>
         <main className="min-h-0 flex-1"><Outlet /></main>

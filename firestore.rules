@@ -113,7 +113,7 @@ service cloud.firestore {
         || (isCommercial() && resource.data.ownerUid == request.auth.uid);
       allow create, update: if isAdmin()
         || (isCommercial() && request.resource.data.ownerUid == request.auth.uid)
-        || (isTissu() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'preparedAt', 'preparedBy']));
+        || (isTissu() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'preparedAt', 'preparedBy', 'lines']));
       allow delete: if isAdmin() || (isCommercial() && resource.data.ownerUid == request.auth.uid);
     }
 

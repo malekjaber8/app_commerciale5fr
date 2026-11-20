@@ -2,7 +2,7 @@ import { collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc, update
 import { db } from '../firebase'
 import type { Article, QuoteLine } from '../types'
 
-export interface TissuLine { name: string; variant: string; qty: number; unit?: string }
+export interface TissuLine { name: string; variant: string; qty: number; unit?: string; cutQty?: number }
 
 export type TissuStatus = 'a_preparer' | 'coupe'
 
@@ -70,8 +70,9 @@ export function watchTissuOrders(cb: (orders: TissuOrderDoc[]) => void): Unsubsc
   }, () => cb([]))
 }
 
-export const markTissuDone = (id: string, preparedBy: string) =>
-  updateDoc(doc(db, 'tissuOrders', id), { status: 'coupe', preparedAt: serverTimestamp(), preparedBy })
+/** Marque la preparation terminee en enregistrant la quantite de tissu reellement coupee par ligne. */
+export const markTissuDone = (id: string, preparedBy: string, lines: TissuLine[]) =>
+  updateDoc(doc(db, 'tissuOrders', id), { status: 'coupe', preparedAt: serverTimestamp(), preparedBy, lines })
 
 export const markTissuPending = (id: string) =>
   updateDoc(doc(db, 'tissuOrders', id), { status: 'a_preparer', preparedAt: null, preparedBy: null })
