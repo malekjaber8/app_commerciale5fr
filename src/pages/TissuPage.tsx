@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { CheckCircle2, Scissors, Undo2, User } from 'lucide-react'
+import { CalendarDays, CheckCircle2, Scissors, Undo2, User } from 'lucide-react'
 import { useAuth } from '../store/auth'
 import { markTissuDone, markTissuPending, watchTissuOrders, type TissuOrderDoc } from '../lib/tissu'
 
 const fmt = (d?: { toDate: () => Date } | null) => d ? d.toDate().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : ''
+const fmtDate = (d?: { toDate: () => Date } | null) => d ? d.toDate().toLocaleDateString('fr-FR', { weekday: 'short', day: '2-digit', month: 'short' }) : ''
 
 /** Session de la personne responsable du tissu : uniquement les commandes qui contiennent du tissu,
  * avec le client et la quantite a preparer/couper — rien d'autre (pas de prix, pas d'autres articles). */
@@ -49,8 +50,15 @@ export function TissuPage() {
               <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50 px-4 py-2.5">
                 <User size={15} className="text-slate-400" />
                 <div className="text-sm font-extrabold text-navy">{o.client || 'Sans client'}</div>
-                {o.status === 'coupe' && <div className="ml-auto text-xs text-slate-400">Prepare par {o.preparedBy} — {fmt(o.preparedAt)}</div>}
+                <div className="ml-auto flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+                  <CalendarDays size={13} /> {fmtDate(o.createdAt)}
+                </div>
               </div>
+              {o.status === 'coupe' && (
+                <div className="border-b border-slate-100 px-4 py-1.5 text-xs text-slate-400">
+                  Prepare par {o.preparedBy} — {fmt(o.preparedAt)}
+                </div>
+              )}
               <div className="divide-y divide-slate-50">
                 {o.lines.map((l, i) => (
                   <div key={i} className="flex items-center justify-between px-4 py-3 text-sm">
