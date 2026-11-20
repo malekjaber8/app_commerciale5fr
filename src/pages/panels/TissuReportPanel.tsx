@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, CheckCircle2, Save, Scissors } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, Save, Scissors, X } from 'lucide-react'
 import { setTissuInvoiceCode, setTissuVerified, watchTissuOrders, type TissuOrderDoc } from '../../lib/tissu'
 import { useAuth } from '../../store/auth'
 import { Empty, inputCls } from '../../components/ui'
@@ -13,19 +13,24 @@ function InvoiceCodeField({ order }: { order: TissuOrderDoc }) {
   const [saving, setSaving] = useState(false)
   const dirty = value !== (order.invoiceCode ?? '')
 
-  const save = async () => {
+  const save = async (code: string) => {
     setSaving(true)
-    try { await setTissuInvoiceCode(order.id, value.trim()) } finally { setSaving(false) }
+    try { await setTissuInvoiceCode(order.id, code.trim()); setValue(code.trim()) } finally { setSaving(false) }
   }
 
   return (
     <div className="flex items-center gap-1.5 border-t border-slate-100 px-4 py-2.5">
       <span className="shrink-0 text-xs font-semibold text-slate-500">Code facture/BL :</span>
-      <input value={value} onChange={e => setValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && save()}
+      <input value={value} onChange={e => setValue(e.target.value)} onKeyDown={e => e.key === 'Enter' && save(value)}
         placeholder="ex. BL-0245" className={inputCls + ' h-8 max-w-[160px] py-1'} />
       {dirty && (
-        <button onClick={save} disabled={saving} className="flex shrink-0 items-center gap-1 rounded-lg bg-navy px-2.5 py-1.5 text-xs font-bold text-white disabled:opacity-60">
+        <button onClick={() => save(value)} disabled={saving} className="flex shrink-0 items-center gap-1 rounded-lg bg-navy px-2.5 py-1.5 text-xs font-bold text-white disabled:opacity-60">
           <Save size={13} /> {saving ? '...' : 'Envoyer'}
+        </button>
+      )}
+      {!dirty && value && (
+        <button onClick={() => save('')} disabled={saving} title="Supprimer le code" className="flex shrink-0 items-center gap-1 rounded-lg border border-red-200 px-2.5 py-1.5 text-xs font-bold text-red-600 disabled:opacity-60">
+          <X size={13} /> Supprimer
         </button>
       )}
     </div>
