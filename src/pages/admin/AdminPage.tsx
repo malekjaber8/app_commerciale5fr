@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowLeft, Activity, ClipboardList, Clock, FileText, Package, Receipt, Users, UserSquare2 } from 'lucide-react'
+import { ArrowLeft, Activity, ClipboardList, Clock, FileText, Package, Receipt, Scissors, Users, UserSquare2 } from 'lucide-react'
 import { emailToLogin } from '../../config'
 import { UsersTab } from './UsersTab'
 import { ContentTab } from './ContentTab'
@@ -8,8 +8,9 @@ import { QuotesPanel } from '../panels/QuotesPanel'
 import { InvoicesPanel } from '../panels/InvoicesPanel'
 import { ActivityPanel } from '../panels/ActivityPanel'
 import { ReportsPanel } from '../panels/ReportsPanel'
+import { TissuReportPanel } from '../panels/TissuReportPanel'
 
-type Tab = 'activity' | 'users' | 'clients' | 'invoices' | 'quotes' | 'content' | 'rapport'
+type Tab = 'activity' | 'users' | 'clients' | 'invoices' | 'quotes' | 'content' | 'rapport' | 'tissu'
 type SubTab = 'activity' | 'quotes' | 'clients' | 'invoices'
 interface Commercial { id: string; name: string; email: string }
 
@@ -50,6 +51,7 @@ export function AdminPage() {
     { id: 'invoices', label: 'Factures', icon: Receipt },
     { id: 'content', label: 'Contenu et prix', icon: Package },
     { id: 'rapport', label: 'Rapport', icon: ClipboardList },
+    { id: 'tissu', label: 'Tissu', icon: Scissors },
   ]
   return (
     <div className="mx-auto h-full max-w-6xl overflow-y-auto p-4 sm:p-6">
@@ -71,6 +73,7 @@ export function AdminPage() {
       {tab === 'quotes' && <QuotesPanel admin />}
       {tab === 'content' && <ContentTab />}
       {tab === 'rapport' && <ReportsPanel />}
+      {tab === 'tissu' && <TissuReportPanel />}
     </div>
   )
 }

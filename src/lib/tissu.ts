@@ -2,7 +2,7 @@ import { collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc, update
 import { db } from '../firebase'
 import type { Article, QuoteLine } from '../types'
 
-export interface TissuLine { name: string; variant: string; qty: number; unit?: string; cutQty?: number }
+export interface TissuLine { name: string; variant: string; qty: number; unit?: string; cutQty?: number; ruptured?: boolean }
 
 export type TissuStatus = 'a_preparer' | 'coupe'
 
@@ -17,6 +17,9 @@ export interface TissuOrderDoc {
   createdAt?: { toDate: () => Date }
   preparedAt?: { toDate: () => Date } | null
   preparedBy?: string
+  verified?: boolean
+  verifiedAt?: { toDate: () => Date } | null
+  verifiedBy?: string
 }
 
 /** Lignes d'un devis qui appartiennent a la categorie Tissu (et ses sous-categories eventuelles). */
@@ -76,3 +79,9 @@ export const markTissuDone = (id: string, preparedBy: string, lines: TissuLine[]
 
 export const markTissuPending = (id: string) =>
   updateDoc(doc(db, 'tissuOrders', id), { status: 'a_preparer', preparedAt: null, preparedBy: null })
+
+/** Admin : pointe une ligne du rapport de tissu comme verifiee (ou annule la verification). */
+export const setTissuVerified = (id: string, verified: boolean, verifiedBy: string) =>
+  updateDoc(doc(db, 'tissuOrders', id), verified
+    ? { verified: true, verifiedAt: serverTimestamp(), verifiedBy }
+    : { verified: false, verifiedAt: null, verifiedBy: null })

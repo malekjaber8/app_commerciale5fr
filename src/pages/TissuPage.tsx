@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CalendarDays, ChevronLeft, ChevronRight, CheckCircle2, Scissors, Undo2, User } from 'lucide-react'
+import { AlertTriangle, CalendarDays, ChevronLeft, ChevronRight, CheckCircle2, Scissors, Undo2, User } from 'lucide-react'
 import { useAuth } from '../store/auth'
 import { Modal } from '../components/ui'
 import { markTissuDone, markTissuPending, watchTissuOrders, type TissuLine, type TissuOrderDoc } from '../lib/tissu'
@@ -30,6 +30,7 @@ export function TissuPage() {
   const [day, setDay] = useState(todayKey)
   const [confirming, setConfirming] = useState<TissuOrderDoc | null>(null)
   const [cutVals, setCutVals] = useState<string[]>([])
+  const [ruptured, setRuptured] = useState<boolean[]>([])
 
   useEffect(() => watchTissuOrders(setOrders), [])
 
@@ -38,12 +39,14 @@ export function TissuPage() {
   const openConfirm = (o: TissuOrderDoc) => {
     setConfirming(o)
     setCutVals(o.lines.map(l => String(l.cutQty ?? l.qty)))
+    setRuptured(o.lines.map(l => !!l.ruptured))
   }
   const confirmDone = async () => {
     if (!confirming) return
     const lines: TissuLine[] = confirming.lines.map((l, i) => {
+      if (ruptured[i]) return { ...l, cutQty: 0, ruptured: true }
       const v = parseFloat(cutVals[i].replace(',', '.'))
-      return { ...l, cutQty: Number.isFinite(v) ? v : l.qty }
+      return { ...l, cutQty: Number.isFinite(v) ? v : l.qty, ruptured: false }
     })
     setBusy(confirming.id)
     try {
@@ -112,9 +115,11 @@ export function TissuPage() {
                     </div>
                     <div className="shrink-0 text-right">
                       <div className="text-lg font-extrabold text-navy">{l.qty}{l.unit ? ` ${l.unit}` : ''}</div>
-                      {o.status === 'coupe' && l.cutQty != null && l.cutQty !== l.qty && (
+                      {o.status === 'coupe' && (l.ruptured ? (
+                        <div className="flex items-center gap-1 text-xs font-bold text-red-600"><AlertTriangle size={12} /> rupture</div>
+                      ) : l.cutQty != null && l.cutQty !== l.qty && (
                         <div className="text-xs font-semibold text-teal-dark">coupe : {l.cutQty}{l.unit ? ` ${l.unit}` : ''}</div>
-                      )}
+                      ))}
                     </div>
                   </div>
                 ))}
@@ -142,16 +147,20 @@ export function TissuPage() {
           <div className="space-y-3">
             <div className="text-sm text-slate-500">{confirming.client || 'Sans client'}</div>
             {confirming.lines.map((l, i) => (
-              <div key={i} className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
+              <div key={i} className="rounded-xl border border-slate-100 p-2.5">
+                <div className="mb-2 min-w-0">
                   <div className="truncate text-sm font-semibold text-slate-700">{l.name}</div>
                   <div className="truncate text-xs text-slate-400">{l.variant} — commande : {l.qty}{l.unit ? ` ${l.unit}` : ''}</div>
                 </div>
-                <div className="flex shrink-0 items-center gap-1.5">
-                  <input type="number" inputMode="decimal" step="any" value={cutVals[i] ?? ''}
+                <div className="flex items-center gap-2">
+                  <input type="number" inputMode="decimal" step="any" value={cutVals[i] ?? ''} disabled={ruptured[i]}
                     onChange={e => setCutVals(v => v.map((x, j) => j === i ? e.target.value : x))}
-                    className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right text-sm font-bold text-navy outline-none focus:border-teal" />
-                  {l.unit && <span className="text-sm text-slate-400">{l.unit}</span>}
+                    className="w-24 rounded-lg border border-slate-200 bg-white px-3 py-2 text-right text-sm font-bold text-navy outline-none focus:border-teal disabled:bg-slate-50 disabled:text-slate-300" />
+                  {l.unit && <span className="shrink-0 text-sm text-slate-400">{l.unit}</span>}
+                  <button type="button" onClick={() => setRuptured(v => v.map((x, j) => j === i ? !x : x))}
+                    className={`ml-auto flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-bold ${ruptured[i] ? 'border-red-600 bg-red-600 text-white' : 'border-red-200 text-red-600'}`}>
+                    <AlertTriangle size={13} /> Rupture de stock
+                  </button>
                 </div>
               </div>
             ))}
