@@ -12,7 +12,7 @@ export function InvoiceView({ invoice, onClose }: { invoice: InvoiceDoc; onClose
   })
 
   return (
-    <div className="fixed inset-0 z-[60] overflow-y-auto bg-slate-600/90 p-4">
+    <div className="print-modal fixed inset-0 z-[60] overflow-y-auto bg-slate-600/90 p-4">
       <div className="no-print mx-auto mb-3 flex max-w-3xl justify-end gap-2">
         <button onClick={() => window.print()} className="flex items-center gap-2 rounded-xl bg-teal px-4 py-2 text-sm font-bold text-navy"><Printer size={15} /> Imprimer / PDF</button>
         <button onClick={onClose} className="flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700"><X size={15} /> Fermer</button>
